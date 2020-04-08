@@ -10,7 +10,7 @@ import com.example.qstreak.models.Submission
 import kotlinx.android.synthetic.main.submission_item.view.*
 
 class SubmissionsAdapter : RecyclerView.Adapter<SubmissionsAdapter.SubmissionViewHolder>() {
-    val submissions = emptyList<Submission>()
+    var submissions = emptyList<Submission>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubmissionViewHolder {
         return SubmissionViewHolder(
@@ -31,5 +31,10 @@ class SubmissionsAdapter : RecyclerView.Adapter<SubmissionsAdapter.SubmissionVie
     inner class SubmissionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val date: TextView = view.submission_date
         val contactCount: TextView = view.submission_contact_count
+    }
+
+    internal fun setSubmissions(submissions: List<Submission>) {
+        this.submissions = submissions
+        notifyDataSetChanged()
     }
 }
