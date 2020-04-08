@@ -10,9 +10,10 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentNewSubmissionBinding
+import com.example.qstreak.models.Submission
 import com.example.qstreak.viewmodels.NewSubmissionViewModel
 
-class NewSubmissionFragment : DialogFragment() {
+class NewSubmissionFragment(private val onSubmissionReceived: (Submission) -> Unit) : DialogFragment() {
     lateinit var binding: FragmentNewSubmissionBinding
     private val newSubmissionViewModel: NewSubmissionViewModel by lazy {
         ViewModelProvider(this).get(NewSubmissionViewModel::class.java)
@@ -26,6 +27,16 @@ class NewSubmissionFragment : DialogFragment() {
         binding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.fragment_new_submission, null, false)
         binding.newSubmissionViewModel = this.newSubmissionViewModel
 
+        binding.submitButton.setOnClickListener {
+            // TODO create submission from values of EditTexts
+            onSubmissionReceived.invoke(Submission("04082020", 123))
+            dialog?.dismiss()
+        }
+
         return binding.root
+    }
+
+    override fun getTheme(): Int {
+        return R.style.NewSubmissionDialogTheme
     }
 }

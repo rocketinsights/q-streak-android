@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showNewSubmissionDialog() {
-        NewSubmissionFragment().show(supportFragmentManager, "fragment_new_submission")
+        NewSubmissionFragment(this::onNewSubmissionSubmitted).show(supportFragmentManager, "fragment_new_submission")
+    }
+
+    private fun onNewSubmissionSubmitted(submission: Submission) {
+        mainViewModel.createSubmission(submission)
     }
 }
