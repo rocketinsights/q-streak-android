@@ -1,5 +1,6 @@
 package com.example.qstreak.db
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.qstreak.models.Submission
 
@@ -7,6 +8,7 @@ class SubmissionRepository(val submissionDao: SubmissionDao) {
     val submissions: LiveData<List<Submission>> = submissionDao.getAllSubmissions()
 
     suspend fun insert(submission: Submission){
+        Log.d("insert", submission.id.toString())
         submissionDao.insert(submission)
     }
 

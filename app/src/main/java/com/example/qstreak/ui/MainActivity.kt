@@ -2,6 +2,7 @@ package com.example.qstreak.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -34,7 +35,13 @@ class MainActivity : AppCompatActivity() {
         })
 
         binding.addSubmissionButton.setOnClickListener {
-            mainViewModel.createSubmission(Submission("12398120398", 123))
+//            mainViewModel.createSubmission(Submission("12398120398", 123))
+
+            showNewSubmissionDialog()
         }
+    }
+
+    private fun showNewSubmissionDialog() {
+        NewSubmissionFragment().show(supportFragmentManager, "fragment_new_submission")
     }
 }

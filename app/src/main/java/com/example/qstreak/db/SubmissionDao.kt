@@ -6,7 +6,7 @@ import com.example.qstreak.models.Submission
 
 @Dao
 interface SubmissionDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(submission: Submission)
 
     @Query("SELECT * FROM submissions LIMIT 100")

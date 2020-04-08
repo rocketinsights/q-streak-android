@@ -3,6 +3,7 @@ package com.example.qstreak.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlin.random.Random
 
 @Entity(tableName = "submissions")
 data class Submission(
