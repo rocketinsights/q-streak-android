@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="24sp"
-            tools:text="2020-04-07" />
+            tools:text="2020-01-01" />
 
         <TextView
             android:id="@+id/submission_contact_count"
@@ -24,6 +24,6 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="24sp"
-            tools:text="10 People" />
+            tools:text="123" />
     </LinearLayout>
 </layout>

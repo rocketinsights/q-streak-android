@@ -10,7 +10,7 @@ import com.example.qstreak.models.Submission
 import kotlinx.android.synthetic.main.submission_item.view.*
 
 class SubmissionsAdapter : RecyclerView.Adapter<SubmissionsAdapter.SubmissionViewHolder>() {
-    var submissions = emptyList<Submission>()
+    val submissions = mutableListOf<Submission>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubmissionViewHolder {
         return SubmissionViewHolder(
@@ -34,7 +34,8 @@ class SubmissionsAdapter : RecyclerView.Adapter<SubmissionsAdapter.SubmissionVie
     }
 
     internal fun setSubmissions(submissions: List<Submission>) {
-        this.submissions = submissions
+        this.submissions.clear()
+        this.submissions.addAll(submissions)
         notifyDataSetChanged()
     }
 }

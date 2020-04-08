@@ -1,4 +1,4 @@
-package com.example.qstreak
+package com.example.qstreak.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
