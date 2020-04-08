@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity() {
         })
 
         binding.addSubmissionButton.setOnClickListener {
-//            mainViewModel.createSubmission(Submission("12398120398", 123))
-
             showNewSubmissionDialog()
         }
     }
