@@ -44,6 +44,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onNewSubmissionSubmitted(submission: Submission) {
-        mainViewModel.createSubmission(submission)
+        mainViewModel.createSubmission(submission, applicationContext)
     }
 }

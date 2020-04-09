@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 import com.example.qstreak.models.Submission
 import com.example.qstreak.models.User
 
-@Database(entities = [Submission::class, User::class], version = 2)
+@Database(entities = [Submission::class, User::class], version = 3)
 abstract class QstreakDatabase : RoomDatabase() {
 
     abstract fun submissionDao(): SubmissionDao
