@@ -8,14 +8,24 @@ import androidx.lifecycle.viewModelScope
 import com.example.qstreak.db.QstreakDatabase
 import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.models.Submission
+import com.example.qstreak.models.User
+import com.example.qstreak.network.CreateUserRequest
+import com.example.qstreak.network.QstreakApiService
 import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     var submissions: LiveData<List<Submission>> = MutableLiveData()
-    val repository = SubmissionRepository(QstreakDatabase.getInstance(application).submissionDao())
+    private val repository = SubmissionRepository(QstreakDatabase.getInstance(application).submissionDao())
+    private val api: QstreakApiService by lazy {
+        QstreakApiService.getQstreakApiService()
+    }
 
     init {
         submissions = repository.submissions
+
+        viewModelScope.launch {
+            api.signup(CreateUserRequest(40, 2, "12345"))
+        }
     }
 
     fun createSubmission(submission: Submission) {
