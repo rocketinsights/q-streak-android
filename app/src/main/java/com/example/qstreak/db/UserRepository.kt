@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.qstreak.models.User
 
 class UserRepository(val userDao: UserDao) {
-    val user: LiveData<User> = userDao.getUser()
+    suspend fun getUser(): User? = userDao.getUser()
 
     suspend fun insert(user: User){
         userDao.insert(user)

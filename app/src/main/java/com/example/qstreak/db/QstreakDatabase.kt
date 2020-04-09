@@ -6,11 +6,14 @@ import androidx.room.Entity
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.qstreak.models.Submission
+import com.example.qstreak.models.User
 
-@Database(entities = [Submission::class], version = 1)
+@Database(entities = [Submission::class, User::class], version = 2)
 abstract class QstreakDatabase : RoomDatabase() {
 
     abstract fun submissionDao(): SubmissionDao
+    abstract fun userDao(): UserDao
+
     companion object {
         @Volatile
         private var INSTANCE: QstreakDatabase? = null
@@ -25,6 +28,7 @@ abstract class QstreakDatabase : RoomDatabase() {
                     QstreakDatabase::class.java,
                     "qstreak_database"
                 )
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 return instance
