@@ -9,6 +9,7 @@ import com.example.qstreak.db.QstreakDatabase
 import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.models.Submission
 import com.example.qstreak.models.User
+import com.example.qstreak.network.Account
 import com.example.qstreak.network.CreateUserRequest
 import com.example.qstreak.network.QstreakApiService
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         submissions = repository.submissions
 
         viewModelScope.launch {
-            api.signup(CreateUserRequest(40, 2, "12345"))
+            api.signup(CreateUserRequest(Account(40, 2, "12345")))
         }
     }
 

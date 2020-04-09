@@ -23,7 +23,7 @@ interface QstreakApiService {
             val client = builder.build()
 
             return Retrofit.Builder()
-                .baseUrl("localhost:4000/api/")
+                .baseUrl("https://localhost:4000/api/")
                 .client(client)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
