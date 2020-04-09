@@ -1,6 +1,5 @@
 package com.example.qstreak.ui
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,8 @@ import com.example.qstreak.databinding.FragmentNewSubmissionBinding
 import com.example.qstreak.models.Submission
 import com.example.qstreak.viewmodels.NewSubmissionViewModel
 
-class NewSubmissionFragment(private val onSubmissionReceived: (Submission) -> Unit) : DialogFragment() {
+class NewSubmissionFragment(private val onSubmissionReceived: (Submission) -> Unit) :
+    DialogFragment() {
     lateinit var binding: FragmentNewSubmissionBinding
     private val newSubmissionViewModel: NewSubmissionViewModel by lazy {
         ViewModelProvider(this).get(NewSubmissionViewModel::class.java)
@@ -24,12 +24,21 @@ class NewSubmissionFragment(private val onSubmissionReceived: (Submission) -> Un
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.fragment_new_submission, null, false)
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(activity),
+            R.layout.fragment_new_submission,
+            null,
+            false
+        )
         binding.newSubmissionViewModel = this.newSubmissionViewModel
 
         binding.submitButton.setOnClickListener {
-            // TODO create submission from values of EditTexts
-            onSubmissionReceived.invoke(Submission("04082020", 123))
+            // TODO data validation
+            val submission = Submission(
+                binding.dateTextInputLayout.editText?.text.toString(),
+                binding.contactCountTextInputLayout.editText?.text.toString().toInt()
+            )
+            onSubmissionReceived(submission)
             dialog?.dismiss()
         }
 
