@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Qstreak</string>
+
+    <string-array name="onboarding_titles">
+        <item>Onboarding Fragment 1</item>
+        <item>Onboarding Fragment 2</item>
+        <item>Onboarding Fragment 3</item>
+    </string-array>
 </resources>
