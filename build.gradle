@@ -37,4 +37,5 @@ ext {
     retrofitVersion = '2.8.1'
     okHttpVersion = '4.5.0'
     moshiVersion = '1.9.2'
+    securityCryptoVersion = '1.0.0-beta01'
 }
