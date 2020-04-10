@@ -1,6 +1,5 @@
 package com.example.qstreak.db
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.qstreak.models.Submission
 import com.example.qstreak.network.CreateSubmissionRequest
@@ -24,12 +23,7 @@ class SubmissionRepository(
                 )
             )
         )
-        // TODO handle HTTP response codes
-        if (response.id >= 0) {
-            submissionDao.insert(submission.copy(remoteId = response.id))
-        } else {
-            Log.e("Submission Request", "Submission Request Failed")
-        }
+        submissionDao.insert(submission.copy(remoteId = response.id))
     }
 
     suspend fun update(submission: Submission) {
