@@ -1,18 +1,15 @@
 package com.example.qstreak.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.qstreak.viewmodels.MainViewModel
 import com.example.qstreak.R
 import com.example.qstreak.databinding.ActivityMainBinding
 import com.example.qstreak.models.Submission
-import kotlin.random.Random
+import com.example.qstreak.viewmodels.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,7 +37,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showNewSubmissionDialog() {
-        NewSubmissionFragment(this::onNewSubmissionSubmitted).show(supportFragmentManager, "fragment_new_submission")
+        NewSubmissionFragment(this::onNewSubmissionSubmitted).show(
+            supportFragmentManager,
+            "fragment_new_submission"
+        )
     }
 
     private fun onNewSubmissionSubmitted(submission: Submission) {

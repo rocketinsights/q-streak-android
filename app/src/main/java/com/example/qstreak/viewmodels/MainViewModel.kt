@@ -2,7 +2,6 @@ package com.example.qstreak.viewmodels
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +11,9 @@ import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.db.UserRepository
 import com.example.qstreak.models.Submission
 import com.example.qstreak.models.User
-import com.example.qstreak.network.*
+import com.example.qstreak.network.Account
+import com.example.qstreak.network.CreateUserRequest
+import com.example.qstreak.network.QstreakApiSignupService
 import com.example.qstreak.utils.EncryptedSharedPreferencesUtil
 import kotlinx.coroutines.launch
 
@@ -38,31 +39,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             UID_KEY, null
         )
 
-        // TODO handle case when trying to create a submission without uid
-        val api = QstreakApiService.getQstreakApiService(uid!!)
-
-        viewModelScope.launch {
-            // TODO convert submission model
-            val response = api.createSubmission(
-                CreateSubmissionRequest(
-                    Submission(
-                        submission.contactCount,
-                        submission.date,
-                        emptyList()
-                    )
-                )
-            )
-            // TODO handle HTTP response codes
-            if (response.id >= 0) {
-                submissionRepository.insert(submission.copy(remoteId = response.id))
-            } else {
-                Log.e("Submission Request", "Submission Request Failed")
+        if (uid != null) {
+            viewModelScope.launch {
+                submissionRepository.insert(submission, uid)
             }
+        } else {
+            // TODO handle error case if uid is null
         }
     }
 
     private fun createUserIfNoneExists(context: Context) {
-
         val sharedPreferences =
             EncryptedSharedPreferencesUtil.getEncryptedSharedPreferences(context)
 
