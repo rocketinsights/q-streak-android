@@ -19,13 +19,9 @@ class SubmissionsViewModel(application: Application) : AndroidViewModel(applicat
     // TODO Dependency injection
     private val submissionRepository =
         SubmissionRepository(QstreakDatabase.getInstance(application).submissionDao())
-    private val userRepository = UserRepository(QstreakDatabase.getInstance(application).userDao())
 
     init {
         submissions = submissionRepository.submissions
-
-        // TODO move logic to onboarding
-        createUserIfNoneExists(application)
     }
 
     fun createSubmission(submission: Submission, context: Context) {
@@ -45,22 +41,6 @@ class SubmissionsViewModel(application: Application) : AndroidViewModel(applicat
             }
         } else {
             // TODO handle error case if uid is null
-        }
-    }
-
-    private fun createUserIfNoneExists(context: Context) {
-        val sharedPreferences =
-            EncryptedSharedPreferencesUtil.getEncryptedSharedPreferences(context)
-        // If there is no UID stored, we haven't created this user yet or app data has been cleared.
-        if (sharedPreferences.getString(UID_KEY, null) == null) {
-            viewModelScope.launch {
-                try {
-                    val newUser = userRepository.createUser(40, 3, "02906")
-                    sharedPreferences.edit().putString(UID_KEY, newUser.device_uid).apply()
-                } catch (e: Exception) {
-                    Log.e("Create User Error", "Error message: " + e.message)
-                }
-            }
         }
     }
 

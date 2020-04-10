@@ -23,7 +23,7 @@ class SubmissionRepository(
                 )
             )
         )
-        submissionDao.insert(submission.copy(remoteId = response.id))
+        submissionDao.insert(submission.apply { this.remoteId = response.id })
     }
 
     suspend fun update(submission: Submission) {
