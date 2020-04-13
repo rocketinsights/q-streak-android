@@ -9,7 +9,7 @@ import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.models.Submission
 import kotlinx.coroutines.launch
 
-class SubmissionsDetailViewModel(application: Application, id: Int) : AndroidViewModel(application) {
+class SubmissionDetailViewModel(application: Application, id: Int) : AndroidViewModel(application) {
     private val submissionRepository =
         SubmissionRepository(QstreakDatabase.getInstance(application).submissionDao())
 
