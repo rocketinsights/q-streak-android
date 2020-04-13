@@ -1,5 +1,6 @@
 package com.example.qstreak.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +10,17 @@ import com.example.qstreak.R
 import com.example.qstreak.models.Submission
 import kotlinx.android.synthetic.main.submission_item.view.*
 
-class SubmissionsAdapter : RecyclerView.Adapter<SubmissionsAdapter.SubmissionViewHolder>() {
+class SubmissionsAdapter(private val onItemClicked: (Submission) -> Unit) : RecyclerView.Adapter<SubmissionsAdapter.SubmissionViewHolder>() {
     val submissions = mutableListOf<Submission>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubmissionViewHolder {
-        return SubmissionViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.submission_item, parent, false)
-        )
+        val holder = SubmissionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.submission_item, parent, false))
+
+        holder.itemView.setOnClickListener {
+            onItemClicked(submissions[holder.adapterPosition])
+        }
+
+        return holder
     }
 
     override fun getItemCount(): Int {

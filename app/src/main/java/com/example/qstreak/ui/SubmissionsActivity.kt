@@ -23,7 +23,7 @@ class SubmissionsActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_submissions)
 
         val recyclerView = binding.submissionsRecyclerView
-        val adapter = SubmissionsAdapter()
+        val adapter = SubmissionsAdapter(this::onSubmissionSelected)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -45,5 +45,9 @@ class SubmissionsActivity : AppCompatActivity() {
 
     private fun onNewSubmissionSubmitted(submission: Submission) {
         submissionsViewModel.createSubmission(submission, applicationContext)
+    }
+
+    private fun onSubmissionSelected(submission: Submission) {
+        // TODO do something
     }
 }
