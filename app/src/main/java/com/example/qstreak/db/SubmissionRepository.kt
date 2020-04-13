@@ -16,7 +16,7 @@ class SubmissionRepository(
         // TODO convert submission model
         val response = api.createSubmission(
             CreateSubmissionRequest(
-                com.example.qstreak.network.Submission(
+                com.example.qstreak.network.SubmissionData(
                     submission.contactCount,
                     submission.date,
                     emptyList()
@@ -24,6 +24,10 @@ class SubmissionRepository(
             )
         )
         submissionDao.insert(submission.apply { this.remoteId = response.id })
+    }
+
+    suspend fun getSubmissionById(id: Int): Submission {
+        return submissionDao.get(id)
     }
 
     suspend fun update(submission: Submission) {
