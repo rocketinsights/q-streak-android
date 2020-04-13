@@ -9,7 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.qstreak.db.QstreakDatabase
 import com.example.qstreak.db.SubmissionRepository
-import com.example.qstreak.db.UserRepository
 import com.example.qstreak.models.Submission
 import com.example.qstreak.utils.EncryptedSharedPreferencesUtil
 import kotlinx.coroutines.launch
@@ -26,9 +25,7 @@ class SubmissionsViewModel(application: Application) : AndroidViewModel(applicat
 
     fun createSubmission(submission: Submission, context: Context) {
         // get uid to pass as bearer token
-        val uid = EncryptedSharedPreferencesUtil.getEncryptedSharedPreferences(context).getString(
-            UID_KEY, null
-        )
+        val uid = EncryptedSharedPreferencesUtil.getUid(context)
 
         if (uid != null) {
             viewModelScope.launch {
