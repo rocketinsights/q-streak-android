@@ -7,27 +7,27 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
-import com.example.qstreak.databinding.ActivityMainBinding
+import com.example.qstreak.databinding.ActivitySubmissionsBinding
 import com.example.qstreak.models.Submission
-import com.example.qstreak.viewmodels.MainViewModel
+import com.example.qstreak.viewmodels.SubmissionsViewModel
 
-class MainActivity : AppCompatActivity() {
+class SubmissionsActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private val mainViewModel: MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
+    private lateinit var binding: ActivitySubmissionsBinding
+    private val submissionsViewModel: SubmissionsViewModel by lazy {
+        ViewModelProvider(this).get(SubmissionsViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_submissions)
 
         val recyclerView = binding.submissionsRecyclerView
         val adapter = SubmissionsAdapter()
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        mainViewModel.submissions.observe(this, Observer { submissions ->
+        submissionsViewModel.submissions.observe(this, Observer { submissions ->
             submissions?.let { adapter.setSubmissions(it) }
         })
 
@@ -44,6 +44,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onNewSubmissionSubmitted(submission: Submission) {
-        mainViewModel.createSubmission(submission, applicationContext)
+        submissionsViewModel.createSubmission(submission, applicationContext)
     }
 }
