@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class OnboardingViewModel(application: Application) : AndroidViewModel(application) {
     private val userRepository = UserRepository(QstreakDatabase.getInstance(application).userDao())
-    val isLoggedIn = MutableLiveData<Boolean>(false)
+    val signupSuccessful = MutableLiveData<Boolean>(false)
 
     fun createUser(context: Context, age: Int, householdSize: Int, zip: String) {
         val sharedPreferences =
@@ -23,7 +23,7 @@ class OnboardingViewModel(application: Application) : AndroidViewModel(applicati
             try {
                 val newUser = userRepository.createUser(age, householdSize, zip)
                 sharedPreferences.edit().putString(UID_KEY, newUser.device_uid).apply()
-                isLoggedIn.postValue(true)
+                signupSuccessful.postValue(true)
             } catch (e: Exception) {
                 Log.e("Create User Error", "Error message: " + e.message)
             }
