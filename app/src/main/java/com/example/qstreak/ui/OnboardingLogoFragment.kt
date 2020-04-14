@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_onboarding_logo.view.*
 class OnboardingLogoFragment : Fragment() {
 
     companion object {
-        val ONBOARDING_ADAPTER_POSITION = 0
+        const val ONBOARDING_ADAPTER_POSITION = 0
     }
 
     override fun onCreateView(
