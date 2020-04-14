@@ -14,13 +14,15 @@ import com.example.qstreak.utils.EncryptedSharedPreferencesUtil
 import kotlinx.coroutines.launch
 
 class SubmissionsViewModel(application: Application) : AndroidViewModel(application) {
-    var submissions: LiveData<List<Submission>> = MutableLiveData()
     // TODO Dependency injection
     private val submissionRepository =
         SubmissionRepository(QstreakDatabase.getInstance(application).submissionDao())
 
-    init {
-        submissions = submissionRepository.submissions
+    val submissions: LiveData<List<Submission>> = submissionRepository.submissions
+    val selectedSubmission = MutableLiveData<Submission>()
+
+    fun select(submission: Submission) {
+        selectedSubmission.value = submission
     }
 
     fun createSubmission(submission: Submission, context: Context) {

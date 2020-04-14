@@ -6,18 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.example.qstreak.R
-import com.example.qstreak.databinding.FragmentNewSubmissionBinding
+import com.example.qstreak.databinding.FragmentAddSubmissionBinding
 import com.example.qstreak.models.Submission
-import com.example.qstreak.viewmodels.NewSubmissionViewModel
+import com.example.qstreak.viewmodels.SubmissionsViewModel
 
-class NewSubmissionFragment(private val onSubmissionReceived: (Submission) -> Unit) :
-    DialogFragment() {
-    lateinit var binding: FragmentNewSubmissionBinding
-    private val newSubmissionViewModel: NewSubmissionViewModel by lazy {
-        ViewModelProvider(this).get(NewSubmissionViewModel::class.java)
-    }
+class AddSubmissionFragment : DialogFragment() {
+    lateinit var binding: FragmentAddSubmissionBinding
+    private val submissionsViewModel: SubmissionsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,11 +23,11 @@ class NewSubmissionFragment(private val onSubmissionReceived: (Submission) -> Un
     ): View? {
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(activity),
-            R.layout.fragment_new_submission,
+            R.layout.fragment_add_submission,
             null,
             false
         )
-        binding.newSubmissionViewModel = this.newSubmissionViewModel
+        binding.submissionsViewModel = this.submissionsViewModel
 
         binding.submitButton.setOnClickListener {
             // TODO data validation
@@ -38,8 +35,8 @@ class NewSubmissionFragment(private val onSubmissionReceived: (Submission) -> Un
                 binding.dateTextInputLayout.editText?.text.toString(),
                 binding.contactCountTextInputLayout.editText?.text.toString().toInt()
             )
-            onSubmissionReceived(submission)
-            dialog?.dismiss()
+            submissionsViewModel.createSubmission(submission, requireContext())
+            requireActivity().supportFragmentManager.popBackStack()
         }
 
         return binding.root
@@ -47,5 +44,9 @@ class NewSubmissionFragment(private val onSubmissionReceived: (Submission) -> Un
 
     override fun getTheme(): Int {
         return R.style.NewSubmissionDialogTheme
+    }
+
+    companion object {
+        const val TAG = "AddSubmissionFragment"
     }
 }
