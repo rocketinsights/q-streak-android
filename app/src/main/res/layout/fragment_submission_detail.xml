@@ -18,7 +18,7 @@
             android:id="@+id/submission_detail_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.selectedSubmission.date}"
+            android:text="@{viewModel.selectedSubmission.submission.date}"
             android:textSize="32sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,12 +29,34 @@
             android:id="@+id/submission_detail_contact_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{Integer.toString(viewModel.selectedSubmission.contactCount)}"
+            android:text="@{Integer.toString(viewModel.selectedSubmission.submission.contactCount)}"
             android:textSize="32sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/submission_detail_date"
             tools:text="123" />
+
+        <TextView
+            android:id="@+id/submission_detail_activities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.selectedSubmission.activities.toString}"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_contact_count"
+            tools:text="activities" />
+
+        <TextView
+            android:id="@+id/submission_detail_stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.selectedSubmission.submission.dailyStats}"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_activities"
+            tools:text="daily stats" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
