@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.qstreak.models.Submission
 import com.example.qstreak.network.CreateSubmissionRequest
 import com.example.qstreak.network.QstreakApiService
+import com.example.qstreak.network.SubmissionData
 
 class SubmissionRepository(
     private val submissionDao: SubmissionDao
@@ -16,7 +17,7 @@ class SubmissionRepository(
         // TODO convert submission model
         val response = api.createSubmission(
             CreateSubmissionRequest(
-                com.example.qstreak.network.Submission(
+                SubmissionData(
                     submission.contactCount,
                     submission.date,
                     emptyList()
@@ -24,6 +25,10 @@ class SubmissionRepository(
             )
         )
         submissionDao.insert(submission.apply { this.remoteId = response.id })
+    }
+
+    suspend fun getSubmissionById(id: Int): Submission {
+        return submissionDao.get(id)
     }
 
     suspend fun update(submission: Submission) {
