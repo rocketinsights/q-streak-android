@@ -30,8 +30,16 @@ class AddSubmissionFragment : Fragment() {
             null,
             false
         )
+        binding.lifecycleOwner = activity
         binding.submissionsViewModel = this.submissionsViewModel
 
+        setupActivitiesList()
+        setSaveClickListener()
+
+        return binding.root
+    }
+
+    private fun setupActivitiesList() {
         val adapter = ActivitiesChecklistAdapter(
             this::onActivityToggled,
             submissionsViewModel.activities.value.orEmpty()
@@ -43,25 +51,25 @@ class AddSubmissionFragment : Fragment() {
 
         binding.activitiesChecklist.adapter = adapter
         binding.activitiesChecklist.layoutManager = LinearLayoutManager(activity)
+    }
 
-        binding.submitButton.setOnClickListener {
+    private fun setSaveClickListener() {
+        binding.saveButton.setOnClickListener {
             // TODO data validation
             val submission = Submission(
                 binding.dateTextInputLayout.editText?.text.toString(),
                 binding.contactCountTextInputLayout.editText?.text.toString().toInt()
             )
-            submissionsViewModel.createSubmission(submission, requireContext())
+            submissionsViewModel.createSubmission(submission)
             requireActivity().supportFragmentManager.popBackStack()
         }
+    }
 
-        return binding.root
+    private fun onActivityToggled(activity: Activity) {
+        submissionsViewModel.onActivityCheckboxToggled(activity)
     }
 
     companion object {
         const val TAG = "AddSubmissionFragment"
-    }
-
-    private fun onActivityToggled(activity: Activity) {
-        submissionsViewModel.onActivityToggled(activity)
     }
 }

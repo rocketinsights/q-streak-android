@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qstreak.R
-import com.example.qstreak.models.SubmissionActivitiesPair
+import com.example.qstreak.models.SubmissionWithActivities
 import kotlinx.android.synthetic.main.submission_item.view.*
 
-class SubmissionsAdapter(private val onItemClicked: (SubmissionActivitiesPair) -> Unit) :
+class SubmissionsAdapter(private val onItemClicked: (SubmissionWithActivities) -> Unit) :
     RecyclerView.Adapter<SubmissionsAdapter.SubmissionViewHolder>() {
-    val submissionsWithActivities = mutableListOf<SubmissionActivitiesPair>()
+    val submissionsWithActivities = mutableListOf<SubmissionWithActivities>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubmissionViewHolder {
         val holder = SubmissionViewHolder(
@@ -44,9 +44,9 @@ class SubmissionsAdapter(private val onItemClicked: (SubmissionActivitiesPair) -
         val contactCount: TextView = view.submission_contact_count
     }
 
-    internal fun setSubmissions(submissions: List<SubmissionActivitiesPair>) {
+    internal fun setSubmissions(submissionWiths: List<SubmissionWithActivities>) {
         this.submissionsWithActivities.clear()
-        this.submissionsWithActivities.addAll(submissions)
+        this.submissionsWithActivities.addAll(submissionWiths)
         notifyDataSetChanged()
     }
 }

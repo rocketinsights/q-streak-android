@@ -6,12 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.qstreak.models.Activity
 import com.example.qstreak.models.Submission
-import com.example.qstreak.models.SubmissionWithActivity
+import com.example.qstreak.models.SubmissionActivityCrossRef
 import com.example.qstreak.models.User
 
 @Database(
-    entities = [Submission::class, User::class, Activity::class, SubmissionWithActivity::class],
-    version = 8
+    entities = [Submission::class, User::class, Activity::class, SubmissionActivityCrossRef::class],
+    version = 9
 )
 abstract class QstreakDatabase : RoomDatabase() {
 

@@ -1,10 +1,7 @@
 package com.example.qstreak.db
 
 import androidx.lifecycle.LiveData
-import com.example.qstreak.models.Activity
-import com.example.qstreak.models.Submission
-import com.example.qstreak.models.SubmissionActivitiesPair
-import com.example.qstreak.models.SubmissionWithActivity
+import com.example.qstreak.models.*
 import com.example.qstreak.network.CreateSubmissionRequest
 import com.example.qstreak.network.QstreakApiService
 import com.example.qstreak.network.SubmissionData
@@ -13,7 +10,7 @@ class SubmissionRepository(
     private val submissionDao: SubmissionDao,
     private val submissionWithActivityDao: SubmissionWithActivityDao
 ) {
-    val submissionsWithActivities: LiveData<List<SubmissionActivitiesPair>> =
+    val submissionsWithWithActivities: LiveData<List<SubmissionWithActivities>> =
         submissionWithActivityDao.getSubmissionsWithActivities()
 
     suspend fun insert(submission: Submission, activities: List<Activity>, uid: String) {
@@ -31,13 +28,11 @@ class SubmissionRepository(
         )
         val newSubmissionId = submissionDao.insert(submission.apply {
             this.remoteId = response.id
-            // TODO handle object result rather than converting to string
-            this.dailyStats = response.dailyStats.toString()
         })
 
         for (activity in activities) {
             submissionWithActivityDao.insert(
-                SubmissionWithActivity(
+                SubmissionActivityCrossRef(
                     newSubmissionId.toInt(),
                     activity.activitySlug
                 )
@@ -47,6 +42,13 @@ class SubmissionRepository(
 
     suspend fun getSubmissionById(id: Int): Submission {
         return submissionDao.get(id)
+    }
+
+    suspend fun fetchDailyStatsForSubmission(remoteId: Int, uid: String): DailyStats {
+        val api = QstreakApiService.getQstreakApiService(uid)
+        val response = api.getSubmission(remoteId)
+
+        return response.dailyStats
     }
 
     suspend fun update(submission: Submission) {

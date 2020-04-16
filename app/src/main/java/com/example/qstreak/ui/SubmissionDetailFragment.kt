@@ -27,6 +27,7 @@ class SubmissionDetailFragment : Fragment() {
             null,
             false
         )
+        binding.lifecycleOwner = activity
         binding.viewModel = submissionsViewModel
         return binding.root
     }
