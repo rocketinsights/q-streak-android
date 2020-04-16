@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentAddSubmissionBinding
 import com.example.qstreak.models.Submission
 import com.example.qstreak.viewmodels.SubmissionsViewModel
 
-class AddSubmissionFragment : DialogFragment() {
+class AddSubmissionFragment : Fragment() {
     lateinit var binding: FragmentAddSubmissionBinding
     private val submissionsViewModel: SubmissionsViewModel by activityViewModels()
 
@@ -40,10 +40,6 @@ class AddSubmissionFragment : DialogFragment() {
         }
 
         return binding.root
-    }
-
-    override fun getTheme(): Int {
-        return R.style.NewSubmissionDialogTheme
     }
 
     companion object {

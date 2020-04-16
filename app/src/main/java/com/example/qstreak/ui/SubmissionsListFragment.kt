@@ -1,7 +1,6 @@
 package com.example.qstreak.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +33,13 @@ class SubmissionsListFragment : Fragment() {
             false
         )
 
+        setupSubmissionsList()
+        setAddSubmissionClickListener()
+
+        return binding.root
+    }
+
+    private fun setupSubmissionsList() {
         val recyclerView = binding.submissionsRecyclerView
         val adapter = SubmissionsAdapter(this::onSubmissionSelected)
         recyclerView.adapter = adapter
@@ -42,16 +48,15 @@ class SubmissionsListFragment : Fragment() {
         submissionsViewModel.submissions.observe(viewLifecycleOwner, Observer { submissions ->
             submissions?.let { adapter.setSubmissions(it) }
         })
+    }
 
+    private fun setAddSubmissionClickListener() {
         binding.addSubmissionButton.setOnClickListener {
             navigateToAddSubmissionFragment()
         }
-
-        return binding.root
     }
 
     private fun onSubmissionSelected(submission: Submission) {
-        Log.d("clicked submission with id ", submission.id.toString())
         submissionsViewModel.select(submission)
         navigateToDetailFragment()
     }
