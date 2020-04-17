@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class SubmissionsViewModel(
-    private val app: Application,
+    app: Application,
     private val submissionRepository: SubmissionRepository,
     private val activitiesRepository: ActivitiesRepository
 ) : AndroidViewModel(app) {

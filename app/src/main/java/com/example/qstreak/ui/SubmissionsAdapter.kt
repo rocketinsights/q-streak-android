@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.submission_item.view.*
 
 class SubmissionsAdapter(private val onItemClicked: (SubmissionWithActivities) -> Unit) :
     RecyclerView.Adapter<SubmissionsAdapter.SubmissionViewHolder>() {
-    val submissionsWithActivities = mutableListOf<SubmissionWithActivities>()
+    private val submissionsWithActivities = mutableListOf<SubmissionWithActivities>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubmissionViewHolder {
         val holder = SubmissionViewHolder(
