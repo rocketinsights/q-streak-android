@@ -16,15 +16,9 @@ import com.example.qstreak.models.SubmissionWithActivities
 import com.example.qstreak.utils.EncryptedSharedPreferencesUtil
 import kotlinx.coroutines.launch
 
-class SubmissionsViewModel(private val app: Application) : AndroidViewModel(app) {
-    // TODO Dependency injection
-    private val submissionRepository =
-        SubmissionRepository(
-            QstreakDatabase.getInstance(app).submissionDao(),
-            QstreakDatabase.getInstance(app).submissionWithActivityDao()
-        )
-    private val activitiesRepository =
-        ActivitiesRepository(QstreakDatabase.getInstance(app).activitiesDao())
+class SubmissionsViewModel(private val app: Application,
+                           private val submissionRepository: SubmissionRepository,
+                           private val activitiesRepository: ActivitiesRepository) : AndroidViewModel(app) {
 
     val submissions: LiveData<List<SubmissionWithActivities>> =
         submissionRepository.submissionsWithWithActivities
@@ -34,7 +28,7 @@ class SubmissionsViewModel(private val app: Application) : AndroidViewModel(app)
     val selectedSubmissionDailyStats = MutableLiveData<DailyStats>()
 
     private val checkedActivities = arrayListOf<Activity>()
-    private val uid: String? = EncryptedSharedPreferencesUtil.getUid(app)
+    private val uid: String? = EncryptedSharedPreferencesUtil.getUidAsBearerToken(app)
 
     init {
         refreshActivities()

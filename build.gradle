@@ -38,4 +38,6 @@ ext {
     okHttpVersion = '4.5.0'
     moshiVersion = '1.9.2'
     securityCryptoVersion = '1.0.0-beta01'
+    koinVersion = '2.0.1'
+    timberVersion = '4.7.1'
 }

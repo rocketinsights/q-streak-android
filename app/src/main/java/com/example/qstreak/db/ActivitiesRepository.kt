@@ -10,6 +10,6 @@ class ActivitiesRepository(
     val activities: LiveData<List<Activity>> = activitiesDao.getAllActivities()
 
     suspend fun refreshActivities(uid: String) {
-        activitiesDao.insertAllActivities(QstreakApiService.getQstreakApiService(uid).getActivities())
+        activitiesDao.insertAllActivities(QstreakApiService.getQstreakApiService().getActivities(uid))
     }
 }

@@ -14,7 +14,7 @@ class SubmissionRepository(
         submissionWithActivityDao.getSubmissionsWithActivities()
 
     suspend fun insert(submission: Submission, activities: List<Activity>, uid: String) {
-        val api = QstreakApiService.getQstreakApiService(uid)
+        val api = QstreakApiService.getQstreakApiService()
 
         // TODO convert submission model
         val response = api.createSubmission(
@@ -24,7 +24,8 @@ class SubmissionRepository(
                     submission.date,
                     activities.map { it.activitySlug }
                 )
-            )
+            ),
+            uid
         )
         val newSubmissionId = submissionDao.insert(submission.apply {
             this.remoteId = response.id
@@ -45,8 +46,8 @@ class SubmissionRepository(
     }
 
     suspend fun fetchDailyStatsForSubmission(remoteId: Int, uid: String): DailyStats {
-        val api = QstreakApiService.getQstreakApiService(uid)
-        val response = api.getSubmission(remoteId)
+        val api = QstreakApiService.getQstreakApiService()
+        val response = api.getSubmission(remoteId, uid)
 
         return response.dailyStats
     }

@@ -20,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun isUserRegistered(): Boolean {
-        return EncryptedSharedPreferencesUtil.getUid(applicationContext) != null
+        return EncryptedSharedPreferencesUtil.getUidAsBearerToken(applicationContext) != null
     }
 
     private fun navigateToOnboarding() {
