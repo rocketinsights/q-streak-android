@@ -29,8 +29,4 @@ class OnboardingViewModel(application: Application) : AndroidViewModel(applicati
             }
         }
     }
-
-    companion object {
-        private const val UID_KEY = "uid"
-    }
 }
