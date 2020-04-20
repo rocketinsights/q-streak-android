@@ -85,4 +85,13 @@ dependencies {
 
     // Android Debug Database
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+
+    // Koin
+    implementation "org.koin:koin-android:$koinVersion"
+    implementation "org.koin:koin-androidx-scope:$koinVersion"
+    implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
+    testImplementation "org.koin:koin-test:$koinVersion"
+
+    // Logs
+    implementation "com.jakewharton.timber:timber:$timberVersion"
 }

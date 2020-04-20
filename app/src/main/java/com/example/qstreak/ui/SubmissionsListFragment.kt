@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
@@ -15,9 +14,9 @@ import com.example.qstreak.models.SubmissionWithActivities
 import com.example.qstreak.viewmodels.SubmissionsViewModel
 
 class SubmissionsListFragment : Fragment() {
-
-    private val submissionsViewModel: SubmissionsViewModel by activityViewModels()
-
+    private val submissionsViewModel: SubmissionsViewModel by lazy {
+        (requireActivity() as SubmissionsActivity).sharedViewModel
+    }
     private lateinit var binding: FragmentSubmissionsListBinding
 
     override fun onCreateView(

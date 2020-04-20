@@ -9,9 +9,11 @@ object EncryptedSharedPreferencesUtil {
 
     private const val USER_PREFS = "user_prefs"
     private const val UID_KEY = "uid"
+    private const val BEARER_PREFIX = "Bearer "
 
-    fun getUid(context: Context): String? {
-        return getEncryptedSharedPreferences(context).getString(UID_KEY, null)
+    fun getUidAsBearerToken(context: Context): String? {
+        val uid = getEncryptedSharedPreferences(context).getString(UID_KEY, null)
+        return if (uid != null) BEARER_PREFIX + uid else null
     }
 
     fun setUid(context: Context, uid: String) {

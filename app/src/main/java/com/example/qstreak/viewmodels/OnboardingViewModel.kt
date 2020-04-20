@@ -2,7 +2,6 @@ package com.example.qstreak.viewmodels
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -10,6 +9,7 @@ import com.example.qstreak.db.QstreakDatabase
 import com.example.qstreak.db.UserRepository
 import com.example.qstreak.utils.EncryptedSharedPreferencesUtil
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class OnboardingViewModel(application: Application) : AndroidViewModel(application) {
     private val userRepository = UserRepository(QstreakDatabase.getInstance(application).userDao())
@@ -25,12 +25,8 @@ class OnboardingViewModel(application: Application) : AndroidViewModel(applicati
                 )
                 signupSuccessful.postValue(true)
             } catch (e: Exception) {
-                Log.e("Create User Error", "Error message: " + e.message)
+                Timber.e("Error message: %s", e.message)
             }
         }
-    }
-
-    companion object {
-        private const val UID_KEY = "uid"
     }
 }

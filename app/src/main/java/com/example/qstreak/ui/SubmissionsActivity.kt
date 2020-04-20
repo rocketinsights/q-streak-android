@@ -3,8 +3,12 @@ package com.example.qstreak.ui
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.example.qstreak.R
+import com.example.qstreak.viewmodels.SubmissionsViewModel
+import org.koin.androidx.scope.currentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SubmissionsActivity : FragmentActivity(R.layout.activity_submissions) {
+    val sharedViewModel: SubmissionsViewModel by currentScope.viewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

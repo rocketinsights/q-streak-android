@@ -1,6 +1,5 @@
 package com.example.qstreak.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.qstreak.models.User
 

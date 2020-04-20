@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentSubmissionDetailBinding
 import com.example.qstreak.viewmodels.SubmissionsViewModel
 
 class SubmissionDetailFragment : Fragment() {
-
-    private val submissionsViewModel: SubmissionsViewModel by activityViewModels()
+    private val submissionsViewModel: SubmissionsViewModel by lazy {
+        (requireActivity() as SubmissionsActivity).sharedViewModel
+    }
     private lateinit var binding: FragmentSubmissionDetailBinding
 
     override fun onCreateView(
