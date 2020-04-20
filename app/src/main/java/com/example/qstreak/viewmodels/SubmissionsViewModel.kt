@@ -14,6 +14,7 @@ import com.example.qstreak.models.SubmissionWithActivities
 import com.example.qstreak.utils.EncryptedSharedPreferencesUtil
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.*
 
 class SubmissionsViewModel(
     app: Application,
@@ -27,6 +28,8 @@ class SubmissionsViewModel(
 
     val selectedSubmission = MutableLiveData<SubmissionWithActivities>()
     val selectedSubmissionDailyStats = MutableLiveData<DailyStats>()
+
+    val newSubmissionDate = MutableLiveData<Date>(Date())
 
     private val checkedActivities = arrayListOf<Activity>()
     private val uid: String? = EncryptedSharedPreferencesUtil.getUidAsBearerToken(app)

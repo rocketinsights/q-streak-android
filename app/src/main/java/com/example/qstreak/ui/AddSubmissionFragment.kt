@@ -13,6 +13,8 @@ import com.example.qstreak.databinding.FragmentAddSubmissionBinding
 import com.example.qstreak.models.Activity
 import com.example.qstreak.models.Submission
 import com.example.qstreak.viewmodels.SubmissionsViewModel
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.util.*
 
 class AddSubmissionFragment : Fragment() {
     private val submissionsViewModel: SubmissionsViewModel by lazy {
@@ -36,6 +38,7 @@ class AddSubmissionFragment : Fragment() {
 
         setupActivitiesList()
         setSaveClickListener()
+        setDateClickListener()
 
         return binding.root
     }
@@ -58,11 +61,25 @@ class AddSubmissionFragment : Fragment() {
         binding.saveButton.setOnClickListener {
             // TODO data validation
             val submission = Submission(
-                binding.dateTextInputLayout.editText?.text.toString(),
+                // binding.dateTextInputLayout.editText?.text.toString(),
+                "NOTADATE",
                 binding.contactCountTextInputLayout.editText?.text.toString().toInt()
             )
             submissionsViewModel.createSubmission(submission)
             requireActivity().supportFragmentManager.popBackStack()
+        }
+    }
+
+    private fun setDateClickListener() {
+        binding.dateButton.setOnClickListener {
+            val builder = MaterialDatePicker.Builder.datePicker()
+            val picker = builder.build()
+            picker.addOnPositiveButtonClickListener {
+                // Log.d("DatePicker Activity", "Date String = ${picker.headerText}:: Date epoch value = ${it}")
+                val pickedDate = Date(it)
+                submissionsViewModel.newSubmissionDate.value = pickedDate
+            }
+            picker.show(requireActivity().supportFragmentManager, picker.toString())
         }
     }
 

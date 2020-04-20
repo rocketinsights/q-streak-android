@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -13,20 +14,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/date_text_input_layout"
-            android:layout_width="0dp"
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/date_text_input_layout"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Date"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+        <Button
+            android:id="@+id/date_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="DATE"
+            android:text="@{submissionsViewModel.newSubmissionDate.toString()}"
+            >
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        </Button>
 
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/contact_count_text_input_layout"
@@ -35,7 +50,7 @@
             android:hint="Contact Count"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_text_input_layout">
+            app:layout_constraintTop_toBottomOf="@+id/date_button">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
