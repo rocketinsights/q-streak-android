@@ -56,6 +56,6 @@ private fun scopeModules(application: Application) = module {
         viewModel { SubmissionsViewModel(application, get(), get()) }
     }
     scope(named<OnboardingSignupFragment>()) {
-        viewModel { OnboardingViewModel(application) }
+        viewModel { OnboardingViewModel(get()) }
     }
 }
