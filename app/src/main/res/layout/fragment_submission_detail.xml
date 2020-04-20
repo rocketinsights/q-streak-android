@@ -31,7 +31,7 @@
             android:id="@+id/submission_detail_contact_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{"Reported contact count: " + Integer.toString(viewModel.selectedSubmission.submission.contactCount)}'
+            android:text="@{@string/submission_detail_contact_count(viewModel.selectedSubmission.submission.contactCount)}"
             android:textSize="32sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

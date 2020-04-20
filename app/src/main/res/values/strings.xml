@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Qstreak</string>
 
+    <string name="submission_detail_contact_count">Reported contact count: %1$d</string>
+
     <string-array name="onboarding_titles">
         <item>Onboarding Fragment 1</item>
         <item>Onboarding Fragment 2</item>
