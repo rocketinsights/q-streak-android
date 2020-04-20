@@ -1,49 +1,97 @@
 package com.example.qstreak.viewmodels
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.qstreak.db.ActivitiesRepository
 import com.example.qstreak.db.QstreakDatabase
 import com.example.qstreak.db.SubmissionRepository
+import com.example.qstreak.models.Activity
+import com.example.qstreak.models.DailyStats
 import com.example.qstreak.models.Submission
+import com.example.qstreak.models.SubmissionWithActivities
 import com.example.qstreak.utils.EncryptedSharedPreferencesUtil
 import kotlinx.coroutines.launch
 
-class SubmissionsViewModel(application: Application) : AndroidViewModel(application) {
+class SubmissionsViewModel(private val app: Application) : AndroidViewModel(app) {
     // TODO Dependency injection
     private val submissionRepository =
-        SubmissionRepository(QstreakDatabase.getInstance(application).submissionDao())
+        SubmissionRepository(
+            QstreakDatabase.getInstance(app).submissionDao(),
+            QstreakDatabase.getInstance(app).submissionWithActivityDao()
+        )
+    private val activitiesRepository =
+        ActivitiesRepository(QstreakDatabase.getInstance(app).activitiesDao())
 
-    val submissions: LiveData<List<Submission>> = submissionRepository.submissions
-    val selectedSubmission = MutableLiveData<Submission>()
+    val submissions: LiveData<List<SubmissionWithActivities>> =
+        submissionRepository.submissionsWithWithActivities
+    val activities: LiveData<List<Activity>> = activitiesRepository.activities
 
-    fun select(submission: Submission) {
-        selectedSubmission.value = submission
+    val selectedSubmission = MutableLiveData<SubmissionWithActivities>()
+    val selectedSubmissionDailyStats = MutableLiveData<DailyStats>()
+
+    private val checkedActivities = arrayListOf<Activity>()
+    private val uid: String? = EncryptedSharedPreferencesUtil.getUid(app)
+
+    init {
+        refreshActivities()
     }
 
-    fun createSubmission(submission: Submission, context: Context) {
-        // get uid to pass as bearer token
-        val uid = EncryptedSharedPreferencesUtil.getUid(context)
+    fun selectSubmission(submissionWithActivities: SubmissionWithActivities) {
+        selectedSubmission.value = submissionWithActivities
+        selectedSubmissionDailyStats.value = null
+        populateDailyStats(submissionWithActivities)
+    }
 
+    private fun populateDailyStats(submissionWithActivities: SubmissionWithActivities) {
+        // TODO handle null uid
         if (uid != null) {
             viewModelScope.launch {
-                try {
-                    submissionRepository.insert(submission, uid)
-                } catch (e: Exception) {
-                    // TODO retrieve error text from response body to surface to user (at api layer)
-                    Log.e("Submission Insert Error", "Error message: " + e.message)
+                submissionWithActivities.submission.remoteId?.let {
+                    val response = submissionRepository.fetchDailyStatsForSubmission(it, uid)
+                    selectedSubmissionDailyStats.value = response
                 }
             }
-        } else {
-            // TODO handle error case if uid is null
         }
     }
 
-    companion object {
-        private const val UID_KEY = "uid"
+    fun createSubmission(submission: Submission) {
+        // TODO handle null uid
+        if (uid != null) {
+            viewModelScope.launch {
+                try {
+                    submissionRepository.insert(submission, checkedActivities, uid)
+                } catch (e: Exception) {
+                    // TODO retrieve error text from response body to surface to user (at api layer)
+                    Log.e("Submission Insert Error", "Error message: " + e.message)
+                } finally {
+                    checkedActivities.clear()
+                }
+            }
+        }
+    }
+
+    fun onActivityCheckboxToggled(activity: Activity) {
+        if (checkedActivities.contains(activity)) {
+            checkedActivities.remove(activity)
+        } else {
+            checkedActivities.add(activity)
+        }
+    }
+
+    private fun refreshActivities() {
+        // TODO handle null uid
+        if (uid != null) {
+            viewModelScope.launch {
+                try {
+                    activitiesRepository.refreshActivities(uid)
+                } catch (e: Exception) {
+                    Log.e("Fetch Activities Error", "Error message: " + e.message)
+                }
+            }
+        }
     }
 }

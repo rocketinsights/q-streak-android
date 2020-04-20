@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentSubmissionsListBinding
-import com.example.qstreak.models.Submission
+import com.example.qstreak.models.SubmissionWithActivities
 import com.example.qstreak.viewmodels.SubmissionsViewModel
 
 class SubmissionsListFragment : Fragment() {
@@ -56,8 +56,8 @@ class SubmissionsListFragment : Fragment() {
         }
     }
 
-    private fun onSubmissionSelected(submission: Submission) {
-        submissionsViewModel.select(submission)
+    private fun onSubmissionSelected(submissionWithActivities: SubmissionWithActivities) {
+        submissionsViewModel.selectSubmission(submissionWithActivities)
         navigateToDetailFragment()
     }
 

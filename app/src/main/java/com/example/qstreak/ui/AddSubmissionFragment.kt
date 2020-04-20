@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentAddSubmissionBinding
+import com.example.qstreak.models.Activity
 import com.example.qstreak.models.Submission
 import com.example.qstreak.viewmodels.SubmissionsViewModel
 
@@ -27,19 +30,43 @@ class AddSubmissionFragment : Fragment() {
             null,
             false
         )
+        binding.lifecycleOwner = activity
         binding.submissionsViewModel = this.submissionsViewModel
 
-        binding.submitButton.setOnClickListener {
+        setupActivitiesList()
+        setSaveClickListener()
+
+        return binding.root
+    }
+
+    private fun setupActivitiesList() {
+        val adapter = ActivitiesChecklistAdapter(
+            this::onActivityToggled,
+            submissionsViewModel.activities.value.orEmpty()
+        )
+
+        submissionsViewModel.activities.observe(viewLifecycleOwner, Observer {
+            adapter.setActivities(it)
+        })
+
+        binding.activitiesChecklist.adapter = adapter
+        binding.activitiesChecklist.layoutManager = LinearLayoutManager(activity)
+    }
+
+    private fun setSaveClickListener() {
+        binding.saveButton.setOnClickListener {
             // TODO data validation
             val submission = Submission(
                 binding.dateTextInputLayout.editText?.text.toString(),
                 binding.contactCountTextInputLayout.editText?.text.toString().toInt()
             )
-            submissionsViewModel.createSubmission(submission, requireContext())
+            submissionsViewModel.createSubmission(submission)
             requireActivity().supportFragmentManager.popBackStack()
         }
+    }
 
-        return binding.root
+    private fun onActivityToggled(activity: Activity) {
+        submissionsViewModel.onActivityCheckboxToggled(activity)
     }
 
     companion object {

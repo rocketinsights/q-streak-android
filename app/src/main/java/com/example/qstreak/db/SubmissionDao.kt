@@ -7,12 +7,12 @@ import com.example.qstreak.models.Submission
 @Dao
 interface SubmissionDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(submission: Submission)
+    suspend fun insert(submission: Submission): Long
 
     @Query("SELECT * FROM submissions LIMIT 100")
     fun getAllSubmissions(): LiveData<List<Submission>>
 
-    @Query("SELECT * FROM submissions WHERE id = :id")
+    @Query("SELECT * FROM submissions WHERE submission_id = :id")
     suspend fun get(id: Int): Submission
 
     @Update

@@ -9,5 +9,5 @@ data class CreateSubmissionRequest(
 data class SubmissionData(
     @field:Json(name = "contact_count") val contactCount: Int,
     @field:Json(name = "date") val date: String,
-    @field:Json(name = "destinations") val destinations: List<String>
+    @field:Json(name = "destination_slugs") val activitySlugs: List<String>
 )

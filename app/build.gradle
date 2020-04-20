@@ -82,4 +82,7 @@ dependencies {
 
     // Encrypted Shared Prefs
     implementation "androidx.security:security-crypto:$securityCryptoVersion"
+
+    // Android Debug Database
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }
