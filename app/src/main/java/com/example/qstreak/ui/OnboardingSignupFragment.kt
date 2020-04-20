@@ -29,22 +29,15 @@ class OnboardingSignupFragment : Fragment() {
             null,
             false
         )
-        binding.continueButton.setOnClickListener {
-            createUser()
+        binding.lifecycleOwner = activity
+        binding.viewModel = onboardingViewModel
+        binding.signUpCallback = {
+            // TODO data validation - zip required, age and household size optional
+            onboardingViewModel.createUser(requireContext())
         }
         observeSignup()
 
         return binding.root
-    }
-
-    private fun createUser() {
-        // TODO data validation - zip required, age and household size optional
-        onboardingViewModel.createUser(
-            requireContext(),
-            binding.ageInput.editText?.text.toString().toInt(),
-            binding.householdSizeInput.editText?.text.toString().toInt(),
-            binding.zipCodeInput.editText?.text.toString()
-        )
     }
 
     private fun observeSignup() {

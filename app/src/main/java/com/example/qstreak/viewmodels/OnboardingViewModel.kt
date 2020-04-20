@@ -12,10 +12,22 @@ import timber.log.Timber
 class OnboardingViewModel(private val userRepository: UserRepository) : ViewModel() {
     val signupSuccessful = MutableLiveData<Boolean>(false)
 
-    fun createUser(context: Context, age: Int, householdSize: Int, zip: String) {
+    val age = MutableLiveData<String>()
+    val householdSize = MutableLiveData<String>()
+    val zipCode = MutableLiveData<String>()
+
+    fun createUser(context: Context) {
+        val age = age.value
+        val householdSize = householdSize.value
+        val zipCode = zipCode.value
+        if (age.isNullOrBlank() || householdSize.isNullOrBlank() || zipCode.isNullOrBlank()) {
+            // Post a LiveData containing errors to be handled by the Fragment
+            return
+        }
+
         viewModelScope.launch {
             try {
-                val newUser = userRepository.createUser(age, householdSize, zip)
+                val newUser = userRepository.createUser(age.toInt(), householdSize.toInt(), zipCode)
                 EncryptedSharedPreferencesUtil.setUid(
                     context,
                     newUser.device_uid
