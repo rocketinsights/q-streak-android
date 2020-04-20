@@ -51,6 +51,17 @@
             tools:text="Reported activities: Grocery Store" />
 
         <TextView
+            android:id="@+id/submission_detail_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Score: "+ Integer.toString(viewModel.selectedSubmission.submission.score)}'
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_activities"
+            tools:text="Score: 3" />
+
+        <TextView
             android:id="@+id/submission_detail_date_of_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,7 +70,7 @@
             android:visibility="@{viewModel.selectedSubmissionDailyStats != null ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/submission_detail_activities"
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_score"
             tools:text="Data as of: 2020-04-05" />
 
         <TextView
@@ -85,6 +96,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/submission_detail_cases"
             tools:text="Deaths: 2" />
+
+        <TextView
+            android:id="@+id/submission_detail_risk_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Risk level: "+ Integer.toString(viewModel.selectedSubmissionDailyStats.riskLevel)}'
+            android:textSize="32sp"
+            android:visibility="@{viewModel.selectedSubmissionDailyStats != null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_deaths"
+            tools:text="Risk level: 4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

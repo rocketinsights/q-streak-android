@@ -9,5 +9,6 @@ data class SubmissionResponse(
     @field:Json(name = "date") val date: String,
     @field:Json(name = "destinations") val destinations: List<Activity>,
     @field:Json(name = "id") val id: Int,
-    @field:Json(name = "daily_stats") val dailyStats: DailyStats
+    @field:Json(name = "daily_stats") val dailyStats: DailyStats,
+    @field:Json(name = "score") val score: Int
 )
