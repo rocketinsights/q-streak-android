@@ -29,6 +29,7 @@ class SubmissionRepository(
         )
         val newSubmissionId = submissionDao.insert(submission.apply {
             this.remoteId = response.id
+            this.score = response.score
         })
 
         for (activity in activities) {

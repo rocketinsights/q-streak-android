@@ -11,7 +11,7 @@ import com.example.qstreak.models.User
 
 @Database(
     entities = [Submission::class, User::class, Activity::class, SubmissionActivityCrossRef::class],
-    version = 9
+    version = 10
 )
 abstract class QstreakDatabase : RoomDatabase() {
 
