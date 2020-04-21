@@ -1,9 +1,9 @@
 package com.example.qstreak.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.qstreak.db.ActivitiesRepository
 import com.example.qstreak.db.SubmissionRepository
@@ -11,15 +11,15 @@ import com.example.qstreak.models.Activity
 import com.example.qstreak.models.DailyStats
 import com.example.qstreak.models.Submission
 import com.example.qstreak.models.SubmissionWithActivities
-import com.example.qstreak.utils.EncryptedSharedPreferencesUtil
+import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class SubmissionsViewModel(
-    app: Application,
     private val submissionRepository: SubmissionRepository,
-    private val activitiesRepository: ActivitiesRepository
-) : AndroidViewModel(app) {
+    private val activitiesRepository: ActivitiesRepository,
+    sharedPrefs: SharedPreferences
+) : ViewModel() {
 
     val submissions: LiveData<List<SubmissionWithActivities>> =
         submissionRepository.submissionsWithWithActivities
@@ -29,7 +29,7 @@ class SubmissionsViewModel(
     val selectedSubmissionDailyStats = MutableLiveData<DailyStats>()
 
     private val checkedActivities = arrayListOf<Activity>()
-    private val uid: String? = EncryptedSharedPreferencesUtil.getUidAsBearerToken(app)
+    private val uid: String? = sharedPrefs.getString(UID, null)
 
     init {
         refreshActivities()

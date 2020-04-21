@@ -79,9 +79,6 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
 
-    // Encrypted Shared Prefs
-    implementation "androidx.security:security-crypto:$securityCryptoVersion"
-
     // Android Debug Database
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 

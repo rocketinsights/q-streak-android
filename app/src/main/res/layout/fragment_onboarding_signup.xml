@@ -3,13 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.qstreak.viewmodels.OnboardingViewModel" />
-
-        <variable
-            name="signUpCallback"
-            type="kotlin.jvm.functions.Function0&lt;kotlin.Unit>"/>
     </data>
 
     <ScrollView
@@ -18,7 +15,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/map_image"
@@ -35,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"
-                android:hint="ZIP Code"
+                android:hint="@string/zip_code"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/map_image">
@@ -43,8 +40,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.zipCode}"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:text="@={viewModel.zipCode}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -52,7 +49,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"
-                android:hint="Age"
+                android:hint="@string/age"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/zip_code_input">
@@ -60,8 +57,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.age}"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:text="@={viewModel.age}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -69,7 +66,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"
-                android:hint="Household Size"
+                android:hint="@string/household_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/age_input">
@@ -77,8 +74,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.householdSize}"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:text="@={viewModel.householdSize}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -86,8 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="60dp"
-                android:text="Continue"
-                android:onClick="@{() -> signUpCallback.invoke()}"
+                android:onClick="@{() -> viewModel.createUser()}"
+                android:text="@string/continue_button_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/household_size_input" />

@@ -31,10 +31,7 @@ class OnboardingSignupFragment : Fragment() {
         )
         binding.lifecycleOwner = activity
         binding.viewModel = onboardingViewModel
-        binding.signUpCallback = {
-            // TODO data validation - zip required, age and household size optional
-            onboardingViewModel.createUser(requireContext())
-        }
+
         observeSignup()
 
         return binding.root
