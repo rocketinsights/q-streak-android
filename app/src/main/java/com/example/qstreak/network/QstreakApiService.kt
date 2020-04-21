@@ -1,5 +1,6 @@
 package com.example.qstreak.network
 
+import com.example.qstreak.BuildConfig
 import com.example.qstreak.models.Activity
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,7 +27,7 @@ interface QstreakApiService {
 
     companion object {
         const val AUTHORIZATION = "Authorization"
-        
+
         fun getQstreakApiService(): QstreakApiService {
             val builder = OkHttpClient.Builder()
             builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
@@ -34,7 +35,7 @@ interface QstreakApiService {
             val client = builder.build()
 
             return Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:4000/api/")
+                .baseUrl(BuildConfig.BASE_URL)
                 .client(client)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
