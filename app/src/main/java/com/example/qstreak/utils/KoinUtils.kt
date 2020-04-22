@@ -9,9 +9,8 @@ import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.db.UserRepository
 import com.example.qstreak.network.QstreakApiService
 import com.example.qstreak.network.QstreakApiSignupService
-import com.example.qstreak.ui.OnboardingSignupFragment
-import com.example.qstreak.ui.SplashActivity
-import com.example.qstreak.ui.SubmissionsActivity
+import com.example.qstreak.ui.*
+import com.example.qstreak.viewmodels.AddSubmissionViewModel
 import com.example.qstreak.viewmodels.OnboardingViewModel
 import com.example.qstreak.viewmodels.SplashViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
@@ -69,9 +68,9 @@ private fun databaseModule() = module {
 }
 
 private fun repositoryModule() = module {
-    single { UserRepository(get()) }
-    single { SubmissionRepository(get(), get()) }
-    single { ActivitiesRepository(get()) }
+    single { UserRepository(get(), get()) }
+    single { SubmissionRepository(get(), get(), get()) }
+    single { ActivitiesRepository(get(), get()) }
 }
 
 private fun scopeModules() = module {
@@ -79,9 +78,15 @@ private fun scopeModules() = module {
         viewModel { SplashViewModel(get()) }
     }
     scope(named<SubmissionsActivity>()) {
-        viewModel { SubmissionsViewModel(get(), get(), get()) }
+        viewModel { SubmissionsViewModel(get(), get()) }
     }
     scope(named<OnboardingSignupFragment>()) {
         viewModel { OnboardingViewModel(get(), get()) }
+    }
+    scope(named<AddSubmissionFragment>()) {
+        viewModel { AddSubmissionViewModel(get(), get(), get()) }
+    }
+    scope(named<OnboardingSubmissionFragment>()) {
+        viewModel { AddSubmissionViewModel(get(), get(), get()) }
     }
 }
