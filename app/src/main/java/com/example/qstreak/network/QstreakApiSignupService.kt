@@ -1,5 +1,6 @@
 package com.example.qstreak.network
 
+import com.example.qstreak.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -23,7 +24,7 @@ interface QstreakApiSignupService {
             val client = builder.build()
 
             return Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:4000/api/")
+                .baseUrl(BuildConfig.BASE_URL)
                 .client(client)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()

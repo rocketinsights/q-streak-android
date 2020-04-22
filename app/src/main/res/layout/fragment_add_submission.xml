@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="submissionsViewModel"
-            type="com.example.qstreak.viewmodels.SubmissionsViewModel" />
+            name="viewModel"
+            type="com.example.qstreak.viewmodels.AddSubmissionViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,6 +40,10 @@
             android:text="@{submissionsViewModel.newSubmissionDate.toString()}"
             >
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@={viewModel.date}" />
         </Button>
 
 
@@ -54,7 +58,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:text="@={viewModel.contactCount}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,10 +84,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="32dp"
+            android:onClick="@{() -> viewModel.createSubmission()}"
             android:text="Save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

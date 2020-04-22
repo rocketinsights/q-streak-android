@@ -1,28 +1,37 @@
 package com.example.qstreak.viewmodels
 
-import android.app.Application
-import android.content.Context
-import androidx.lifecycle.AndroidViewModel
+import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.qstreak.db.QstreakDatabase
 import com.example.qstreak.db.UserRepository
-import com.example.qstreak.utils.EncryptedSharedPreferencesUtil
+import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class OnboardingViewModel(application: Application) : AndroidViewModel(application) {
-    private val userRepository = UserRepository(QstreakDatabase.getInstance(application).userDao())
+class OnboardingViewModel(
+    private val userRepository: UserRepository,
+    private val sharedPrefsEditor: SharedPreferences.Editor
+) : ViewModel() {
     val signupSuccessful = MutableLiveData<Boolean>(false)
 
-    fun createUser(context: Context, age: Int, householdSize: Int, zip: String) {
+    val age = MutableLiveData<String>()
+    val householdSize = MutableLiveData<String>()
+    val zipCode = MutableLiveData<String>()
+
+    fun createUser() {
+        val age = age.value
+        val householdSize = householdSize.value
+        val zipCode = zipCode.value
+        if (age.isNullOrBlank() || householdSize.isNullOrBlank() || zipCode.isNullOrBlank()) {
+            // TODO data validation - Post a LiveData containing errors to be handled by the Fragment
+            return
+        }
+
         viewModelScope.launch {
             try {
-                val newUser = userRepository.createUser(age, householdSize, zip)
-                EncryptedSharedPreferencesUtil.setUid(
-                    context,
-                    newUser.device_uid
-                )
+                val newUser = userRepository.createUser(age.toInt(), householdSize.toInt(), zipCode)
+                sharedPrefsEditor.putString(UID, newUser.device_uid).commit()
                 signupSuccessful.postValue(true)
             } catch (e: Exception) {
                 Timber.e("Error message: %s", e.message)

@@ -3,24 +3,26 @@ package com.example.qstreak.ui
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.qstreak.R
-import com.example.qstreak.utils.EncryptedSharedPreferencesUtil
+import com.example.qstreak.viewmodels.SplashViewModel
+import org.koin.androidx.scope.currentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashActivity : AppCompatActivity() {
+    private val viewModel: SplashViewModel by currentScope.viewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
-        if (isUserRegistered()) {
-            navigateToSubmissions()
-        } else {
-            navigateToOnboarding()
-        }
-    }
-
-    private fun isUserRegistered(): Boolean {
-        return EncryptedSharedPreferencesUtil.getUidAsBearerToken(applicationContext) != null
+        viewModel.isUserRegistered.observe(this, Observer { isRegistered ->
+            if (isRegistered) {
+                navigateToSubmissions()
+            } else {
+                navigateToOnboarding()
+            }
+        })
     }
 
     private fun navigateToOnboarding() {

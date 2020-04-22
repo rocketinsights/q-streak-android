@@ -13,9 +13,9 @@ class OnboardingAdapter(activity: AppCompatActivity, private val itemsCount: Int
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            // TODO set values to variables named for fragments
             OnboardingLogoFragment.ONBOARDING_ADAPTER_POSITION -> OnboardingLogoFragment()
             OnboardingSignupFragment.ONBOARDING_ADAPTER_POSITION -> OnboardingSignupFragment()
+            OnboardingSubmissionFragment.ONBOARDING_ADAPTER_POSITION -> OnboardingSubmissionFragment()
             else -> OnboardingLogoFragment()
         }
     }
