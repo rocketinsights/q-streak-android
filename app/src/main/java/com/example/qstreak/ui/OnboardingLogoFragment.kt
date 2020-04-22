@@ -17,10 +17,14 @@ class OnboardingLogoFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_onboarding_logo, container, false)
 
         view.setup_button.setOnClickListener {
-            (activity as OnboardingActivity).onSetupButtonClicked()
+            navigateToSignup()
         }
 
         return view
+    }
+
+    private fun navigateToSignup() {
+        (activity as OnboardingActivity).setCurrentItem(OnboardingSignupFragment.ONBOARDING_ADAPTER_POSITION)
     }
 
     companion object {

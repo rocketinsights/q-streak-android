@@ -11,14 +11,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentAddSubmissionBinding
 import com.example.qstreak.models.Activity
-import com.example.qstreak.models.Submission
-import com.example.qstreak.viewmodels.SubmissionsViewModel
+import com.example.qstreak.viewmodels.AddSubmissionViewModel
+import org.koin.androidx.scope.currentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AddSubmissionFragment : Fragment() {
-    private val submissionsViewModel: SubmissionsViewModel by lazy {
-        (requireActivity() as SubmissionsActivity).sharedViewModel
-    }
+open class AddSubmissionFragment : Fragment() {
+
+    private val viewModel: AddSubmissionViewModel by currentScope.viewModel(this)
     private lateinit var binding: FragmentAddSubmissionBinding
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshActivities()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,43 +36,45 @@ class AddSubmissionFragment : Fragment() {
             null,
             false
         )
-        binding.lifecycleOwner = activity
-        binding.submissionsViewModel = this.submissionsViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         setupActivitiesList()
-        setSaveClickListener()
+        observeCompletion()
 
         return binding.root
+    }
+
+    // Override this function to reuse fragment in a different flow.
+    open fun onSubmissionCompleted() {
+        requireActivity().supportFragmentManager.popBackStack()
     }
 
     private fun setupActivitiesList() {
         val adapter = ActivitiesChecklistAdapter(
             this::onActivityToggled,
-            submissionsViewModel.activities.value.orEmpty()
+            viewModel.activities.value.orEmpty()
         )
 
-        submissionsViewModel.activities.observe(viewLifecycleOwner, Observer {
+        viewModel.activities.observe(viewLifecycleOwner, Observer {
             adapter.setActivities(it)
         })
 
         binding.activitiesChecklist.adapter = adapter
-        binding.activitiesChecklist.layoutManager = LinearLayoutManager(activity)
+        binding.activitiesChecklist.layoutManager =
+            LinearLayoutManager(activity)
     }
 
-    private fun setSaveClickListener() {
-        binding.saveButton.setOnClickListener {
-            // TODO data validation
-            val submission = Submission(
-                binding.dateTextInputLayout.editText?.text.toString(),
-                binding.contactCountTextInputLayout.editText?.text.toString().toInt()
-            )
-            submissionsViewModel.createSubmission(submission)
-            requireActivity().supportFragmentManager.popBackStack()
-        }
+    private fun observeCompletion() {
+        viewModel.submissionComplete.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                onSubmissionCompleted()
+            }
+        })
     }
 
     private fun onActivityToggled(activity: Activity) {
-        submissionsViewModel.onActivityCheckboxToggled(activity)
+        viewModel.onActivityCheckboxToggled(activity)
     }
 
     companion object {

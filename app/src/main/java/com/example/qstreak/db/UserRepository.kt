@@ -5,7 +5,7 @@ import com.example.qstreak.network.Account
 import com.example.qstreak.network.CreateUserRequest
 import com.example.qstreak.network.QstreakApiSignupService
 
-class UserRepository(val userDao: UserDao) {
+class UserRepository(private val userDao: UserDao, private val api: QstreakApiSignupService) {
     suspend fun getUser(): User? = userDao.getUser()
 
     suspend fun createUser(age: Int, householdSize: Int, zip: String): User {
