@@ -5,15 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.qstreak.db.UserRepository
+import com.example.qstreak.network.ApiResult
 import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class OnboardingViewModel(
     private val userRepository: UserRepository,
     private val sharedPrefsEditor: SharedPreferences.Editor
 ) : ViewModel() {
     val signupSuccessful = MutableLiveData<Boolean>(false)
+    val errorToDisplay = MutableLiveData<String>()
 
     val age = MutableLiveData<String>()
     val householdSize = MutableLiveData<String>()
@@ -30,11 +31,18 @@ class OnboardingViewModel(
 
         viewModelScope.launch {
             try {
-                val newUser = userRepository.createUser(age.toInt(), householdSize.toInt(), zipCode)
-                sharedPrefsEditor.putString(UID, newUser.device_uid).commit()
-                signupSuccessful.postValue(true)
+                val createUserResponse =
+                    userRepository.createUser(age.toInt(), householdSize.toInt(), zipCode)
+                if (createUserResponse is ApiResult.Success) {
+                    sharedPrefsEditor.putString(UID, createUserResponse.data.uid).commit()
+                    signupSuccessful.postValue(true)
+                } else {
+                    // We received an API error response when attempting to create a user.
+                    errorToDisplay.value = (createUserResponse as ApiResult.Error).apiErrors
+                }
             } catch (e: Exception) {
-                Timber.e("Error message: %s", e.message)
+                // Something else went wrong when attempting to create a user.
+                errorToDisplay.value = e.message
             }
         }
     }
