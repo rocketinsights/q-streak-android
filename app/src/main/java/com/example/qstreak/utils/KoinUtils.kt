@@ -87,7 +87,7 @@ private fun databaseModule() = module {
 
 private fun repositoryModule() = module {
     single { UserRepository(get(), get(), get(), Dispatchers.IO) }
-    single { SubmissionRepository(get(), get(), get()) }
+    single { SubmissionRepository(get(), get(), get(), get(), Dispatchers.IO) }
     single { ActivitiesRepository(get(), get()) }
 }
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentSubmissionDetailBinding
 import com.example.qstreak.viewmodels.SubmissionsViewModel
@@ -29,7 +30,20 @@ class SubmissionDetailFragment : Fragment() {
         )
         binding.lifecycleOwner = activity
         binding.viewModel = submissionsViewModel
+
+        observeDeletion()
+
         return binding.root
+    }
+
+    private fun observeDeletion() {
+        submissionsViewModel.submissionDeleted.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                requireActivity().supportFragmentManager.popBackStack()
+                // TODO replace with SingleLiveEvent so there's no action required here
+                submissionsViewModel.submissionDeleted.value = false
+            }
+        })
     }
 
     companion object {
