@@ -19,20 +19,21 @@ class OnboardingViewModel(
     val age = MutableLiveData<String>()
     val householdSize = MutableLiveData<String>()
     val zipCode = MutableLiveData<String>()
+    val zipCodeError = MutableLiveData<Boolean>(false)
 
     fun createUser() {
         val age = age.value
         val householdSize = householdSize.value
         val zipCode = zipCode.value
-        if (age.isNullOrBlank() || householdSize.isNullOrBlank() || zipCode.isNullOrBlank()) {
-            // TODO data validation - Post a LiveData containing errors to be handled by the Fragment
+
+        if (!validateInputs(age, householdSize, zipCode)) {
             return
         }
 
         viewModelScope.launch {
             try {
                 val createUserResponse =
-                    userRepository.createUser(age.toInt(), householdSize.toInt(), zipCode)
+                    userRepository.createUser(age!!.toInt(), householdSize!!.toInt(), zipCode!!)
                 if (createUserResponse is ApiResult.Success) {
                     sharedPrefsEditor.putString(UID, createUserResponse.data.uid).commit()
                     signupSuccessful.postValue(true)
@@ -45,5 +46,41 @@ class OnboardingViewModel(
                 errorToDisplay.value = e.message
             }
         }
+    }
+
+    private fun validateInputs(age: String?, householdSize: String?, zipCode: String?): Boolean {
+        clearErrors()
+
+        val zipValid = isZipValid(zipCode)
+        val ageValid = isAgeValid(age)
+        val householdSizeValid = isHouseholdSizeValid(householdSize)
+        // Ideally we'll set errors on each of the invalid fields, so we don't want to return until
+        // they have all been evaluated.
+        if (!zipValid) {
+            // Could also set a custom error string based on exactly how it is invalid,
+            // but for now just a single "invalid" message.
+            zipCodeError.value = true
+        }
+        return zipValid && ageValid && householdSizeValid
+    }
+
+    // TODO These methods could be extracted to a utility class.
+
+    private fun isZipValid(zip: String?): Boolean {
+        return !zip.isNullOrBlank() && zip.length == 5 && zip.toInt() > 0
+    }
+
+    private fun isAgeValid(age: String?): Boolean {
+        // TODO validation rules
+        return !age.isNullOrBlank()
+    }
+
+    private fun isHouseholdSizeValid(householdSize: String?): Boolean {
+        // TODO validation rules
+        return !householdSize.isNullOrBlank()
+    }
+
+    private fun clearErrors() {
+        zipCodeError.value = false
     }
 }

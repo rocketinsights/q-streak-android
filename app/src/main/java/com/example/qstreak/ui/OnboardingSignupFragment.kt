@@ -50,6 +50,11 @@ class OnboardingSignupFragment : Fragment() {
         onboardingViewModel.errorToDisplay.observe(viewLifecycleOwner, Observer {
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         })
+        onboardingViewModel.zipCodeError.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.zipCodeInput.error = "Please enter a valid zip code."
+            }
+        })
     }
 
     private fun navigateToFirstSubmission() {
