@@ -85,7 +85,7 @@ open class AddSubmissionFragment : Fragment() {
             picker.addOnPositiveButtonClickListener {
                 // Log.d("DatePicker Activity", "Date String = ${picker.headerText}:: Date epoch value = ${it}")
                 val pickedDate = Date(it)
-                submissionsViewModel.newSubmissionDate.value = pickedDate
+                viewModel.newSubmissionDate.value = pickedDate
             }
             picker.show(requireActivity().supportFragmentManager, picker.toString())
         }

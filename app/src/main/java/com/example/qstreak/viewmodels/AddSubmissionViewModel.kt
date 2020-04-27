@@ -12,6 +12,8 @@ import com.example.qstreak.models.Submission
 import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddSubmissionViewModel(
     private val submissionRepository: SubmissionRepository,
@@ -19,11 +21,14 @@ class AddSubmissionViewModel(
     sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
+    // TODO is this locale okay to use?
+    val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+
     val activities: LiveData<List<Activity>> = activitiesRepository.activities
     private val checkedActivities = arrayListOf<Activity>()
 
     val submissionComplete = MutableLiveData<Boolean>(false)
-    val date = MutableLiveData<String>()
+    val newSubmissionDate = MutableLiveData<Date>(Date())
     val contactCount = MutableLiveData<String>()
 
     val uid: String? by lazy {
@@ -46,7 +51,10 @@ class AddSubmissionViewModel(
     fun createSubmission() {
         // TODO handle null uid
         if (uid != null && isUserInputValid()) {
-            val submission = Submission(date.value!!, contactCount.value!!.toInt())
+            val submission = Submission(
+                dateFormatter.format(newSubmissionDate.value!!),
+                contactCount.value!!.toInt()
+            )
             viewModelScope.launch {
                 try {
                     submissionRepository.insert(submission, checkedActivities, uid as String)

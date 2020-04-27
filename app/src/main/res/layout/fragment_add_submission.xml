@@ -14,21 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:id="@+id/date_text_input_layout"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="Date"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent">-->
-
-<!--            <com.google.android.material.textfield.TextInputEditText-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent" />-->
-
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
-
         <Button
             android:id="@+id/date_button"
             android:layout_width="match_parent"
@@ -37,13 +22,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="DATE"
-            android:text="@{submissionsViewModel.newSubmissionDate.toString()}"
+            android:text="@{viewModel.newSubmissionDate.toString()}"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@={viewModel.date}" />
         </Button>
 
 
