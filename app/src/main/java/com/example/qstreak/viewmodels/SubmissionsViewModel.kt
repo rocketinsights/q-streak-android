@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.qstreak.db.ActivitiesRepository
 import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.models.DailyStats
 import com.example.qstreak.models.SubmissionWithActivities
@@ -22,6 +21,7 @@ class SubmissionsViewModel(
 
     val selectedSubmission = MutableLiveData<SubmissionWithActivities>()
     val selectedSubmissionDailyStats = MutableLiveData<DailyStats>()
+    val submissionDeleted = MutableLiveData<Boolean>(false)
 
     private val uid: String? = sharedPrefs.getString(UID, null)
 
@@ -29,6 +29,16 @@ class SubmissionsViewModel(
         selectedSubmission.value = submissionWithActivities
         selectedSubmissionDailyStats.value = null
         populateDailyStats(submissionWithActivities)
+    }
+
+    fun deleteSubmission() {
+        if (uid != null) {
+            viewModelScope.launch {
+                submissionRepository.delete(selectedSubmission.value!!.submission, uid)
+                // TODO this is a case for SingleLiveEvent
+                submissionDeleted.value = true
+            }
+        }
     }
 
     private fun populateDailyStats(submissionWithActivities: SubmissionWithActivities) {
