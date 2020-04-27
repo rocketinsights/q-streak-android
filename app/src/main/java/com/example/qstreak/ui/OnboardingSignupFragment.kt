@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -32,6 +33,7 @@ class OnboardingSignupFragment : Fragment() {
         binding.viewModel = onboardingViewModel
 
         observeSignup()
+        observeErrors()
 
         return binding.root
     }
@@ -40,6 +42,17 @@ class OnboardingSignupFragment : Fragment() {
         onboardingViewModel.signupSuccessful.observe(viewLifecycleOwner, Observer {
             if (it) {
                 navigateToFirstSubmission()
+            }
+        })
+    }
+
+    private fun observeErrors() {
+        onboardingViewModel.errorToDisplay.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+        })
+        onboardingViewModel.zipCodeError.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.zipCodeInput.error = "Please enter a valid zip code."
             }
         })
     }
