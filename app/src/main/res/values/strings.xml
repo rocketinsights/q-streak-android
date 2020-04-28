@@ -7,6 +7,9 @@
     <string name="household_size">Household Size</string>
     <string name="continue_button_label">Continue</string>
     <string name="delete_submission">Delete Submission</string>
+    <string name="onboarding_step1_action_text">Get started</string>
+    <string name="onboarding_step1_mission_title">Stay safe</string>
+    <string name="onboarding_step1_mission_text">👋 See your impact of staying home and\n keeping your community safe</string>
 
     <string-array name="onboarding_titles">
         <item>Onboarding Fragment 1</item>
