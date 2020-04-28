@@ -5,26 +5,28 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:layout_marginHorizontal="30dp"
+    >
 
         <ImageView
             android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/qstreak_onboarding_eyepatch_woman"
-            android:layout_margin="0dp"
             android:contentDescription="Woman with eyepatch"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/qstreak_onboarding_eyepatch_woman"
             app:layout_constraintBottom_toTopOf="@+id/mission_statement"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/mission_statement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="60dp"
             app:layout_constraintTop_toBottomOf="@id/logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,6 +40,7 @@
                 android:textSize="14pt"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
+                android:layout_marginBottom="15dp"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -53,17 +56,15 @@
             android:id="@+id/setup_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="60dp"
+            android:backgroundTint="@color/primary_action"
             android:text="@string/onboarding_step1_action_text"
             android:textAlignment="center"
-            android:backgroundTint="@color/primary_action"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mission_statement"
-            />
+            app:layout_constraintTop_toBottomOf="@id/mission_statement" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
