@@ -2,14 +2,17 @@ package com.example.qstreak.db
 
 import androidx.lifecycle.LiveData
 import com.example.qstreak.models.*
-import com.example.qstreak.network.CreateSubmissionRequest
-import com.example.qstreak.network.QstreakApiService
-import com.example.qstreak.network.SubmissionData
+import com.example.qstreak.network.*
+import kotlinx.coroutines.CoroutineDispatcher
+import retrofit2.Response
+import retrofit2.Retrofit
 
 class SubmissionRepository(
     private val submissionDao: SubmissionDao,
     private val submissionWithActivityDao: SubmissionWithActivityDao,
-    private val api: QstreakApiService
+    private val api: QstreakApiService,
+    private val retrofit: Retrofit,
+    private val dispatcher: CoroutineDispatcher
 ) {
     val submissionsWithWithActivities: LiveData<List<SubmissionWithActivities>> =
         submissionWithActivityDao.getSubmissionsWithActivities()
@@ -56,8 +59,16 @@ class SubmissionRepository(
         submissionDao.update(submission)
     }
 
-    suspend fun delete(submission: Submission) {
-        submissionDao.delete(submission)
+    suspend fun delete(submission: Submission, uid: String): ApiResult<Response<Unit>> {
+        val apiResponse = safeApiCall(dispatcher, retrofit) {
+            api.deleteSubmission(submission.remoteId!!, uid)
+        }
+
+        if (apiResponse is ApiResult.Success) {
+            submissionDao.delete(submission)
+        }
+
+        return apiResponse
     }
 
     // maybe proxy getAllSubmission too

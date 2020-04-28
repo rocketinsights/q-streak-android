@@ -6,6 +6,7 @@
     <string name="age">Age</string>
     <string name="household_size">Household Size</string>
     <string name="continue_button_label">Continue</string>
+    <string name="delete_submission">Delete Submission</string>
 
     <string-array name="onboarding_titles">
         <item>Onboarding Fragment 1</item>

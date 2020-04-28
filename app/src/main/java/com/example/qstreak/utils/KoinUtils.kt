@@ -3,6 +3,7 @@ package com.example.qstreak.utils
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.qstreak.BuildConfig
 import com.example.qstreak.db.ActivitiesRepository
 import com.example.qstreak.db.QstreakDatabase
 import com.example.qstreak.db.SubmissionRepository
@@ -14,12 +15,17 @@ import com.example.qstreak.viewmodels.AddSubmissionViewModel
 import com.example.qstreak.viewmodels.OnboardingViewModel
 import com.example.qstreak.viewmodels.SplashViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
+import kotlinx.coroutines.Dispatchers
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 const val USER_PREFS = "user_prefs"
 const val UID = "uid"
@@ -56,8 +62,20 @@ private fun sharedPrefsModule() = module {
 }
 
 private fun networkModule() = module {
-    single { QstreakApiSignupService.getQstreakApiSignupService() }
+    factory { provideOkHttpClient() }
+    single { provideRetrofit(get()) }
+    single { QstreakApiSignupService.getQstreakApiSignupService(get()) }
     single { QstreakApiService.getQstreakApiService() }
+}
+
+fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    return Retrofit.Builder().baseUrl(BuildConfig.BASE_URL).client(okHttpClient)
+        .addConverterFactory(MoshiConverterFactory.create()).build()
+}
+
+fun provideOkHttpClient(): OkHttpClient {
+    val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    return OkHttpClient().newBuilder().addInterceptor(interceptor).build()
 }
 
 private fun databaseModule() = module {
@@ -68,8 +86,8 @@ private fun databaseModule() = module {
 }
 
 private fun repositoryModule() = module {
-    single { UserRepository(get(), get()) }
-    single { SubmissionRepository(get(), get(), get()) }
+    single { UserRepository(get(), get(), get(), Dispatchers.IO) }
+    single { SubmissionRepository(get(), get(), get(), get(), Dispatchers.IO) }
     single { ActivitiesRepository(get(), get()) }
 }
 

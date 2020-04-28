@@ -1,22 +1,34 @@
 package com.example.qstreak.db
 
 import com.example.qstreak.models.User
-import com.example.qstreak.network.Account
-import com.example.qstreak.network.CreateUserRequest
-import com.example.qstreak.network.QstreakApiSignupService
+import com.example.qstreak.network.*
+import kotlinx.coroutines.CoroutineDispatcher
+import retrofit2.Retrofit
 
-class UserRepository(private val userDao: UserDao, private val api: QstreakApiSignupService) {
+class UserRepository(
+    private val userDao: UserDao,
+    private val api: QstreakApiSignupService,
+    private val retrofit: Retrofit,
+    private val dispatcher: CoroutineDispatcher
+) {
     suspend fun getUser(): User? = userDao.getUser()
 
-    suspend fun createUser(age: Int, householdSize: Int, zip: String): User {
-        val api = QstreakApiSignupService.getQstreakApiSignupService()
-        val response = api.signup(CreateUserRequest(Account(age, householdSize, zip)))
-        // TODO add type converter to Response object
-        val newUser =
-            User(response.zip, response.age, response.householdSize, response.uid)
-        userDao.insert(newUser)
+    suspend fun createUser(
+        age: Int,
+        householdSize: Int,
+        zip: String
+    ): ApiResult<CreateUserResponse> {
+        val apiResponse = safeApiCall(dispatcher, retrofit) {
+            api.signup(CreateUserRequest(Account(age, householdSize, zip)))
+        }
 
-        return newUser
+        // Add user to local database if API reports user successfully created.
+        if (apiResponse is ApiResult.Success) {
+            val user = apiResponse.data.toUserModel()
+            userDao.insert(user)
+        }
+
+        return apiResponse
     }
 
     suspend fun update(user: User) {
