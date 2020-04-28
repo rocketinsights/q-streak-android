@@ -12,14 +12,12 @@ import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentAddSubmissionBinding
 import com.example.qstreak.models.Activity
 import com.example.qstreak.viewmodels.AddSubmissionViewModel
+import com.google.android.material.datepicker.MaterialDatePicker
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.example.qstreak.models.Submission
-import com.example.qstreak.viewmodels.SubmissionsViewModel
-import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
 
-open class AddSubmissionFragment : Fragment() {
+class AddEditSubmissionFragment : Fragment() {
 
     private val viewModel: AddSubmissionViewModel by currentScope.viewModel(this)
     private lateinit var binding: FragmentAddSubmissionBinding
@@ -50,8 +48,7 @@ open class AddSubmissionFragment : Fragment() {
         return binding.root
     }
 
-    // Override this function to reuse fragment in a different flow.
-    open fun onSubmissionCompleted() {
+    private fun onSubmissionCompleted() {
         requireActivity().supportFragmentManager.popBackStack()
     }
 

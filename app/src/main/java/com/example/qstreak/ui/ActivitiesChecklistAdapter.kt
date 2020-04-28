@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qstreak.R
 import com.example.qstreak.models.Activity
-import kotlinx.android.synthetic.main.activity_item.view.*
+import kotlinx.android.synthetic.main.submission_activity_item.view.*
 
 class ActivitiesChecklistAdapter(
     private val onItemClicked: (Activity) -> Unit,
@@ -23,7 +23,7 @@ class ActivitiesChecklistAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityViewHolder {
         val holder = ActivityViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.activity_item,
+                R.layout.submission_activity_item,
                 parent,
                 false
             )

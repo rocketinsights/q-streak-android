@@ -9,31 +9,40 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
-import com.example.qstreak.databinding.FragmentSubmissionsListBinding
+import com.example.qstreak.databinding.FragmentDashboardBinding
 import com.example.qstreak.models.SubmissionWithActivities
+import com.example.qstreak.viewmodels.DashboardViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
+import org.koin.androidx.scope.currentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SubmissionsListFragment : Fragment() {
+class DashboardFragment : Fragment() {
+    private lateinit var binding: FragmentDashboardBinding
+    private val dashboardViewModel: DashboardViewModel by currentScope.viewModel(this)
     private val submissionsViewModel: SubmissionsViewModel by lazy {
-        (requireActivity() as SubmissionsActivity).sharedViewModel
+        (requireActivity() as MainActivity).submissionsViewModel
     }
-    private lateinit var binding: FragmentSubmissionsListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(activity),
-            R.layout.fragment_submissions_list,
+            R.layout.fragment_dashboard,
             null,
             false
         )
 
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewmodel = dashboardViewModel
+
+        binding.buttonRecordActivity.setOnClickListener {
+            (requireActivity() as MainActivity).navigateToAddOrEditRecord()
+        }
+
         setupSubmissionsList()
-        setAddSubmissionClickListener()
 
         return binding.root
     }
@@ -49,26 +58,12 @@ class SubmissionsListFragment : Fragment() {
         })
     }
 
-    private fun setAddSubmissionClickListener() {
-        binding.addSubmissionButton.setOnClickListener {
-            navigateToAddSubmissionFragment()
-        }
-    }
-
     private fun onSubmissionSelected(submissionWithActivities: SubmissionWithActivities) {
         submissionsViewModel.selectSubmission(submissionWithActivities)
         navigateToDetailFragment()
     }
 
-    private fun navigateToAddSubmissionFragment() {
-        (requireActivity() as SubmissionsActivity).navigateToAddSubmission()
-    }
-
     private fun navigateToDetailFragment() {
-        (requireActivity() as SubmissionsActivity).navigateToSubmissionDetail()
-    }
-
-    companion object {
-        const val TAG = "SubmissionsListFragment"
+        (requireActivity() as MainActivity).navigateToShowRecord()
     }
 }
