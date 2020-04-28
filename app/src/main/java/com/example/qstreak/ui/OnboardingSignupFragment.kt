@@ -1,5 +1,6 @@
 package com.example.qstreak.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,7 +42,7 @@ class OnboardingSignupFragment : Fragment() {
     private fun observeSignup() {
         onboardingViewModel.signupSuccessful.observe(viewLifecycleOwner, Observer {
             if (it) {
-                navigateToFirstSubmission()
+                navigateToDashboard()
             }
         })
     }
@@ -57,8 +58,10 @@ class OnboardingSignupFragment : Fragment() {
         })
     }
 
-    private fun navigateToFirstSubmission() {
-        (activity as OnboardingActivity).setCurrentItem(OnboardingSubmissionFragment.ONBOARDING_ADAPTER_POSITION)
+    private fun navigateToDashboard() {
+        val intent = Intent(activity, SubmissionsActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
     companion object {

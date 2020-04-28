@@ -104,7 +104,4 @@ private fun scopeModules() = module {
     scope(named<AddSubmissionFragment>()) {
         viewModel { AddSubmissionViewModel(get(), get(), get()) }
     }
-    scope(named<OnboardingSubmissionFragment>()) {
-        viewModel { AddSubmissionViewModel(get(), get(), get()) }
-    }
 }

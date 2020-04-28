@@ -14,7 +14,7 @@ class OnboardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
 
-        val onboardingAdapter = OnboardingAdapter(this, 3)
+        val onboardingAdapter = OnboardingAdapter(this, 2)
         onboarding_view_pager.adapter = onboardingAdapter
         onboarding_view_pager.isUserInputEnabled = false
         viewPager = onboarding_view_pager

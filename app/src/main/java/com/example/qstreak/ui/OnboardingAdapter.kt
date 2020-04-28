@@ -15,7 +15,6 @@ class OnboardingAdapter(activity: AppCompatActivity, private val itemsCount: Int
         return when (position) {
             OnboardingLogoFragment.ONBOARDING_ADAPTER_POSITION -> OnboardingLogoFragment()
             OnboardingSignupFragment.ONBOARDING_ADAPTER_POSITION -> OnboardingSignupFragment()
-            OnboardingSubmissionFragment.ONBOARDING_ADAPTER_POSITION -> OnboardingSubmissionFragment()
             else -> OnboardingLogoFragment()
         }
     }
