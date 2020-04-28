@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
 
         viewModel.isUserRegistered.observe(this, Observer { isRegistered ->
             if (isRegistered) {
-                navigateToSubmissions()
+                navigateToDashboard()
             } else {
                 navigateToOnboarding()
             }
@@ -31,8 +31,8 @@ class SplashActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun navigateToSubmissions() {
-        val intent = Intent(this, SubmissionsActivity::class.java)
+    private fun navigateToDashboard() {
+        val intent = Intent(this, DashboardActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }

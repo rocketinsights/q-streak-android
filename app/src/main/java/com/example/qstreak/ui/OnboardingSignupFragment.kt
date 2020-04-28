@@ -59,7 +59,7 @@ class OnboardingSignupFragment : Fragment() {
     }
 
     private fun navigateToDashboard() {
-        val intent = Intent(activity, SubmissionsActivity::class.java)
+        val intent = Intent(activity, DashboardActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }

@@ -11,10 +11,7 @@ import com.example.qstreak.db.UserRepository
 import com.example.qstreak.network.QstreakApiService
 import com.example.qstreak.network.QstreakApiSignupService
 import com.example.qstreak.ui.*
-import com.example.qstreak.viewmodels.AddSubmissionViewModel
-import com.example.qstreak.viewmodels.OnboardingViewModel
-import com.example.qstreak.viewmodels.SplashViewModel
-import com.example.qstreak.viewmodels.SubmissionsViewModel
+import com.example.qstreak.viewmodels.*
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -103,5 +100,8 @@ private fun scopeModules() = module {
     }
     scope(named<AddSubmissionFragment>()) {
         viewModel { AddSubmissionViewModel(get(), get(), get()) }
+    }
+    scope(named<DashboardActivity>()) {
+        viewModel { DashboardViewModel() }
     }
 }

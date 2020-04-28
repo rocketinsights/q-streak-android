@@ -17,6 +17,7 @@ class SubmissionsActivity : FragmentActivity(R.layout.activity_submissions) {
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container_view, fragment)
             .commit()
+        navigateToAddSubmission()
     }
 
     fun navigateToSubmissionDetail() {
