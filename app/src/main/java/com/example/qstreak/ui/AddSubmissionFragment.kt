@@ -14,6 +14,10 @@ import com.example.qstreak.models.Activity
 import com.example.qstreak.viewmodels.AddSubmissionViewModel
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.qstreak.models.Submission
+import com.example.qstreak.viewmodels.SubmissionsViewModel
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.util.*
 
 open class AddSubmissionFragment : Fragment() {
 
@@ -41,6 +45,7 @@ open class AddSubmissionFragment : Fragment() {
 
         setupActivitiesList()
         observeCompletion()
+        setDateClickListener()
 
         return binding.root
     }
@@ -71,6 +76,19 @@ open class AddSubmissionFragment : Fragment() {
                 onSubmissionCompleted()
             }
         })
+    }
+
+    private fun setDateClickListener() {
+        binding.dateButton.setOnClickListener {
+            val builder = MaterialDatePicker.Builder.datePicker()
+            val picker = builder.build()
+            picker.addOnPositiveButtonClickListener {
+                // Log.d("DatePicker Activity", "Date String = ${picker.headerText}:: Date epoch value = ${it}")
+                val pickedDate = Date(it)
+                viewModel.newSubmissionDate.value = pickedDate
+            }
+            picker.show(requireActivity().supportFragmentManager, picker.toString())
+        }
     }
 
     private fun onActivityToggled(activity: Activity) {
