@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class User(
     @ColumnInfo(name = "zip") var zip: String,
     @ColumnInfo(name = "device_uid") var device_uid: String,
-    @ColumnInfo(name = "name") var name: String
+    @ColumnInfo(name = "name") var name: String?
 ) {
     @PrimaryKey var id: Int = 1
 }

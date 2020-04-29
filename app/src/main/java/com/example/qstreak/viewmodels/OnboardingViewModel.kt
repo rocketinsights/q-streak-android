@@ -21,7 +21,7 @@ class OnboardingViewModel(
     val zipCodeError = MutableLiveData<Boolean>(false)
 
     fun createUser() {
-        val name = name.value
+        val name = name.value?.let { it } ?: ""
         val zipCode = zipCode.value
 
         if (!validateInputs(name, zipCode)) {
@@ -69,7 +69,7 @@ class OnboardingViewModel(
 
     private fun isNameValid(name: String?): Boolean {
         // TODO validation rules - character validation?
-        return true
+        return name != null
     }
 
     private fun clearErrors() {
