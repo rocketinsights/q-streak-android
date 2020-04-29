@@ -9,13 +9,14 @@ import com.example.qstreak.db.ActivitiesRepository
 import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.models.Activity
 import com.example.qstreak.models.Submission
+import com.example.qstreak.models.SubmissionWithActivities
 import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddSubmissionViewModel(
+class AddEditSubmissionViewModel(
     private val submissionRepository: SubmissionRepository,
     private val activitiesRepository: ActivitiesRepository,
     sharedPreferences: SharedPreferences
@@ -25,11 +26,13 @@ class AddSubmissionViewModel(
     val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
     val activities: LiveData<List<Activity>> = activitiesRepository.activities
-    private val checkedActivities = arrayListOf<Activity>()
+    val checkedActivities = MutableLiveData<List<Activity>>()
 
     val submissionComplete = MutableLiveData<Boolean>(false)
     val newSubmissionDate = MutableLiveData<Date>(Date())
     val contactCount = MutableLiveData<String>()
+
+    val existingSubmission = MutableLiveData<SubmissionWithActivities>()
 
     val uid: String? by lazy {
         sharedPreferences.getString(UID, null)
@@ -48,6 +51,17 @@ class AddSubmissionViewModel(
         }
     }
 
+    fun getSubmissionByDate(date: String) {
+        viewModelScope.launch {
+            try {
+                val submission = submissionRepository.getSubmissionWithActivitiesByDate(date)
+                existingSubmission.value = submission
+            } catch (e: Exception) {
+                Timber.e(e, "Error loading existing submission")
+            }
+        }
+    }
+
     fun createSubmission() {
         // TODO handle null uid
         if (uid != null && isUserInputValid()) {
@@ -57,13 +71,17 @@ class AddSubmissionViewModel(
             )
             viewModelScope.launch {
                 try {
-                    submissionRepository.insert(submission, checkedActivities, uid as String)
+                    submissionRepository.insert(
+                        submission,
+                        checkedActivities.value.orEmpty(),
+                        uid as String
+                    )
                     submissionComplete.value = true
                 } catch (e: Exception) {
                     // TODO retrieve error text from response body to surface to user (at api layer)
                     Timber.e("Error message: %s", e.message)
                 } finally {
-                    checkedActivities.clear()
+                    checkedActivities.value = null
                 }
             }
         }
@@ -75,10 +93,13 @@ class AddSubmissionViewModel(
     }
 
     fun onActivityCheckboxToggled(activity: Activity) {
-        if (checkedActivities.contains(activity)) {
-            checkedActivities.remove(activity)
+        val currentActivities = arrayListOf<Activity>()
+        currentActivities.addAll(checkedActivities.value.orEmpty())
+        if (currentActivities.contains(activity)) {
+            currentActivities.remove(activity)
         } else {
-            checkedActivities.add(activity)
+            currentActivities.add(activity)
         }
+        checkedActivities.value = currentActivities
     }
 }

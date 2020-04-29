@@ -31,9 +31,18 @@ class SubmissionDetailFragment : Fragment() {
         binding.lifecycleOwner = activity
         binding.viewModel = submissionsViewModel
 
+        setupEditClickListener()
         observeDeletion()
 
         return binding.root
+    }
+
+    private fun setupEditClickListener() {
+        binding.editButton.setOnClickListener {
+            (requireActivity() as MainActivity).navigateToAddOrEditRecord(
+                submissionsViewModel.selectedSubmission.value?.submission?.date
+            )
+        }
     }
 
     private fun observeDeletion() {

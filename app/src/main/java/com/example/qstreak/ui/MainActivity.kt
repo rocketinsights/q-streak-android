@@ -26,11 +26,9 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
             .replace(R.id.fragment_container_view, fragment)
             .commit()
     }
-
-    // TODO: We'll pass an optional submission ID through fragment bundle
-    // to determine whether to fetch existing submission data.
-    fun navigateToAddOrEditRecord() {
-        val fragment = AddEditSubmissionFragment()
+    
+    fun navigateToAddOrEditRecord(existingSubmissionDate: String? = null) {
+        val fragment = AddEditSubmissionFragment.newInstance(existingSubmissionDate)
         supportFragmentManager.beginTransaction()
             .addToBackStack(AddEditSubmissionFragment.TAG)
             .replace(R.id.fragment_container_view, fragment)

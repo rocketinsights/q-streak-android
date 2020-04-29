@@ -44,8 +44,8 @@ class SubmissionRepository(
         }
     }
 
-    suspend fun getSubmissionById(id: Int): Submission {
-        return submissionDao.get(id)
+    suspend fun getSubmissionWithActivitiesByDate(date: String): SubmissionWithActivities {
+        return submissionWithActivityDao.getByDate(date)
     }
 
     suspend fun fetchDailyStatsForSubmission(remoteId: Int, uid: String): DailyStats {
