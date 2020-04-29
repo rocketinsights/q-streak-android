@@ -2,15 +2,16 @@
     <string name="app_name">Qstreak</string>
 
     <string name="submission_detail_contact_count">Reported contact count: %1$d</string>
-    <string name="zip_code">ZIP Code</string>
-    <string name="age">Age</string>
-    <string name="household_size">Household Size</string>
-    <string name="continue_button_label">Continue</string>
+    <string name="zip_code">What\'s your zip code?</string>
+    <string name="name">What\'s your name?</string>
+    <string name="continue_button_label">Start tracking</string>
     <string name="delete_submission">Delete Submission</string>
     <string name="onboarding_step1_action_text">Get started</string>
     <string name="onboarding_step1_mission_title">Stay safe</string>
     <string name="onboarding_step1_mission_text">👋 See your impact of staying home and keeping your community safe</string>
     <string name="woman_with_eyepatch">Woman with eyepatch</string>
+    <string name="onboarding_step2_signup_text">📝 This information helps us calculate your daily activity score.</string>
+    <string name="onboarding_step2_signup_title">About you</string>
 
     <string-array name="onboarding_titles">
         <item>Onboarding Fragment 1</item>
