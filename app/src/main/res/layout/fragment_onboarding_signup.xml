@@ -17,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:layout_marginStart="@dimen/onboarding_horizonal_margin"
-            android:layout_marginEnd="@dimen/onboarding_horizonal_margin">
+            android:layout_marginStart="@dimen/horizonal_margin"
+            android:layout_marginEnd="@dimen/horizonal_margin">
 
             <LinearLayout
                 android:id="@+id/signup_text"
@@ -94,12 +94,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_marginStart="@dimen/onboarding_horizonal_margin"
-            android:layout_marginEnd="@dimen/onboarding_horizonal_margin"
             android:layout_marginBottom="40dp"
             android:onClick="@{() -> viewModel.createUser()}"
             android:text="@string/continue_button_label"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/zip_code_input" />

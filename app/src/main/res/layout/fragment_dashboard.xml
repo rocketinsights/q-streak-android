@@ -15,15 +15,70 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp">
+
+            <LinearLayout
+                android:id="@+id/daily_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/horizonal_margin"
+                android:layout_marginEnd="@dimen/horizonal_margin">
+
+                <LinearLayout
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Thanks for tracking, Sandy!"
+                        android:textColor="@color/secondaryText"
+                        android:textStyle="bold"
+                        android:textSize="7pt" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today's Score"
+                            android:textColor="@android:color/black"
+                            android:textSize="12pt"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/help_button"
+                            android:layout_width="0dp"
+                            android:layout_height="27dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/help_button_text"
+                            android:src="@drawable/qstreak_help_button" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/score_meter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/score_meter_level_5"
+                    android:src="@drawable/qstreak_score_meter_5" />
+            </LinearLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
+                android:background="@color/DefaultInputBackground"
                 android:id="@+id/submissions_recycler_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/daily_score" />
 
             <TextView
                 android:id="@+id/test_text"
@@ -36,13 +91,34 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/button_record_activity"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/record_activity"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_marginBottom="20dp"
-            android:text="Record Activity" />
+            android:background="@color/DefaultInputBackground"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingBottom="12dp">
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/button_record_activity"
+                style="@style/PrimaryActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/record_activity_label" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/record_activity_CTA_subtext"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="6pt" />
+        </LinearLayout>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
