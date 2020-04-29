@@ -7,4 +7,5 @@
     <color name="FocusInputBackground">#308CF5D0</color>
     <color name="DefaultInputBackground">#F2F5F7</color>
     <color name="secondaryText">#9B9CAE</color>
+    <color name="cardBorder">#203f3d56</color>
 </resources>
