@@ -16,24 +16,22 @@ class OnboardingViewModel(
     val signupSuccessful = MutableLiveData<Boolean>(false)
     val errorToDisplay = MutableLiveData<String>()
 
-    val age = MutableLiveData<String>()
-    val householdSize = MutableLiveData<String>()
+    val name = MutableLiveData<String>()
     val zipCode = MutableLiveData<String>()
     val zipCodeError = MutableLiveData<Boolean>(false)
 
     fun createUser() {
-        val age = age.value
-        val householdSize = householdSize.value
+        val name = name.value
         val zipCode = zipCode.value
 
-        if (!validateInputs(age, householdSize, zipCode)) {
+        if (!validateInputs(name, zipCode)) {
             return
         }
 
         viewModelScope.launch {
             try {
                 val createUserResponse =
-                    userRepository.createUser(age!!.toInt(), householdSize!!.toInt(), zipCode!!)
+                    userRepository.createUser(name, zipCode!!)
                 if (createUserResponse is ApiResult.Success) {
                     sharedPrefsEditor.putString(UID, createUserResponse.data.uid).commit()
                     signupSuccessful.postValue(true)
@@ -48,12 +46,11 @@ class OnboardingViewModel(
         }
     }
 
-    private fun validateInputs(age: String?, householdSize: String?, zipCode: String?): Boolean {
+    private fun validateInputs(name: String?, zipCode: String?): Boolean {
         clearErrors()
 
         val zipValid = isZipValid(zipCode)
-        val ageValid = isAgeValid(age)
-        val householdSizeValid = isHouseholdSizeValid(householdSize)
+        val nameValid = isNameValid(name)
         // Ideally we'll set errors on each of the invalid fields, so we don't want to return until
         // they have all been evaluated.
         if (!zipValid) {
@@ -61,7 +58,7 @@ class OnboardingViewModel(
             // but for now just a single "invalid" message.
             zipCodeError.value = true
         }
-        return zipValid && ageValid && householdSizeValid
+        return zipValid && nameValid
     }
 
     // TODO These methods could be extracted to a utility class.
@@ -70,14 +67,9 @@ class OnboardingViewModel(
         return !zip.isNullOrBlank() && zip.length == 5 && zip.toInt() > 0
     }
 
-    private fun isAgeValid(age: String?): Boolean {
-        // TODO validation rules
-        return !age.isNullOrBlank()
-    }
-
-    private fun isHouseholdSizeValid(householdSize: String?): Boolean {
-        // TODO validation rules
-        return !householdSize.isNullOrBlank()
+    private fun isNameValid(name: String?): Boolean {
+        // TODO validation rules - character validation?
+        return true
     }
 
     private fun clearErrors() {

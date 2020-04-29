@@ -7,9 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "users")
 data class User(
     @ColumnInfo(name = "zip") var zip: String,
-    @ColumnInfo(name = "age") var age: Int,
-    @ColumnInfo(name = "household_size") var household_size: Int,
-    @ColumnInfo(name = "device_uid") var device_uid: String
+    @ColumnInfo(name = "device_uid") var device_uid: String,
+    @ColumnInfo(name = "name") var name: String
 ) {
     @PrimaryKey var id: Int = 1
 }
