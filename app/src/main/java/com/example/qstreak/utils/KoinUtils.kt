@@ -92,16 +92,16 @@ private fun scopeModules() = module {
     scope(named<SplashActivity>()) {
         viewModel { SplashViewModel(get()) }
     }
-    scope(named<SubmissionsActivity>()) {
-        viewModel { SubmissionsViewModel(get(), get()) }
-    }
     scope(named<OnboardingSignupFragment>()) {
         viewModel { OnboardingViewModel(get(), get()) }
     }
-    scope(named<AddSubmissionFragment>()) {
+    scope(named<AddEditSubmissionFragment>()) {
         viewModel { AddSubmissionViewModel(get(), get(), get()) }
     }
-    scope(named<DashboardActivity>()) {
+    scope(named<DashboardFragment>()) {
         viewModel { DashboardViewModel() }
+    }
+    scope(named<MainActivity>()) {
+        viewModel { SubmissionsViewModel(get(), get()) }
     }
 }

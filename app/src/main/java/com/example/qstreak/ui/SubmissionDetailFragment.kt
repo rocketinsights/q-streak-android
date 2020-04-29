@@ -13,7 +13,7 @@ import com.example.qstreak.viewmodels.SubmissionsViewModel
 
 class SubmissionDetailFragment : Fragment() {
     private val submissionsViewModel: SubmissionsViewModel by lazy {
-        (requireActivity() as SubmissionsActivity).sharedViewModel
+        (requireActivity() as MainActivity).submissionsViewModel
     }
     private lateinit var binding: FragmentSubmissionDetailBinding
 
