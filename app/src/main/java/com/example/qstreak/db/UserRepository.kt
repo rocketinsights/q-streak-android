@@ -14,12 +14,11 @@ class UserRepository(
     suspend fun getUser(): User? = userDao.getUser()
 
     suspend fun createUser(
-        age: Int,
-        householdSize: Int,
+        name: String?,
         zip: String
     ): ApiResult<CreateUserResponse> {
         val apiResponse = safeApiCall(dispatcher, retrofit) {
-            api.signup(CreateUserRequest(Account(age, householdSize, zip)))
+            api.signup(CreateUserRequest(Account(name, zip)))
         }
 
         // Add user to local database if API reports user successfully created.
