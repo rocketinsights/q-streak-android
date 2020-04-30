@@ -108,6 +108,7 @@ class AddEditSubmissionFragment : Fragment() {
         binding.dateButton.setOnClickListener {
             val builder = MaterialDatePicker.Builder.datePicker()
             val picker = builder.build()
+            // TODO listen for user changing date with date picker, then check to see if there is an existing record for that date (need to handle time zone weirdness)
             picker.addOnPositiveButtonClickListener {
                 // Log.d("DatePicker Activity", "Date String = ${picker.headerText}:: Date epoch value = ${it}")
                 val pickedDate = Date(it)
