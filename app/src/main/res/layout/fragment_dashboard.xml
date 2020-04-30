@@ -17,8 +17,9 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="100dp">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/record_activity_card"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -218,101 +219,7 @@
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
-
-
-<!--Temporary cards for scroll testing-->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/horizonal_margin"
-                    android:layout_marginVertical="10dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/cardBorder"
-                    app:strokeWidth="1dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="20dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="rank icon"
-                            android:src="@drawable/qstreak_rank_icon" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Top 10"
-                                android:textColor="@android:color/black"
-                                android:textSize="7pt"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="You’re in the 10% of people in your community who have reported under 5 close encounters over the last week."
-                                android:textColor="@android:color/black"
-                                android:textSize="6pt" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/horizonal_margin"
-                    android:layout_marginVertical="10dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/cardBorder"
-                    app:strokeWidth="1dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="20dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="rank icon"
-                            android:src="@drawable/qstreak_rank_icon" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Top 10"
-                                android:textColor="@android:color/black"
-                                android:textSize="7pt"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="You’re in the 10% of people in your community who have reported under 5 close encounters over the last week."
-                                android:textColor="@android:color/black"
-                                android:textSize="6pt" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-<!--End of Temp cards-->
+                
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -321,8 +228,8 @@
             android:id="@+id/record_activity_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="5dp"
+            app:shapeAppearanceOverlay="@style/CardSquareBottomCorners"
+            app:cardElevation="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:strokeColor="@color/cardBorder"
             app:strokeWidth="1dp">

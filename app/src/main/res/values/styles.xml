@@ -42,4 +42,12 @@
         <item name="android:background">@drawable/input_background</item>
     </style>
 
+    <style name="CardSquareBottomCorners">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">15dp</item>
+        <item name="cornerSizeTopLeft">15dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
 </resources>
