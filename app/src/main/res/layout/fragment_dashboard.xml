@@ -56,7 +56,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Today's Score"
+                                android:text="@string/todays_score"
                                 android:textColor="@android:color/black"
                                 android:textSize="28sp"
                                 android:textStyle="bold" />
@@ -93,19 +93,17 @@
                         android:layout_marginHorizontal="@dimen/horizonal_margin">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="Daily Log Activity"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:text="@string/daily_log_activity"
+                            style="@style/CardTitle" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_gravity="right"
-                            android:text="View History"
+                            android:layout_gravity="end"
+                            android:text="@string/view_history"
                             android:textColor="@color/secondaryText"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -129,13 +127,8 @@
                     android:id="@+id/longest_stretch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/horizonal_margin"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/cardBorder"
-                    app:strokeWidth="1dp">
+                    style="@style/DashboardCard">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -145,29 +138,26 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="longest streak icon"
-                            android:src="@drawable/qstreak_longest_streak" />
+                            android:contentDescription="@string/longest_streak_icon"
+                            android:src="@drawable/qstreak_longest_streak"
+                            android:layout_marginEnd="18dp"/>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
                             android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Longest Stretch"
-                                android:textColor="@android:color/black"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
+                                android:text="@string/longest_stretch"
+                                style="@style/CardTitle"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="It's been 5 days since you last visited the grocery store."
-                                android:textColor="@android:color/black"
-                                android:textSize="16sp" />
+                                style="@style/CardDescription" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -177,12 +167,7 @@
                     android:id="@+id/rank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/horizonal_margin"
-                    android:layout_marginVertical="10dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/cardBorder"
-                    app:strokeWidth="1dp">
+                    style="@style/DashboardCard">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -192,29 +177,26 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="rank icon"
-                            android:src="@drawable/qstreak_rank_icon" />
+                            android:contentDescription="@string/rank_icon"
+                            android:src="@drawable/qstreak_rank_icon"
+                            android:layout_marginEnd="18dp"/>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
                             android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Top 10"
-                                android:textColor="@android:color/black"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
+                                style="@style/CardTitle" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="You’re in the 10% of people in your community who have reported under 5 close encounters over the last week."
-                                android:textColor="@android:color/black"
-                                android:textSize="16sp" />
+                                style="@style/CardDescription" />
                         </LinearLayout>
                     </LinearLayout>
 

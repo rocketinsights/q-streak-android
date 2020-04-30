@@ -51,4 +51,25 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
+    <style name="DashboardCard">
+        <item name="android:layout_marginHorizontal">@dimen/horizonal_margin</item>
+        <item name="android:layout_marginTop">7dp</item>
+        <item name="android:layout_marginBottom">7dp</item>
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/cardBorder</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="CardTitle">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CardDescription">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
