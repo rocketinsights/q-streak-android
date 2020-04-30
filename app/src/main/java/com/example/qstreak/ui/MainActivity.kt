@@ -34,4 +34,12 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
             .replace(R.id.fragment_container_view, fragment)
             .commit()
     }
+
+    fun navigateToTempDailyLog() {
+        val fragment = TempDailyLogFragment()
+        supportFragmentManager.beginTransaction()
+            .addToBackStack(TempDailyLogFragment.TAG)
+            .replace(R.id.fragment_container_view, fragment)
+            .commit()
+    }
 }

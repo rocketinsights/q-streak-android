@@ -42,6 +42,10 @@ class DashboardFragment : Fragment() {
             (requireActivity() as MainActivity).navigateToAddOrEditRecord()
         }
 
+        binding.buttonDebugComponent.setOnClickListener {
+            navigateToTempDailyLogFragment()
+        }
+
         setupSubmissionsList()
 
         return binding.root
@@ -65,5 +69,9 @@ class DashboardFragment : Fragment() {
 
     private fun navigateToDetailFragment() {
         (requireActivity() as MainActivity).navigateToShowRecord()
+    }
+
+    private fun navigateToTempDailyLogFragment() {
+        (requireActivity() as MainActivity).navigateToTempDailyLog()
     }
 }
