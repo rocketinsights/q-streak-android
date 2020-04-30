@@ -36,7 +36,7 @@
                     android:paddingBottom="20dp">
 
                     <LinearLayout
-                        android:layout_width="220dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
@@ -219,7 +219,7 @@
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
-                
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -228,9 +228,9 @@
             android:id="@+id/record_activity_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:shapeAppearanceOverlay="@style/CardSquareBottomCorners"
             app:cardElevation="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:shapeAppearanceOverlay="@style/CardSquareBottomCorners"
             app:strokeColor="@color/cardBorder"
             app:strokeWidth="1dp">
 

@@ -27,6 +27,7 @@
         <item name="android:backgroundTint">@color/primary_action</item>
         <item name="android:layout_marginStart">@dimen/horizonal_margin</item>
         <item name="android:layout_marginEnd">@dimen/horizonal_margin</item>
+        <item name="android:stateListAnimator">@null</item>
     </style>
 
     <style name="PrimaryInput" parent="">
