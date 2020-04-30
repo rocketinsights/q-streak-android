@@ -22,6 +22,7 @@
     <string name="longest_streak_icon">longest streak icon</string>
     <string name="longest_stretch">Longest Stretch</string>
     <string name="rank_icon">rank icon</string>
+    <string name="risk_warning_icon">risk warning icon</string>
 
     <string-array name="onboarding_titles">
         <item>Onboarding Fragment 1</item>

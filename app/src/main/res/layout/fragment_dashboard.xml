@@ -201,6 +201,29 @@
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginStart="@dimen/horizonal_margin"
+                    android:layout_marginEnd="@dimen/horizonal_margin">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="13dp"
+                        android:layout_marginStart="42dp"
+                        android:contentDescription="@string/risk_warning_icon"
+                        android:src="@drawable/qstreak_help_button" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cook County is at risk for continued outbreaks."
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
             </LinearLayout>
 
