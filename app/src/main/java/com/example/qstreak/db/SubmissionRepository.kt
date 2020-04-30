@@ -17,72 +17,102 @@ class SubmissionRepository(
     val submissionsWithActivities: LiveData<List<SubmissionWithActivities>> =
         submissionWithActivityDao.getSubmissionsWithActivities()
 
-    suspend fun insert(submission: Submission, activities: List<Activity>, uid: String) {
-        // TODO convert submission model
-        val response = api.createSubmission(
-            CreateSubmissionRequest(
-                SubmissionData(
-                    submission.contactCount,
-                    submission.date,
-                    activities.map { it.activitySlug }
-                )
-            ),
-            uid
-        )
-
-        insertSubmissionLocally(response.id, response.score, submission, activities)
-    }
-
-    private suspend fun insertSubmissionLocally(
-        remoteId: Int,
-        score: Int,
-        submission: Submission,
-        activities: List<Activity>
-    ) {
-        val newSubmissionId = submissionDao.insert(submission.apply {
-            this.remoteId = remoteId
-            this.score = score
-        })
-
-        for (activity in activities) {
-            submissionWithActivityDao.insert(
-                SubmissionActivityCrossRef(
-                    newSubmissionId.toInt(),
-                    activity.activitySlug
-                )
-            )
-        }
-    }
-
-    suspend fun updateSubmission(
-        submission: Submission,
+    suspend fun createSubmission(
+        contactCount: Int,
+        date: String,
         activities: List<Activity>,
         uid: String
     ): ApiResult<SubmissionResponse> {
         val response = safeApiCall(dispatcher, retrofit) {
-            api.updateSubmission(submission.remoteId!!,
+            api.createSubmission(
+                CreateSubmissionRequest(
+                    SubmissionData(
+                        contactCount,
+                        date,
+                        activities.map { it.activitySlug }
+                    )
+                ),
+                uid
+            )
+        }
+
+        if (response is ApiResult.Success) {
+            insertSubmissionLocally(response.data.toLocalSubmission(), response.data.destinations)
+        }
+
+        return response
+    }
+
+    suspend fun updateSubmission(
+        remoteId: Int,
+        contactCount: Int,
+        activities: List<Activity>,
+        uid: String
+    ): ApiResult<SubmissionResponse> {
+        val response = safeApiCall(dispatcher, retrofit) {
+            api.updateSubmission(remoteId,
                 UpdateSubmissionRequest(
                     UpdateSubmissionData(
-                        submission.contactCount,
+                        contactCount,
                         activities.map { it.activitySlug }
                     )
                 ),
                 uid)
         }
 
-        // For now, delete existing record and re-insert, but there's a better way to do this.
+        // For now, delete existing relations and re-insert, but there's a better way to do this.
         if (response is ApiResult.Success) {
-            submissionDao.deleteByRemoteId(submission.remoteId!!)
-            response.data.apply {
-                insertSubmissionLocally(this.id, this.score, submission, activities)
-            }
+            updateSubmissionLocally(response.data.toLocalSubmission(), response.data.destinations)
         }
 
         return response
     }
 
+    suspend fun deleteSubmission(submission: Submission, uid: String): ApiResult<Response<Unit>> {
+        val apiResponse = safeApiCall(dispatcher, retrofit) {
+            api.deleteSubmission(submission.remoteId, uid)
+        }
+
+        if (apiResponse is ApiResult.Success) {
+            submissionDao.deleteByRemoteId(submission.remoteId)
+            submissionWithActivityDao.deleteActivitiesBySubmissionId(submission.remoteId)
+        }
+
+        return apiResponse
+    }
+
+    private suspend fun insertSubmissionLocally(
+        submission: Submission,
+        activities: List<Activity>
+    ) {
+        submissionDao.insert(submission)
+
+        insertActivityRelations(submission.remoteId, activities)
+    }
+
+    private suspend fun updateSubmissionLocally(
+        submission: Submission,
+        activities: List<Activity>
+    ) {
+        submissionDao.update(submission)
+        submissionWithActivityDao.deleteActivitiesBySubmissionId(submission.remoteId)
+
+        insertActivityRelations(submission.remoteId, activities)
+    }
+
+    private suspend fun insertActivityRelations(remoteId: Int, activities: List<Activity>) {
+        for (activity in activities) {
+            submissionWithActivityDao.insert(
+                SubmissionActivityCrossRef(
+                    remoteId,
+                    activity.activitySlug
+                )
+            )
+        }
+    }
+
     suspend fun getSubmissionWithActivitiesByDate(date: String): SubmissionWithActivities {
-        return submissionWithActivityDao.getByDate(date)
+        return submissionWithActivityDao.getSubmissionWithActivitiesByDate(date)
     }
 
     suspend fun fetchDailyStatsForSubmission(remoteId: Int, uid: String): DailyStats {
@@ -91,18 +121,4 @@ class SubmissionRepository(
 
         return response.dailyStats
     }
-
-    suspend fun delete(submission: Submission, uid: String): ApiResult<Response<Unit>> {
-        val apiResponse = safeApiCall(dispatcher, retrofit) {
-            api.deleteSubmission(submission.remoteId!!, uid)
-        }
-
-        if (apiResponse is ApiResult.Success) {
-            submissionDao.deleteByRemoteId(submission.remoteId!!)
-        }
-
-        return apiResponse
-    }
-
-    // maybe proxy getAllSubmission too
 }

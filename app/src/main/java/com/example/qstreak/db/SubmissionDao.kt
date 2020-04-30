@@ -12,9 +12,6 @@ interface SubmissionDao {
     @Query("SELECT * FROM submissions LIMIT 100")
     fun getAllSubmissions(): LiveData<List<Submission>>
 
-    @Query("SELECT * FROM submissions WHERE submission_id = :id")
-    suspend fun get(id: Int): Submission
-
     @Update
     suspend fun update(submission: Submission)
 

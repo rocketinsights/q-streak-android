@@ -2,6 +2,7 @@ package com.example.qstreak.network
 
 import com.example.qstreak.models.Activity
 import com.example.qstreak.models.DailyStats
+import com.example.qstreak.models.Submission
 import com.squareup.moshi.Json
 
 data class SubmissionResponse(
@@ -11,4 +12,8 @@ data class SubmissionResponse(
     @field:Json(name = "id") val id: Int,
     @field:Json(name = "daily_stats") val dailyStats: DailyStats,
     @field:Json(name = "score") val score: Int
-)
+) {
+    fun toLocalSubmission(): Submission {
+        return Submission(date, contactCount, id, score)
+    }
+}

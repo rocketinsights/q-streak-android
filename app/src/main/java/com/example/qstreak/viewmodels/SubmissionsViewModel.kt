@@ -44,7 +44,7 @@ class SubmissionsViewModel(
     fun deleteSubmission() {
         if (uid != null) {
             viewModelScope.launch {
-                submissionRepository.delete(selectedSubmission.value!!.submission, uid)
+                submissionRepository.deleteSubmission(selectedSubmission.value!!.submission, uid)
                 // TODO this is a case for SingleLiveEvent
                 submissionDeleted.value = true
             }
@@ -55,10 +55,11 @@ class SubmissionsViewModel(
         // TODO handle null uid
         if (uid != null) {
             viewModelScope.launch {
-                submissionWithActivities.submission.remoteId?.let {
-                    val response = submissionRepository.fetchDailyStatsForSubmission(it, uid)
-                    selectedSubmissionDailyStats.value = response
-                }
+                val response = submissionRepository.fetchDailyStatsForSubmission(
+                    submissionWithActivities.submission.remoteId,
+                    uid
+                )
+                selectedSubmissionDailyStats.value = response
             }
         }
     }

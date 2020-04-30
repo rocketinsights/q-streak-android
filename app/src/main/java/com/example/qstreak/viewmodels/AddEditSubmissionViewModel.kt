@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.qstreak.db.ActivitiesRepository
 import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.models.Activity
-import com.example.qstreak.models.Submission
 import com.example.qstreak.models.SubmissionWithActivities
 import com.example.qstreak.network.ApiResult
+import com.example.qstreak.network.SubmissionResponse
 import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -58,7 +58,8 @@ class AddEditSubmissionViewModel(
                 val submission = submissionRepository.getSubmissionWithActivitiesByDate(date)
                 existingSubmission.value = submission
             } catch (e: Exception) {
-                Timber.e(e, "Error loading existing submission")
+                errorToDisplay.value = ("Error loading date: $date")
+                Timber.e(e)
             }
         }
     }
@@ -66,56 +67,50 @@ class AddEditSubmissionViewModel(
     fun saveSubmission() {
         // TODO handle null uid
         if (uid != null && isUserInputValid()) {
-            if (existingSubmission.value != null) {
-                updateExistingSubmission()
-            } else {
-                createNewSubmission()
-            }
-        }
-    }
-
-    private fun createNewSubmission() {
-        viewModelScope.launch {
             try {
-                submissionRepository.insert(
-                    getCurrentSubmissionValues(),
-                    checkedActivities.value.orEmpty(),
-                    uid as String
-                )
-                submissionComplete.value = true
-            } catch (e: Exception) {
-                errorToDisplay.value = e.message
-            }
-        }
-    }
+                viewModelScope.launch {
+                    val response = existingSubmission.value?.let {
+                        updateExistingSubmission(
+                            it.submission.remoteId,
+                            contactCount.value!!.toInt(),
+                            checkedActivities.value.orEmpty(),
+                            uid as String
+                        )
+                    } ?: createNewSubmission(
+                        contactCount.value!!.toInt(),
+                        dateFormatter.format(newSubmissionDate.value!!),
+                        checkedActivities.value.orEmpty(),
+                        uid as String
+                    )
 
-    private fun updateExistingSubmission() {
-        viewModelScope.launch {
-            try {
-                val response = submissionRepository.updateSubmission(
-                    getCurrentSubmissionValues(),
-                    checkedActivities.value.orEmpty(),
-                    uid as String
-                )
-                if (response is ApiResult.Success) {
-                    submissionComplete.value = true
-                } else {
-                    // We received an API error when attempting to update a submission.
-                    errorToDisplay.value = (response as ApiResult.Error).apiErrors
+                    if (response is ApiResult.Success) {
+                        submissionComplete.value = true
+                    } else {
+                        errorToDisplay.value = (response as ApiResult.Error).apiErrors
+                    }
                 }
             } catch (e: Exception) {
-                // Something else went wrong when attempting to update a submission.
                 errorToDisplay.value = e.message
             }
         }
     }
 
-    private fun getCurrentSubmissionValues(): Submission {
-        return Submission(
-            dateFormatter.format(newSubmissionDate.value!!),
-            contactCount.value!!.toInt(),
-            existingSubmission.value?.submission?.remoteId
-        )
+    private suspend fun createNewSubmission(
+        contactCount: Int,
+        date: String,
+        activities: List<Activity>,
+        uid: String
+    ): ApiResult<SubmissionResponse> {
+        return submissionRepository.createSubmission(contactCount, date, activities, uid)
+    }
+
+    private suspend fun updateExistingSubmission(
+        remoteId: Int,
+        contactCount: Int,
+        activities: List<Activity>,
+        uid: String
+    ): ApiResult<SubmissionResponse> {
+        return submissionRepository.updateSubmission(remoteId, contactCount, activities, uid)
     }
 
     private fun isUserInputValid(): Boolean {
