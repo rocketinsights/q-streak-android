@@ -42,7 +42,7 @@
                     android:text="@string/onboarding_step1_mission_title"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="14pt"
+                    android:textSize="32sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -51,7 +51,7 @@
                     android:text="@string/onboarding_step1_mission_text"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="8pt" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

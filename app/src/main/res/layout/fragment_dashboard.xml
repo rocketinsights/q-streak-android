@@ -45,7 +45,7 @@
                             android:layout_height="wrap_content"
                             android:text="Thanks for tracking, Sandy!"
                             android:textColor="@color/secondaryText"
-                            android:textSize="7pt"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -58,7 +58,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Today's Score"
                                 android:textColor="@android:color/black"
-                                android:textSize="12pt"
+                                android:textSize="28sp"
                                 android:textStyle="bold" />
 
                             <ImageView
@@ -98,7 +98,7 @@
                             android:layout_weight="1"
                             android:text="Daily Log Activity"
                             android:textColor="@android:color/black"
-                            android:textSize="7pt"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -107,7 +107,7 @@
                             android:layout_gravity="right"
                             android:text="View History"
                             android:textColor="@color/secondaryText"
-                            android:textSize="6pt"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -117,7 +117,7 @@
                         android:layout_marginHorizontal="@dimen/horizonal_margin"
                         android:text="Week of April 20"
                         android:textColor="@color/secondaryText"
-                        android:textSize="6pt" />
+                        android:textSize="16sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/submissions_recycler_view"
@@ -151,7 +151,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginStart="20dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -159,7 +159,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Longest Stretch"
                                 android:textColor="@android:color/black"
-                                android:textSize="7pt"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -167,7 +167,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="It's been 5 days since you last visited the grocery store."
                                 android:textColor="@android:color/black"
-                                android:textSize="6pt" />
+                                android:textSize="16sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -206,7 +206,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Top 10"
                                 android:textColor="@android:color/black"
-                                android:textSize="7pt"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -214,7 +214,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="You’re in the 10% of people in your community who have reported under 5 close encounters over the last week."
                                 android:textColor="@android:color/black"
-                                android:textSize="6pt" />
+                                android:textSize="16sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -256,7 +256,7 @@
                     android:text="@string/record_activity_CTA_subtext"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="6pt" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
