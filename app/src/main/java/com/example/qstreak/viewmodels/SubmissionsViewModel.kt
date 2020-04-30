@@ -17,7 +17,7 @@ class SubmissionsViewModel(
 ) : ViewModel() {
 
     val submissions: LiveData<List<SubmissionWithActivities>> =
-        submissionRepository.submissionsWithWithActivities
+        submissionRepository.submissionsWithActivities
 
     val selectedSubmission = MutableLiveData<SubmissionWithActivities>()
     val selectedSubmissionDailyStats = MutableLiveData<DailyStats>()
@@ -29,6 +29,16 @@ class SubmissionsViewModel(
         selectedSubmission.value = submissionWithActivities
         selectedSubmissionDailyStats.value = null
         populateDailyStats(submissionWithActivities)
+    }
+
+    fun refreshSelectedSubmission() {
+        val selectedDate = selectedSubmission.value?.submission?.date
+        selectedDate?.let {
+            viewModelScope.launch {
+                selectedSubmission.value =
+                    submissionRepository.getSubmissionWithActivitiesByDate(selectedDate)
+            }
+        }
     }
 
     fun deleteSubmission() {

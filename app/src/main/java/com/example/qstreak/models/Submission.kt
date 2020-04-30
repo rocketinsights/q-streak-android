@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "submissions")
 data class Submission(
+    // TODO change primary key to date?
     @ColumnInfo(name = "date") var date: String,
     @ColumnInfo(name = "contact_count") var contactCount: Int,
     @ColumnInfo(name = "remote_id") var remoteId: Int? = null,

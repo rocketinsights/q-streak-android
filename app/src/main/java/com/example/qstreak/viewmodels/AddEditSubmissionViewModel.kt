@@ -10,6 +10,7 @@ import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.models.Activity
 import com.example.qstreak.models.Submission
 import com.example.qstreak.models.SubmissionWithActivities
+import com.example.qstreak.network.ApiResult
 import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -23,7 +24,7 @@ class AddEditSubmissionViewModel(
 ) : ViewModel() {
 
     // TODO is this locale okay to use?
-    val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+    private val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
     val activities: LiveData<List<Activity>> = activitiesRepository.activities
     val checkedActivities = MutableLiveData<List<Activity>>()
@@ -31,10 +32,10 @@ class AddEditSubmissionViewModel(
     val submissionComplete = MutableLiveData<Boolean>(false)
     val newSubmissionDate = MutableLiveData<Date>(Date())
     val contactCount = MutableLiveData<String>()
-
     val existingSubmission = MutableLiveData<SubmissionWithActivities>()
+    val errorToDisplay = MutableLiveData<String>()
 
-    val uid: String? by lazy {
+    private val uid: String? by lazy {
         sharedPreferences.getString(UID, null)
     }
 
@@ -62,29 +63,59 @@ class AddEditSubmissionViewModel(
         }
     }
 
-    fun createSubmission() {
+    fun saveSubmission() {
         // TODO handle null uid
         if (uid != null && isUserInputValid()) {
-            val submission = Submission(
-                dateFormatter.format(newSubmissionDate.value!!),
-                contactCount.value!!.toInt()
-            )
-            viewModelScope.launch {
-                try {
-                    submissionRepository.insert(
-                        submission,
-                        checkedActivities.value.orEmpty(),
-                        uid as String
-                    )
-                    submissionComplete.value = true
-                } catch (e: Exception) {
-                    // TODO retrieve error text from response body to surface to user (at api layer)
-                    Timber.e("Error message: %s", e.message)
-                } finally {
-                    checkedActivities.value = null
-                }
+            if (existingSubmission.value != null) {
+                updateExistingSubmission()
+            } else {
+                createNewSubmission()
             }
         }
+    }
+
+    private fun createNewSubmission() {
+        viewModelScope.launch {
+            try {
+                submissionRepository.insert(
+                    getCurrentSubmissionValues(),
+                    checkedActivities.value.orEmpty(),
+                    uid as String
+                )
+                submissionComplete.value = true
+            } catch (e: Exception) {
+                errorToDisplay.value = e.message
+            }
+        }
+    }
+
+    private fun updateExistingSubmission() {
+        viewModelScope.launch {
+            try {
+                val response = submissionRepository.updateSubmission(
+                    getCurrentSubmissionValues(),
+                    checkedActivities.value.orEmpty(),
+                    uid as String
+                )
+                if (response is ApiResult.Success) {
+                    submissionComplete.value = true
+                } else {
+                    // We received an API error when attempting to update a submission.
+                    errorToDisplay.value = (response as ApiResult.Error).apiErrors
+                }
+            } catch (e: Exception) {
+                // Something else went wrong when attempting to update a submission.
+                errorToDisplay.value = e.message
+            }
+        }
+    }
+
+    private fun getCurrentSubmissionValues(): Submission {
+        return Submission(
+            dateFormatter.format(newSubmissionDate.value!!),
+            contactCount.value!!.toInt(),
+            existingSubmission.value?.submission?.remoteId
+        )
     }
 
     private fun isUserInputValid(): Boolean {

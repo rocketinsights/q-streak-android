@@ -17,6 +17,11 @@ class SubmissionDetailFragment : Fragment() {
     }
     private lateinit var binding: FragmentSubmissionDetailBinding
 
+    override fun onResume() {
+        super.onResume()
+        submissionsViewModel.refreshSelectedSubmission()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

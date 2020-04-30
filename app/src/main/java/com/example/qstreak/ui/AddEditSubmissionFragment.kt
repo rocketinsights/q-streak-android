@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
-import com.example.qstreak.databinding.FragmentAddSubmissionBinding
+import com.example.qstreak.databinding.FragmentAddEditSubmissionBinding
 import com.example.qstreak.models.Activity
 import com.example.qstreak.viewmodels.AddEditSubmissionViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -23,7 +23,7 @@ class AddEditSubmissionFragment : Fragment() {
     private val addEditViewModel: AddEditSubmissionViewModel by currentScope.viewModel(this)
     private val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
-    private lateinit var binding: FragmentAddSubmissionBinding
+    private lateinit var binding: FragmentAddEditSubmissionBinding
 
     override fun onResume() {
         super.onResume()
@@ -41,7 +41,7 @@ class AddEditSubmissionFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(activity),
-            R.layout.fragment_add_submission,
+            R.layout.fragment_add_edit_submission,
             null,
             false
         )
