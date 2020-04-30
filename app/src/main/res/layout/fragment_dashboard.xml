@@ -142,7 +142,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:contentDescription="longest streak icon"
                         android:src="@drawable/qstreak_longest_streak" />
 
@@ -191,9 +191,9 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:contentDescription="longest streak icon"
-                        android:src="@drawable/qstreak_longest_streak" />
+                        android:layout_height="wrap_content"
+                        android:contentDescription="rank icon"
+                        android:src="@drawable/qstreak_rank_icon" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
