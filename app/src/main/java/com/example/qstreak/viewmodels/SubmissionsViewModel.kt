@@ -13,6 +13,7 @@ import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.utils.DateUtils.dateStringFormat
 import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
+import java.util.*
 
 class SubmissionsViewModel(
     private val submissionRepository: SubmissionRepository,
@@ -23,6 +24,9 @@ class SubmissionsViewModel(
         submissionRepository.submissionsWithActivities
 
     val dailyLogInfos = MutableLiveData<List<DailyLogItemInfo>>()
+    val currentWeekString = MutableLiveData<String>().apply {
+        this.value = DateUtils.getWeekOfDateString(Calendar.getInstance().time)
+    }
 
     val selectedSubmission = MutableLiveData<SubmissionWithActivities>()
     val selectedSubmissionDailyStats = MutableLiveData<DailyStats>()
@@ -30,7 +34,6 @@ class SubmissionsViewModel(
 
     private val uid: String? = sharedPrefs.getString(UID, null)
 
-    // TODO extract date handling into a utility class
     fun generateDailyLogInfos() {
         val dates = DateUtils.listOfThisAndLastWeekDates()
 
@@ -45,6 +48,13 @@ class SubmissionsViewModel(
             val sortedInfos = latestInfos.sortedBy { it.date }
 
             dailyLogInfos.value = sortedInfos
+        }
+    }
+
+    fun setCurrentWeekBasedOnScrollPosition(position: Int) {
+        val firstVisibleDate = dailyLogInfos.value?.get(position)
+        firstVisibleDate?.let {
+            currentWeekString.value = DateUtils.getWeekOfDateString(it.date)
         }
     }
 

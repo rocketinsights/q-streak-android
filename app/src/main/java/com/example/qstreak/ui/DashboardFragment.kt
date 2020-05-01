@@ -11,10 +11,12 @@ import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentDashboardBinding
 import com.example.qstreak.models.DailyLogItemInfo
 import com.example.qstreak.models.SubmissionWithActivities
+import com.example.qstreak.utils.RecyclerViewUtils
 import com.example.qstreak.viewmodels.DashboardViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class DashboardFragment : Fragment() {
     private lateinit var binding: FragmentDashboardBinding
@@ -41,7 +43,8 @@ class DashboardFragment : Fragment() {
         )
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewmodel = dashboardViewModel
+        binding.dashboardViewModel = dashboardViewModel
+        binding.submissionsViewModel = submissionsViewModel
 
         binding.buttonRecordActivity.setOnClickListener {
             (requireActivity() as MainActivity).navigateToAddOrEditRecord()
@@ -58,6 +61,9 @@ class DashboardFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.addOnScrollListener(RecyclerViewUtils.getListenerForFirstVisibleItemPosition {
+            onScrollFirstItemVisible(it)
+        })
 
         submissionsViewModel.dailyLogInfos.observe(
             viewLifecycleOwner,
@@ -78,5 +84,10 @@ class DashboardFragment : Fragment() {
 
     private fun navigateToDetailFragment() {
         (requireActivity() as MainActivity).navigateToShowRecord()
+    }
+
+    private fun onScrollFirstItemVisible(firstItemPosition: Int) {
+        Timber.d("First item: %d", firstItemPosition)
+        submissionsViewModel.setCurrentWeekBasedOnScrollPosition(firstItemPosition)
     }
 }
