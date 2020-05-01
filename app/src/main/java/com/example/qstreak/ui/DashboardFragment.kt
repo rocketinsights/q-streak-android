@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentDashboardBinding
 import com.example.qstreak.models.DailyLogItemInfo
+import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.utils.RecyclerViewUtils
 import com.example.qstreak.viewmodels.DashboardViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
@@ -56,7 +57,7 @@ class DashboardFragment : Fragment() {
 
     private fun setupDailyLog() {
         val recyclerView = binding.dailyLogWeekView
-        val adapter = DailyLogAdapter(this::onDateSelected)
+        val adapter = DailyLogAdapter(this::onDailyLogItemSelected)
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -72,12 +73,14 @@ class DashboardFragment : Fragment() {
             })
     }
 
-    private fun onDateSelected(item: DailyLogItemInfo) {
+    private fun onDailyLogItemSelected(item: DailyLogItemInfo) {
         if (item.isComplete) {
             submissionsViewModel.selectSubmission(item.submission!!)
             (requireActivity() as MainActivity).navigateToShowRecord()
         } else {
-            (requireActivity() as MainActivity).navigateToAddOrEditRecord()
+            (requireActivity() as MainActivity).navigateToAddOrEditRecord(
+                DateUtils.dateStringFormat.format(item.date)
+            )
         }
     }
 

@@ -6,6 +6,7 @@ import java.util.*
 object DateUtils {
 
     val dateStringFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+    val dateStringFormatForAddEditRecord = SimpleDateFormat("EEEE MMMM d", Locale.US)
     val dateFormatDayOfWeek = SimpleDateFormat("E", Locale.US)
     val dateFormatDayOfMonth = SimpleDateFormat("dd", Locale.US)
     val dateFormatWeekOfDate = SimpleDateFormat("MMMM d", Locale.US)
@@ -35,6 +36,20 @@ object DateUtils {
         calendar.add(Calendar.DATE, -(dayOfWeek - 1))
 
         return dateFormatWeekOfDate.format(calendar.time)
+    }
+
+    fun getDateStringForAddEditFromDate(date: Date = Calendar.getInstance().time): String {
+        return dateStringFormatForAddEditRecord.format(date)
+    }
+
+    fun getDateStringForAddEditFromDbRecord(dbString: String): String? {
+        return getDateFromDbRecord(dbString)?.let {
+            dateStringFormatForAddEditRecord.format(it)
+        }
+    }
+
+    fun getDateFromDbRecord(dbString: String): Date? {
+        return dateStringFormat.parse(dbString)
     }
 }
 

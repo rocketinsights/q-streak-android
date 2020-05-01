@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="DATE"
-            android:text="@{viewModel.newSubmissionDate.toString()}"
+            android:text="@{viewModel.submissionDateString}"
             >
 
         </Button>
