@@ -85,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/DefaultInputBackground"
                     android:orientation="vertical"
-                    android:paddingVertical="20dp">
+                    android:paddingTop="20dp">
 
                     <LinearLayout
                         android:layout_width="fill_parent"
@@ -118,9 +118,13 @@
                         android:textSize="16sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/submissions_recycler_view"
+                        android:id="@+id/daily_log_week_view"
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="26dp"/>
+
                 </LinearLayout>
 
                 <com.google.android.material.card.MaterialCardView

@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentDashboardBinding
+import com.example.qstreak.models.DailyLogItemInfo
 import com.example.qstreak.models.SubmissionWithActivities
 import com.example.qstreak.viewmodels.DashboardViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
@@ -21,6 +21,11 @@ class DashboardFragment : Fragment() {
     private val dashboardViewModel: DashboardViewModel by currentScope.viewModel(this)
     private val submissionsViewModel: SubmissionsViewModel by lazy {
         (requireActivity() as MainActivity).submissionsViewModel
+    }
+
+    override fun onResume() {
+        super.onResume()
+        submissionsViewModel.generateDailyLogInfos()
     }
 
     override fun onCreateView(
@@ -42,24 +47,28 @@ class DashboardFragment : Fragment() {
             (requireActivity() as MainActivity).navigateToAddOrEditRecord()
         }
 
-        binding.buttonDebugComponent.setOnClickListener {
-            navigateToTempDailyLogFragment()
-        }
-
-        setupSubmissionsList()
+        setupDailyLog()
 
         return binding.root
     }
 
-    private fun setupSubmissionsList() {
-        val recyclerView = binding.submissionsRecyclerView
-        val adapter = SubmissionsAdapter(this::onSubmissionSelected)
+    private fun setupDailyLog() {
+        val recyclerView = binding.dailyLogWeekView
+        val adapter = DailyLogAdapter(this::onDateSelected)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
-        submissionsViewModel.submissions.observe(viewLifecycleOwner, Observer { submissions ->
-            submissions?.let { adapter.setSubmissions(it) }
-        })
+        submissionsViewModel.dailyLogInfos.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { infos ->
+                adapter.setItemInfos(infos)
+                recyclerView.layoutManager?.scrollToPosition(adapter.itemCount - 1)
+            })
+    }
+
+    private fun onDateSelected(item: DailyLogItemInfo) {
+        (requireActivity() as MainActivity).navigateToAddOrEditRecord(item.submission?.submission?.date)
     }
 
     private fun onSubmissionSelected(submissionWithActivities: SubmissionWithActivities) {
@@ -69,9 +78,5 @@ class DashboardFragment : Fragment() {
 
     private fun navigateToDetailFragment() {
         (requireActivity() as MainActivity).navigateToShowRecord()
-    }
-
-    private fun navigateToTempDailyLogFragment() {
-        (requireActivity() as MainActivity).navigateToTempDailyLog()
     }
 }
