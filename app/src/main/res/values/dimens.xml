@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="onboarding_horizonal_margin">30dp</dimen>
+    <dimen name="horizonal_margin">30dp</dimen>
 </resources>

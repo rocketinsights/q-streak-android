@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimaryDark">#65E9BA</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="primary_action">#8CF5D0</color>
     <color name="FocusInputBackground">#308CF5D0</color>
     <color name="DefaultInputBackground">#F2F5F7</color>
+    <color name="secondaryText">#9B9CAE</color>
+    <color name="cardBorder">#203f3d56</color>
 </resources>

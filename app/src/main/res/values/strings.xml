@@ -12,6 +12,17 @@
     <string name="woman_with_eyepatch">Woman with eyepatch</string>
     <string name="onboarding_step2_signup_text">📝 This information helps us calculate your daily activity score.</string>
     <string name="onboarding_step2_signup_title">About you</string>
+    <string name="record_activity_label">Record Activity</string>
+    <string name="record_activity_CTA_subtext">See how you\'re contributing to the curve.</string>
+    <string name="score_meter_level_5">score meter level 5</string>
+    <string name="help_button_text">what is this?</string>
+    <string name="todays_score">Today\'s Score</string>
+    <string name="daily_log_activity">Daily Log Activity</string>
+    <string name="view_history">View History</string>
+    <string name="longest_streak_icon">longest streak icon</string>
+    <string name="longest_stretch">Longest Stretch</string>
+    <string name="rank_icon">rank icon</string>
+    <string name="risk_warning_icon">risk warning icon</string>
 
     <string-array name="onboarding_titles">
         <item>Onboarding Fragment 1</item>
