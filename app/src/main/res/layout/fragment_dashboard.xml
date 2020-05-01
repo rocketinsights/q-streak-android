@@ -215,7 +215,7 @@
                         android:layout_marginEnd="13dp"
                         android:layout_marginStart="42dp"
                         android:contentDescription="@string/risk_warning_icon"
-                        android:src="@drawable/qstreak_help_button" />
+                        android:src="@drawable/qstreak_risk_warning" />
 
                     <TextView
                         android:layout_width="wrap_content"
