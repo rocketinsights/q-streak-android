@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentTempDailyLogBinding
 import com.example.qstreak.models.DailyLogItemInfo
@@ -48,16 +49,16 @@ class TempDailyLogFragment : Fragment() {
     private fun setupDailyLog() {
         val recyclerView = binding.dailyLogWeekView
         val adapter = DailyLogAdapter(this::onItemSelected)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
         submissionsViewModel.dailyLogInfos.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer { infos ->
                 adapter.setItemInfos(infos)
+                recyclerView.layoutManager?.scrollToPosition(adapter.itemCount - 1)
             })
-
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun onItemSelected(item: DailyLogItemInfo) {

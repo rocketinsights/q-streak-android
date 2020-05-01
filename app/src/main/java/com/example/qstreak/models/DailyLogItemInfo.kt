@@ -1,5 +1,7 @@
 package com.example.qstreak.models
 
+import com.example.qstreak.utils.DateUtils.dateFormatDayOfMonth
+import com.example.qstreak.utils.DateUtils.dateFormatDayOfWeek
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -8,8 +10,6 @@ data class DailyLogItemInfo(
     val submission: SubmissionWithActivities? = null
 ) {
     private val dateFormatFullDay = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    private val dateFormatDayOfWeek = SimpleDateFormat("E", Locale.US)
-    private val dateFormatDayOfMonth = SimpleDateFormat("dd", Locale.US)
     val dayOfWeek: String = dateFormatDayOfWeek.format(date).toUpperCase(Locale.US)
     val dayOfMonth: String = dateFormatDayOfMonth.format(date)
 

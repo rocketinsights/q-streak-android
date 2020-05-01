@@ -9,10 +9,10 @@ import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.models.DailyLogItemInfo
 import com.example.qstreak.models.DailyStats
 import com.example.qstreak.models.SubmissionWithActivities
+import com.example.qstreak.utils.DateUtils
+import com.example.qstreak.utils.DateUtils.dateStringFormat
 import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 
 class SubmissionsViewModel(
     private val submissionRepository: SubmissionRepository,
@@ -32,34 +32,19 @@ class SubmissionsViewModel(
 
     // TODO extract date handling into a utility class
     fun generateDailyLogInfos() {
-        val fullDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-
-        val calendar = Calendar.getInstance().apply {
-            this.add(Calendar.DATE, -14)
-        }
-
-        val dates = mutableListOf<Date>().apply {
-            for (i in 1..14) {
-                this.add(calendar.time)
-                calendar.add(Calendar.DATE, 1)
-            }
-        }
-
-        val dailyInfos = arrayListOf<DailyLogItemInfo>()
+        val dates = DateUtils.listOfThisAndLastWeekDates()
 
         viewModelScope.launch {
-            for (date in dates) {
-                val submissionOrNull =
-                    submissionRepository.getSubmissionWithActivitiesByDate(
-                        fullDateFormat.format(
-                            date
-                        )
-                    )
-                dailyInfos.add(DailyLogItemInfo(date, submissionOrNull))
+            val latestInfos = dates.map {
+                val submission = submissionRepository.getSubmissionWithActivitiesByDate(
+                    dateStringFormat.format(it)
+                )
+                DailyLogItemInfo(it, submission)
             }
-            dailyInfos.sortBy { it.date }
 
-            dailyLogInfos.value = dailyInfos
+            val sortedInfos = latestInfos.sortedBy { it.date }
+
+            dailyLogInfos.value = sortedInfos
         }
     }
 
