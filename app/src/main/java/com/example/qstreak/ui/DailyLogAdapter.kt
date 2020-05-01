@@ -1,5 +1,6 @@
 package com.example.qstreak.ui
 
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +19,18 @@ class DailyLogAdapter(
     private val infos = arrayListOf<DailyLogItemInfo>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyLogViewHolder {
-        val holder = DailyLogViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.daily_log_item,
-                parent,
-                false
-            )
+        val view = LayoutInflater.from(parent.context).inflate(
+            R.layout.daily_log_item,
+            parent,
+            false
         )
+
+        val layoutParams = view.layoutParams
+        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
+        layoutParams.width = (screenWidth / 7)
+        view.layoutParams = layoutParams
+
+        val holder = DailyLogViewHolder(view)
 
         holder.itemView.setOnClickListener {
             onItemClicked(infos[holder.adapterPosition])

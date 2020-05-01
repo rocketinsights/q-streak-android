@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentTempDailyLogBinding
 import com.example.qstreak.models.DailyLogItemInfo
 import com.example.qstreak.viewmodels.SubmissionsViewModel
-import timber.log.Timber
 
 class TempDailyLogFragment : Fragment() {
 
@@ -62,8 +60,7 @@ class TempDailyLogFragment : Fragment() {
     }
 
     private fun onItemSelected(item: DailyLogItemInfo) {
-        // TODO
-        Timber.d("Clicked on a date.")
+        (requireActivity() as MainActivity).navigateToAddOrEditRecord(item.submission?.submission?.date)
     }
 
     companion object {
