@@ -57,9 +57,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/todays_score"
-                                android:textColor="@android:color/black"
-                                android:textSize="28sp"
-                                android:textStyle="bold" />
+                                style="@style/MainHeader" />
 
                             <ImageView
                                 android:id="@+id/help_button"
