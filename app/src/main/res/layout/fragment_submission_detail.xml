@@ -14,41 +14,42 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="60dp"
+        android:paddingHorizontal="@dimen/horizonal_margin">
 
         <TextView
             android:id="@+id/submission_detail_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{viewModel.selectedSubmission.submission.date}"
-            android:textSize="32sp"
+            android:textAlignment="center"
+            style="@style/SecondaryHeader"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2020-04-05" />
 
         <TextView
-            android:id="@+id/submission_detail_contact_count"
+            android:id="@+id/submission_detail_header"
+            style="@style/MainHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{@string/submission_detail_contact_count(viewModel.selectedSubmission.submission.contactCount)}"
-            android:textSize="32sp"
+            android:text="@string/activity_report"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/submission_detail_date"
-            tools:text="Reported contact count: 2" />
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_date" />
 
-        <TextView
-            android:id="@+id/submission_detail_activities"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/submission_detail_score_meter"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{"Reported activities: " + viewModel.selectedSubmission.activityNames()}'
-            android:textSize="32sp"
-            android:visibility="@{viewModel.selectedSubmission.activities.isEmpty ? View.GONE : View.VISIBLE}"
+            android:contentDescription="@string/score_meter"
+            android:src="@drawable/qstreak_score_5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/submission_detail_contact_count"
-            tools:text="Reported activities: Grocery Store" />
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_header" />
 
         <TextView
             android:id="@+id/submission_detail_score"
@@ -58,67 +59,81 @@
             android:textSize="32sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/submission_detail_activities"
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_score_meter"
             tools:text="Score: 3" />
 
         <TextView
-            android:id="@+id/submission_detail_date_of_data"
+            android:id="@+id/submission_detail_contact_count_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{"Data as of: " + viewModel.selectedSubmissionDailyStats.date}'
-            android:textSize="32sp"
-            android:visibility="@{viewModel.selectedSubmissionDailyStats != null ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/submission_detail_score"
-            tools:text="Data as of: 2020-04-05" />
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:text="Contact:" />
 
         <TextView
-            android:id="@+id/submission_detail_cases"
+            android:id="@+id/submission_detail_contact_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{"Cases: "+ Integer.toString(viewModel.selectedSubmissionDailyStats.cases)}'
-            android:textSize="32sp"
-            android:visibility="@{viewModel.selectedSubmissionDailyStats != null ? View.VISIBLE : View.GONE}"
+            android:text="@{@string/submission_detail_contact_count(viewModel.selectedSubmission.submission.contactCount)}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:paddingBottom="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/submission_detail_date_of_data"
-            tools:text="Cases: 100" />
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_contact_count_header"
+            tools:text="2 people" />
 
         <TextView
-            android:id="@+id/submission_detail_deaths"
+            android:id="@+id/submission_detail_locations_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{"Deaths: "+ Integer.toString(viewModel.selectedSubmissionDailyStats.deaths)}'
-            android:textSize="32sp"
-            android:visibility="@{viewModel.selectedSubmissionDailyStats != null ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/submission_detail_cases"
-            tools:text="Deaths: 2" />
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_contact_count"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:text="Reported Locations:" />
 
         <TextView
-            android:id="@+id/submission_detail_risk_level"
+            android:id="@+id/submission_detail_activities"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{"Risk level: "+ Integer.toString(viewModel.selectedSubmissionDailyStats.riskLevel)}'
+            android:text='@{viewModel.selectedSubmission.activityNames()}'
             android:textSize="32sp"
-            android:visibility="@{viewModel.selectedSubmissionDailyStats != null ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.selectedSubmission.activities.isEmpty ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/submission_detail_deaths"
-            tools:text="Risk level: 4" />
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_locations_header"
+            tools:text="Grocery Store" />
 
-        <ImageView
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/edit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            style="@style/PrimaryActionButton"
+            android:text="Edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/delete_button" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:contentDescription="@string/delete_submission"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="25dp"
+            style="@style/PrimaryActionButton"
+            android:backgroundTint="@android:color/white"
             android:onClick="@{() -> viewModel.deleteSubmission()}"
-            android:src="@android:drawable/ic_delete"
+            android:text="Delete Record"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/submission_detail_risk_level" />
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
