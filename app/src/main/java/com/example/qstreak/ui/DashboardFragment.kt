@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentDashboardBinding
 import com.example.qstreak.models.DailyLogItemInfo
-import com.example.qstreak.models.SubmissionWithActivities
 import com.example.qstreak.utils.RecyclerViewUtils
 import com.example.qstreak.viewmodels.DashboardViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
@@ -74,16 +73,12 @@ class DashboardFragment : Fragment() {
     }
 
     private fun onDateSelected(item: DailyLogItemInfo) {
-        (requireActivity() as MainActivity).navigateToAddOrEditRecord(item.submission?.submission?.date)
-    }
-
-    private fun onSubmissionSelected(submissionWithActivities: SubmissionWithActivities) {
-        submissionsViewModel.selectSubmission(submissionWithActivities)
-        navigateToDetailFragment()
-    }
-
-    private fun navigateToDetailFragment() {
-        (requireActivity() as MainActivity).navigateToShowRecord()
+        if (item.isComplete) {
+            submissionsViewModel.selectSubmission(item.submission!!)
+            (requireActivity() as MainActivity).navigateToShowRecord()
+        } else {
+            (requireActivity() as MainActivity).navigateToAddOrEditRecord()
+        }
     }
 
     private fun onScrollFirstItemVisible(firstItemPosition: Int) {

@@ -1,7 +1,6 @@
 package com.example.qstreak.viewmodels
 
 import android.content.SharedPreferences
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,9 +18,6 @@ class SubmissionsViewModel(
     private val submissionRepository: SubmissionRepository,
     sharedPrefs: SharedPreferences
 ) : ViewModel() {
-
-    val submissions: LiveData<List<SubmissionWithActivities>> =
-        submissionRepository.submissionsWithActivities
 
     val dailyLogInfos = MutableLiveData<List<DailyLogItemInfo>>()
     val currentWeekString = MutableLiveData<String>().apply {
