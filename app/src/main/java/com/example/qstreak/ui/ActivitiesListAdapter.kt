@@ -38,11 +38,11 @@ class ActivitiesListAdapter(activities: List<Activity>) :
     override fun onBindViewHolder(holder: ActivityViewHolder, position: Int) {
         val activity = activities[position]
         holder.activityName.text = activity.name
-        holder.activityIcon.setImageResource(ImageUtils.getImageByLocation(activity.activitySlug))
+        holder.activityIcon.text = activity.icon
     }
 
     inner class ActivityViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val activityIcon: ImageView = view.activity_icon
+        val activityIcon: TextView = view.activity_icon
         val activityName: TextView = view.activity_name
     }
 

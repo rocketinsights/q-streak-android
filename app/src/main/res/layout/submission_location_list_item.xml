@@ -9,19 +9,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
+        <TextView
             android:id="@+id/activity_icon"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            tools:src="@drawable/qstreak_help_button" />
+            android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            android:fontFamily="@font/fa_regular_400"
+            android:textColor="@color/locationIcon"
+            android:textSize="24sp"
+            tools:text="\uf2b9" />
 
         <TextView
             android:id="@+id/activity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:textColor="@color/locationText"
             android:textSize="24sp"
             tools:text="Grocery Store" />
     </LinearLayout>

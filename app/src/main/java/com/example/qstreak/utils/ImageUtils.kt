@@ -14,13 +14,4 @@ object ImageUtils {
             else -> 0
         }
     }
-
-    fun getImageByLocation(activity: String?): Int {
-        return when (activity) {
-            "grocery-store" -> R.drawable.qstreak_longest_streak
-            "post-office" -> R.drawable.qstreak_help_button
-            "pharmacy" -> R.drawable.qstreak_risk_warning
-            else -> 0
-        }
-    }
 }

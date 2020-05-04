@@ -8,4 +8,6 @@
     <color name="DefaultInputBackground">#F2F5F7</color>
     <color name="secondaryText">#9B9CAE</color>
     <color name="cardBorder">#203f3d56</color>
+    <color name="locationIcon">#6C63FF</color>
+    <color name="locationText">#4E4C70</color>
 </resources>
