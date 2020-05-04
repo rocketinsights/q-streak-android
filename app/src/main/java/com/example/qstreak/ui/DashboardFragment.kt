@@ -50,6 +50,10 @@ class DashboardFragment : Fragment() {
             (requireActivity() as MainActivity).navigateToAddOrEditRecord()
         }
 
+        binding.scoreMeter.setOnClickListener {
+            (requireActivity() as MainActivity).navigateToAddOrEditRecord()
+        }
+
         setupDailyLog()
 
         return binding.root

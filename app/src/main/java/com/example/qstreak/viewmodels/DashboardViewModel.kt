@@ -6,25 +6,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.utils.DateUtils
+import com.example.qstreak.utils.ImageUtils
 import com.example.qstreak.utils.USER_NAME
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.*
 
-class DashboardViewModel(
-    private val submissionRepository: SubmissionRepository,
-    sharedPrefs: SharedPreferences
-) : ViewModel() {
-
+class DashboardViewModel(private val submissionRepository: SubmissionRepository,
+                         sharedPrefs: SharedPreferences) : ViewModel() {
+    val currentScoreImage = MutableLiveData<Int>()
+    val hasEntryForToday = MutableLiveData<Boolean>()
     val userName = MutableLiveData<String>(sharedPrefs.getString(USER_NAME, null))
 
     fun refreshToday() {
-        // TODO use this call as needed -- retrieves submission for today if one is available
         viewModelScope.launch {
             val submission = submissionRepository.getSubmissionWithActivitiesByDate(
                 DateUtils.dateStringFormat.format(Calendar.getInstance().time)
             )
-            Timber.d("submission or null: %s", submission)
+            hasEntryForToday.value = submission != null
+            currentScoreImage.value =
+                ImageUtils.getDashboardImageByScore(submission?.submission?.score)
         }
     }
 }
