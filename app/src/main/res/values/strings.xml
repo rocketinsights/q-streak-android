@@ -23,6 +23,7 @@
     <string name="longest_stretch">Longest Stretch</string>
     <string name="rank_icon">rank icon</string>
     <string name="risk_warning_icon">risk warning icon</string>
+    <string name="daily_checkmark">daily_checkmark</string>
 
     <string-array name="onboarding_titles">
         <item>Onboarding Fragment 1</item>
