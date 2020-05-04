@@ -11,6 +11,7 @@ import com.example.qstreak.models.Activity
 import com.example.qstreak.models.SubmissionWithActivities
 import com.example.qstreak.network.ApiResult
 import com.example.qstreak.network.SubmissionResponse
+import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -30,7 +31,8 @@ class AddEditSubmissionViewModel(
     val checkedActivities = MutableLiveData<List<Activity>>()
 
     val submissionComplete = MutableLiveData<Boolean>(false)
-    val newSubmissionDate = MutableLiveData<Date>(Date())
+    val submissionDate = MutableLiveData<Date>(Date())
+    val submissionDateString = MutableLiveData<String>(DateUtils.getDateStringForAddEditFromDate())
     val contactCount = MutableLiveData<String>()
     val existingSubmission = MutableLiveData<SubmissionWithActivities>()
     val errorToDisplay = MutableLiveData<String>()
@@ -52,15 +54,17 @@ class AddEditSubmissionViewModel(
         }
     }
 
-    fun getSubmissionByDate(date: String) {
+    fun initializeWithDate(dateString: String) {
         viewModelScope.launch {
             try {
-                val submission = submissionRepository.getSubmissionWithActivitiesByDate(date)
+                val submission = submissionRepository.getSubmissionWithActivitiesByDate(dateString)
                 existingSubmission.value = submission
             } catch (e: Exception) {
-                errorToDisplay.value = ("Error loading date: $date")
+                errorToDisplay.value = ("Error loading date: $dateString")
                 Timber.e(e)
             }
+            submissionDate.value = DateUtils.dateStringFormat.parse(dateString)
+            submissionDateString.value = DateUtils.getDateStringForAddEditFromDbRecord(dateString)
         }
     }
 
@@ -78,7 +82,7 @@ class AddEditSubmissionViewModel(
                         )
                     } ?: createNewSubmission(
                         contactCount.value!!.toInt(),
-                        dateFormatter.format(newSubmissionDate.value!!),
+                        dateFormatter.format(submissionDate.value!!),
                         checkedActivities.value.orEmpty(),
                         uid as String
                     )
