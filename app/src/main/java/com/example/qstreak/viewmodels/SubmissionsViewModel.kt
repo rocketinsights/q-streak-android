@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.models.DailyStats
 import com.example.qstreak.models.SubmissionWithActivities
+import com.example.qstreak.utils.ImageUtils
 import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
 
@@ -23,12 +24,15 @@ class SubmissionsViewModel(
     val selectedSubmissionDailyStats = MutableLiveData<DailyStats>()
     val submissionDeleted = MutableLiveData<Boolean>(false)
 
+    val selectedSubmissionScoreImage = MutableLiveData<Int>()
+
     private val uid: String? = sharedPrefs.getString(UID, null)
 
     fun selectSubmission(submissionWithActivities: SubmissionWithActivities) {
         selectedSubmission.value = submissionWithActivities
         selectedSubmissionDailyStats.value = null
         populateDailyStats(submissionWithActivities)
+        selectedSubmissionScoreImage.value = ImageUtils.getImageByScore(submissionWithActivities.submission.score)
     }
 
     fun deleteSubmission() {

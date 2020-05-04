@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentSubmissionDetailBinding
 import com.example.qstreak.viewmodels.SubmissionsViewModel
@@ -32,6 +33,7 @@ class SubmissionDetailFragment : Fragment() {
         binding.viewModel = submissionsViewModel
 
         observeDeletion()
+        setupActivitiesList()
 
         return binding.root
     }
@@ -44,6 +46,20 @@ class SubmissionDetailFragment : Fragment() {
                 submissionsViewModel.submissionDeleted.value = false
             }
         })
+    }
+
+    private fun setupActivitiesList() {
+        val adapter = ActivitiesListAdapter(
+            submissionsViewModel.selectedSubmission.value?.activities.orEmpty()
+        )
+
+        submissionsViewModel.selectedSubmission.observe(viewLifecycleOwner, Observer {
+            adapter.setActivities(it.activities)
+        })
+
+        binding.activitiesList.adapter = adapter
+        binding.activitiesList.layoutManager =
+            LinearLayoutManager(activity)
     }
 
     companion object {
