@@ -16,7 +16,6 @@ import com.example.qstreak.viewmodels.DashboardViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class DashboardFragment : Fragment() {
     private lateinit var binding: FragmentDashboardBinding
@@ -86,7 +85,6 @@ class DashboardFragment : Fragment() {
     }
 
     private fun onScrollFirstItemVisible(firstItemPosition: Int) {
-        Timber.d("First item: %d", firstItemPosition)
         submissionsViewModel.setCurrentWeekBasedOnScrollPosition(firstItemPosition)
     }
 }
