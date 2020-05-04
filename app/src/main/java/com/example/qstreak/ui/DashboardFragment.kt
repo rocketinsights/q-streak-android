@@ -28,6 +28,7 @@ class DashboardFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         submissionsViewModel.generateDailyLogInfos()
+        dashboardViewModel.refreshToday()
     }
 
     override fun onCreateView(
