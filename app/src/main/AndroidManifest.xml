@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.SubmissionsActivity" />
-        <activity android:name=".ui.OnboardingActivity" />
+        <activity
+            android:name=".ui.OnboardingActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.SplashActivity"
             android:theme="@style/AppTheme.Splash">
