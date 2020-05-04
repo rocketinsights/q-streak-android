@@ -32,6 +32,13 @@ interface QstreakApiService {
         @Header(AUTHORIZATION) uid: String
     ): Response<Unit>
 
+    @PUT("submissions/{remoteId}")
+    suspend fun updateSubmission(
+        @Path("remoteId") remoteId: Int,
+        @Body updateSubmissionRequest: UpdateSubmissionRequest,
+        @Header(AUTHORIZATION) uid: String
+    ): SubmissionResponse
+
     companion object {
         const val AUTHORIZATION = "Authorization"
 

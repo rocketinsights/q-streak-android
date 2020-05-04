@@ -8,10 +8,6 @@ import androidx.room.PrimaryKey
 data class Submission(
     @ColumnInfo(name = "date") var date: String,
     @ColumnInfo(name = "contact_count") var contactCount: Int,
-    @ColumnInfo(name = "remote_id") var remoteId: Int? = null,
+    @PrimaryKey @ColumnInfo(name = "remote_id") var remoteId: Int,
     @ColumnInfo(name = "score") var score: Int? = null
-) {
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "submission_id")
-    var submissionId: Int = 0
-}
+)

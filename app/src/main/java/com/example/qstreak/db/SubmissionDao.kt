@@ -12,12 +12,9 @@ interface SubmissionDao {
     @Query("SELECT * FROM submissions LIMIT 100")
     fun getAllSubmissions(): LiveData<List<Submission>>
 
-    @Query("SELECT * FROM submissions WHERE submission_id = :id")
-    suspend fun get(id: Int): Submission
-
     @Update
     suspend fun update(submission: Submission)
 
-    @Delete
-    suspend fun delete(submission: Submission)
+    @Query("DELETE FROM submissions WHERE remote_id = :remoteId")
+    suspend fun deleteByRemoteId(remoteId: Int)
 }

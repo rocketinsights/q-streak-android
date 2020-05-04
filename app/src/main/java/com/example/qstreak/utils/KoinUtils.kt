@@ -96,7 +96,7 @@ private fun scopeModules() = module {
         viewModel { OnboardingViewModel(get(), get()) }
     }
     scope(named<AddEditSubmissionFragment>()) {
-        viewModel { AddSubmissionViewModel(get(), get(), get()) }
+        viewModel { AddEditSubmissionViewModel(get(), get(), get()) }
     }
     scope(named<DashboardFragment>()) {
         viewModel { DashboardViewModel() }
