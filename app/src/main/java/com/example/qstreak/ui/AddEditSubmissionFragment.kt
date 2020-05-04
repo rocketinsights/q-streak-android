@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentAddEditSubmissionBinding
 import com.example.qstreak.models.Activity
+import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.viewmodels.AddEditSubmissionViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import org.koin.androidx.scope.currentScope
@@ -22,7 +23,6 @@ import java.util.*
 class AddEditSubmissionFragment : Fragment() {
 
     private val addEditViewModel: AddEditSubmissionViewModel by currentScope.viewModel(this)
-    private val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
     private lateinit var binding: FragmentAddEditSubmissionBinding
 
@@ -36,8 +36,8 @@ class AddEditSubmissionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        arguments?.getString(SUBMISSION_ID_KEY)?.let {
-            addEditViewModel.getSubmissionByDate(it)
+        arguments?.getString(SUBMISSION_DATE_KEY)?.let {
+            addEditViewModel.initializeWithDate(it)
         }
 
         binding = DataBindingUtil.inflate(
@@ -82,11 +82,23 @@ class AddEditSubmissionFragment : Fragment() {
         binding.activitiesChecklist.layoutManager = LinearLayoutManager(activity)
     }
 
+    // TODO this is MVP. How to avoid coming back up to the Fragment here?
     private fun observeExistingSubmission() {
         addEditViewModel.existingSubmission.observe(viewLifecycleOwner, Observer { existing ->
-            addEditViewModel.contactCount.value = existing.submission.contactCount.toString()
-            addEditViewModel.newSubmissionDate.value = dateFormatter.parse(existing.submission.date)
-            addEditViewModel.checkedActivities.value = existing.activities
+            if (existing != null) {
+                // TODO less gross way to do this: (ensures if we return to detail page the correct record is selected)
+                (requireActivity() as MainActivity).submissionsViewModel.selectSubmission(existing)
+
+                addEditViewModel.contactCount.value = existing.submission.contactCount.toString()
+                addEditViewModel.submissionDate.value =
+                    DateUtils.getDateFromDbRecord(existing.submission.date)
+                addEditViewModel.submissionDateString.value =
+                    DateUtils.getDateStringForAddEditFromDbRecord(existing.submission.date)
+                addEditViewModel.checkedActivities.value = existing.activities
+            } else {
+                addEditViewModel.contactCount.value = null
+                addEditViewModel.checkedActivities.value = null
+            }
         })
     }
 
@@ -108,12 +120,14 @@ class AddEditSubmissionFragment : Fragment() {
         binding.dateButton.setOnClickListener {
             val builder = MaterialDatePicker.Builder.datePicker()
             val picker = builder.build()
-            // TODO listen for user changing date with date picker, then check to see if there is an existing record for that date (need to handle time zone weirdness)
             picker.addOnPositiveButtonClickListener {
-                // Log.d("DatePicker Activity", "Date String = ${picker.headerText}:: Date epoch value = ${it}")
-                val pickedDate = Date(it)
-                // TODO viewmodel needs to check repository for existing submission w this date
-                addEditViewModel.newSubmissionDate.value = pickedDate
+                val calendar = Calendar.getInstance().apply {
+                    this.time = Date(it)
+                    // TODO Don't know why we have to add one to the result of the picker
+                    this.add(Calendar.DATE, 1)
+                }
+                val pickedDate = DateUtils.dateStringFormat.format(calendar.time)
+                addEditViewModel.initializeWithDate(pickedDate)
             }
             picker.show(requireActivity().supportFragmentManager, picker.toString())
         }
@@ -125,12 +139,12 @@ class AddEditSubmissionFragment : Fragment() {
 
     companion object {
         const val TAG = "AddSubmissionFragment"
-        const val SUBMISSION_ID_KEY = "submission_id"
+        const val SUBMISSION_DATE_KEY = "submission_id"
 
         fun newInstance(existingSubmissionDate: String?): AddEditSubmissionFragment {
             val fragment = AddEditSubmissionFragment()
             existingSubmissionDate?.let { date ->
-                fragment.arguments = Bundle().apply { this.putString(SUBMISSION_ID_KEY, date) }
+                fragment.arguments = Bundle().apply { this.putString(SUBMISSION_DATE_KEY, date) }
             }
             return fragment
         }

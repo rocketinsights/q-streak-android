@@ -99,7 +99,7 @@ private fun scopeModules() = module {
         viewModel { AddEditSubmissionViewModel(get(), get(), get()) }
     }
     scope(named<DashboardFragment>()) {
-        viewModel { DashboardViewModel() }
+        viewModel { DashboardViewModel(get()) }
     }
     scope(named<MainActivity>()) {
         viewModel { SubmissionsViewModel(get(), get()) }
