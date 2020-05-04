@@ -52,15 +52,9 @@ class DailyLogAdapter(
 
     private fun getResourceForCircle(itemInfo: DailyLogItemInfo): Int {
         return when {
-            itemInfo.isComplete -> {
-                R.drawable.ic_green_check_filled
-            }
-            itemInfo.isTodayOrEarlier -> {
-                R.drawable.dotted_check
-            }
-            else -> {
-                R.drawable.dotted_circle
-            }
+            itemInfo.isComplete -> R.drawable.ic_green_check_filled
+            itemInfo.isTodayOrEarlier -> R.drawable.dotted_check
+            else -> R.drawable.dotted_circle
         }
     }
 
