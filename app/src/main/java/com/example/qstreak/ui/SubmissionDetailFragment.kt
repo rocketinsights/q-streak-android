@@ -17,6 +17,11 @@ class SubmissionDetailFragment : Fragment() {
     }
     private lateinit var binding: FragmentSubmissionDetailBinding
 
+    override fun onResume() {
+        super.onResume()
+        submissionsViewModel.refreshSelectedSubmission()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,9 +36,18 @@ class SubmissionDetailFragment : Fragment() {
         binding.lifecycleOwner = activity
         binding.viewModel = submissionsViewModel
 
+        setupEditClickListener()
         observeDeletion()
 
         return binding.root
+    }
+
+    private fun setupEditClickListener() {
+        binding.editButton.setOnClickListener {
+            (requireActivity() as MainActivity).navigateToAddOrEditRecord(
+                submissionsViewModel.selectedSubmission.value?.submission?.date
+            )
+        }
     }
 
     private fun observeDeletion() {

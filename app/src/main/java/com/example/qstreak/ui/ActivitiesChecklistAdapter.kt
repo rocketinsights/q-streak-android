@@ -20,6 +20,8 @@ class ActivitiesChecklistAdapter(
         this.addAll(activities)
     }
 
+    private val checkedActivities = mutableListOf<Activity>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityViewHolder {
         val holder = ActivityViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -30,7 +32,6 @@ class ActivitiesChecklistAdapter(
         )
 
         holder.itemView.setOnClickListener {
-            holder.checkBox.toggle()
             onItemClicked(activities[holder.adapterPosition])
         }
 
@@ -44,6 +45,13 @@ class ActivitiesChecklistAdapter(
     override fun onBindViewHolder(holder: ActivityViewHolder, position: Int) {
         val activity = activities[position]
         holder.activityName.text = activity.name
+        holder.checkBox.isChecked = checkedActivities.contains(activity)
+    }
+
+    fun setCheckedActivities(activities: List<Activity>) {
+        checkedActivities.clear()
+        checkedActivities.addAll(activities)
+        notifyDataSetChanged()
     }
 
     inner class ActivityViewHolder(view: View) : RecyclerView.ViewHolder(view) {
