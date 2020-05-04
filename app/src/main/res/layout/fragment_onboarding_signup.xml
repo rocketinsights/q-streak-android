@@ -32,9 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:text="@string/onboarding_step2_signup_title"
-                android:textColor="@android:color/black"
-                android:textSize="32sp"
-                android:textStyle="bold" />
+                style="@style/OnboardingHeader" />
 
             <TextView
                 android:layout_width="match_parent"
