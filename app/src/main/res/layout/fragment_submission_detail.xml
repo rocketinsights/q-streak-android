@@ -15,16 +15,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="60dp"
-        android:paddingHorizontal="@dimen/horizonal_margin">
+        android:paddingHorizontal="@dimen/horizonal_margin"
+        android:paddingTop="60dp">
 
         <TextView
             android:id="@+id/submission_detail_date"
+            style="@style/SecondaryHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{viewModel.selectedSubmission.submission.date}"
             android:textAlignment="center"
-            style="@style/SecondaryHeader"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -52,36 +52,25 @@
             app:layout_constraintTop_toBottomOf="@id/submission_detail_header" />
 
         <TextView
-            android:id="@+id/submission_detail_score"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text='@{"Score: "+ Integer.toString(viewModel.selectedSubmission.submission.score)}'
-            android:textSize="32sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/submission_detail_score_meter"
-            tools:text="Score: 3" />
-
-        <TextView
             android:id="@+id/submission_detail_contact_count_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Contact:"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/submission_detail_score"
-            android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:text="Contact:" />
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_score_meter" />
 
         <TextView
             android:id="@+id/submission_detail_contact_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
             android:text="@{@string/submission_detail_contact_count(viewModel.selectedSubmission.submission.contactCount)}"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:paddingBottom="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/submission_detail_contact_count_header"
@@ -91,46 +80,52 @@
             android:id="@+id/submission_detail_locations_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/submission_detail_contact_count"
-            android:textSize="18sp"
+            android:text="Reported Locations:"
             android:textColor="@android:color/black"
-            android:text="Reported Locations:" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/activities_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/submission_detail_locations_header"
-            />
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_contact_count" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toTopOf="@id/edit_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/submission_detail_locations_header">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activities_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/edit_button"
+            style="@style/PrimaryActionButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            style="@style/PrimaryActionButton"
             android:text="Edit"
+            app:layout_constraintBottom_toTopOf="@id/delete_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/delete_button" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/delete_button"
+            style="@style/PrimaryActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
             android:layout_marginBottom="25dp"
-            style="@style/PrimaryActionButton"
             android:backgroundTint="@android:color/white"
             android:onClick="@{() -> viewModel.deleteSubmission()}"
             android:text="Delete Record"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
