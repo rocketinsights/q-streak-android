@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:padding="8dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/day_of_week"
@@ -12,14 +11,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
-        tools:text="SUN"/>
+        android:textColor="@color/secondaryText"
+        android:textSize="10sp"
+        tools:text="SUN" />
 
     <ImageView
         android:id="@+id/check_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/ic_gray_empty_circle"/>
+        android:contentDescription="@string/daily_checkmark"
+        android:paddingVertical="6dp"
+        android:src="@drawable/ic_gray_empty_circle" />
 
     <TextView
         android:id="@+id/day_of_month"
@@ -27,6 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
-        tools:text="12"/>
+        android:textColor="@color/secondaryText"
+        android:textSize="12sp"
+        tools:text="12" />
 
 </LinearLayout>

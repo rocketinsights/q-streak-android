@@ -28,6 +28,7 @@
     <string name="new_submission_text">📉 Let’s get your score calculated for the day. You can return here at any time to update your daily input.</string>
     <string name="new_submission_contact_label">How many people did you come into close contact with today (approximate)?</string>
     <string name="new_submission_location_label">Did you go to any of the following locations?</string>
+    <string name="daily_checkmark">daily_checkmark</string>
 
     <string-array name="onboarding_titles">
         <item>Onboarding Fragment 1</item>

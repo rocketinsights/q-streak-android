@@ -25,18 +25,13 @@ class DailyLogAdapter(
             false
         )
 
+        // Set item to 1/7 of screen width so a week's worth of days are always shown.
         val layoutParams = view.layoutParams
         val screenWidth = Resources.getSystem().displayMetrics.widthPixels
         layoutParams.width = (screenWidth / 7)
         view.layoutParams = layoutParams
 
-        val holder = DailyLogViewHolder(view)
-
-        holder.itemView.setOnClickListener {
-            onItemClicked(infos[holder.adapterPosition])
-        }
-
-        return holder
+        return DailyLogViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -45,6 +40,11 @@ class DailyLogAdapter(
 
     override fun onBindViewHolder(holder: DailyLogViewHolder, position: Int) {
         val itemInfo = infos[position]
+        if (itemInfo.isTodayOrEarlier) {
+            holder.itemView.setOnClickListener {
+                this.onItemClicked(itemInfo)
+            }
+        }
         holder.dayOfWeek.text = itemInfo.dayOfWeek
         holder.dayOfMonth.text = itemInfo.dayOfMonth
         holder.checkImage.setImageResource(getResourceForCircle(itemInfo))
@@ -52,15 +52,9 @@ class DailyLogAdapter(
 
     private fun getResourceForCircle(itemInfo: DailyLogItemInfo): Int {
         return when {
-            itemInfo.isComplete -> {
-                R.drawable.ic_green_check_filled
-            }
-            itemInfo.isToday -> {
-                R.drawable.ic_gray_check_dotted
-            }
-            else -> {
-                R.drawable.ic_gray_empty_circle
-            }
+            itemInfo.isComplete -> R.drawable.ic_green_check_filled
+            itemInfo.isTodayOrEarlier -> R.drawable.dotted_check
+            else -> R.drawable.dotted_circle
         }
     }
 

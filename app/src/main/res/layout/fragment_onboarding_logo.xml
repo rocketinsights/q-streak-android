@@ -1,71 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/horizonal_margin"
-            android:layout_marginEnd="@dimen/horizonal_margin">
+            android:layout_marginEnd="@dimen/horizonal_margin"
+            android:contentDescription="@string/woman_with_eyepatch"
+            android:src="@drawable/qstreak_onboarding_eyepatch_woman"
+            app:layout_constraintBottom_toTopOf="@id/mission_statement"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/logo"
+        <LinearLayout
+            android:id="@+id/mission_statement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/setup_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logo">
+
+            <TextView
+                android:id="@+id/mission_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="140dp"
-                android:contentDescription="@string/woman_with_eyepatch"
-                android:src="@drawable/qstreak_onboarding_eyepatch_woman"
-                app:layout_constraintBottom_toTopOf="@+id/mission_statement"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginStart="@dimen/horizonal_margin"
+                android:layout_marginEnd="@dimen/horizonal_margin"
+                android:layout_marginBottom="13dp"
+                android:text="@string/onboarding_step1_mission_title"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="32sp"
+                android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/mission_statement"
+            <TextView
+                android:id="@+id/mission_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="130dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/logo">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:text="@string/onboarding_step1_mission_title"
-                    android:textAlignment="center"
-                    style="@style/OnboardingHeader" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/onboarding_step1_mission_text"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginStart="@dimen/horizonal_margin"
+                android:layout_marginEnd="@dimen/horizonal_margin"
+                android:text="@string/onboarding_step1_mission_text"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/setup_button"
             style="@style/PrimaryActionButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="60dp"
             android:text="@string/onboarding_step1_action_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mission_statement" />
+            app:layout_constraintStart_toStartOf="parent" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

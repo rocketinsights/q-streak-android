@@ -9,53 +9,47 @@
             type="com.example.qstreak.viewmodels.OnboardingViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/signup_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
             android:layout_marginStart="@dimen/horizonal_margin"
-            android:layout_marginEnd="@dimen/horizonal_margin">
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="@dimen/horizonal_margin"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/continue_button"
+            app:layout_constraintVertical_chainStyle="spread_inside">
 
-            <LinearLayout
-                android:id="@+id/signup_text"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@id/name_input"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent">
+                android:layout_marginBottom="15dp"
+                android:text="@string/onboarding_step2_signup_title"
+                android:textColor="@android:color/black"
+                android:textSize="32sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:text="@string/onboarding_step2_signup_title"
-                    style="@style/OnboardingHeader" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/onboarding_step2_signup_text"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/onboarding_step2_signup_text"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/name_input"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:hint="@string/name"
-                android:theme="@style/PrimaryInput"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/signup_text">
+                android:theme="@style/PrimaryInput">
 
                 <com.google.android.material.textfield.TextInputEditText
                     style="@style/PrimaryInputEdit"
@@ -66,15 +60,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/zip_code_input"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:hint="@string/zip_code"
                 android:theme="@style/PrimaryInput"
-                app:errorEnabled="@{viewModel.zipCodeError}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/name_input">
+                app:errorEnabled="@{viewModel.zipCodeError}">
 
                 <com.google.android.material.textfield.TextInputEditText
                     style="@style/PrimaryInputEdit"
@@ -83,22 +74,22 @@
                     android:inputType="number"
                     android:text="@={viewModel.zipCode}" />
             </com.google.android.material.textfield.TextInputLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/continue_button"
             style="@style/PrimaryActionButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="60dp"
             android:onClick="@{() -> viewModel.createUser()}"
             android:text="@string/continue_button_label"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/zip_code_input" />
+            app:layout_constraintTop_toBottomOf="@id/signup_text"
+            app:layout_constraintVertical_chainStyle="spread_inside"/>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
