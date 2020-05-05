@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="dashboardViewModel"
             type="com.example.qstreak.viewmodels.DashboardViewModel" />
@@ -40,17 +42,20 @@
                     android:paddingBottom="20dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="70"
                         android:orientation="vertical">
 
+                        <!--                        TODO store user's name when they sign up to use in string -->
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@{dashboardViewModel.userName != null ? @string/thanks_for_tracking_name(dashboardViewModel.userName) : @string/thanks_for_tracking}"
                             android:textColor="@color/secondaryText"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="@{dashboardViewModel.hasEntryForToday ? View.VISIBLE : View.INVISIBLE}" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -67,7 +72,7 @@
                                 android:id="@+id/help_button"
                                 android:layout_width="0dp"
                                 android:layout_height="27dp"
-                                android:layout_weight="1"
+                                android:layout_marginStart="4dp"
                                 android:contentDescription="@string/help_button_text"
                                 android:src="@drawable/qstreak_help_button" />
                         </LinearLayout>
@@ -75,10 +80,13 @@
 
                     <ImageView
                         android:id="@+id/score_meter"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="30"
+                        android:clickable="@{dashboardViewModel.hasEntryForToday ? false : true}"
                         android:contentDescription="@string/score_meter_level_5"
-                        android:src="@drawable/qstreak_score_meter_5" />
+                        app:imageResource="@{dashboardViewModel.currentScoreImage}"
+                        tools:src="@drawable/ic_dashboard_score_5" />
                 </LinearLayout>
 
                 <LinearLayout

@@ -16,7 +16,7 @@ interface SubmissionWithActivityDao {
 
     @Transaction
     @Query("SELECT * FROM submissions WHERE date = :date LIMIT 1")
-    suspend fun getSubmissionWithActivitiesByDate(date: String): SubmissionWithActivities
+    suspend fun getSubmissionWithActivitiesByDate(date: String): SubmissionWithActivities?
 
     @Query("DELETE FROM submission_activity_cross_ref WHERE remote_id = :remoteId")
     suspend fun deleteActivitiesBySubmissionId(remoteId: Int)

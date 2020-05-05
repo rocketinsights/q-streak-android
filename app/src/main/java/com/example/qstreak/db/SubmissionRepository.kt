@@ -111,7 +111,7 @@ class SubmissionRepository(
         }
     }
 
-    suspend fun getSubmissionWithActivitiesByDate(date: String): SubmissionWithActivities {
+    suspend fun getSubmissionWithActivitiesByDate(date: String): SubmissionWithActivities? {
         return submissionWithActivityDao.getSubmissionWithActivitiesByDate(date)
     }
 
