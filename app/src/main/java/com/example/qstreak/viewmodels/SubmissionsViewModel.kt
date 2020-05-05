@@ -8,9 +8,9 @@ import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.models.DailyLogItemInfo
 import com.example.qstreak.models.DailyStats
 import com.example.qstreak.models.SubmissionWithActivities
-import com.example.qstreak.utils.ImageUtils
 import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.utils.DateUtils.dateStringFormat
+import com.example.qstreak.utils.ImageUtils
 import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
 import java.util.*
@@ -60,16 +60,19 @@ class SubmissionsViewModel(
     fun selectSubmission(submissionWithActivities: SubmissionWithActivities) {
         selectedSubmission.value = submissionWithActivities
         selectedSubmissionDailyStats.value = null
-        populateDailyStats(submissionWithActivities)
-        selectedSubmissionScoreImage.value = ImageUtils.getImageByScore(submissionWithActivities.submission.score)
+        selectedSubmissionScoreImage.value =
+            ImageUtils.getImageByScore(submissionWithActivities.submission.score)
     }
 
     fun refreshSelectedSubmission() {
         val selectedDate = selectedSubmission.value?.submission?.date
         selectedDate?.let {
             viewModelScope.launch {
-                selectedSubmission.value =
+                val selectedSubmission =
                     submissionRepository.getSubmissionWithActivitiesByDate(selectedDate)
+                selectedSubmission?.let {
+                    selectSubmission(it)
+                }
             }
         }
     }
