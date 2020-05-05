@@ -35,4 +35,8 @@
         <item>Onboarding Fragment 2</item>
         <item>Onboarding Fragment 3</item>
     </string-array>
+
+<!--    Field validation    -->
+    <string name="zip_invalid">Please enter a valid ZIP code.</string>
+    <string name="name_invalid">Please enter a valid name.</string>
 </resources>

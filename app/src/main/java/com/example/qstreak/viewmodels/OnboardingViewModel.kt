@@ -17,6 +17,7 @@ class OnboardingViewModel(
     val errorToDisplay = MutableLiveData<String>()
 
     val name = MutableLiveData<String>()
+    val nameError = MutableLiveData<Boolean>(false)
     val zipCode = MutableLiveData<String>()
     val zipCodeError = MutableLiveData<Boolean>(false)
 
@@ -47,17 +48,10 @@ class OnboardingViewModel(
     }
 
     private fun validateInputs(name: String?, zipCode: String?): Boolean {
-        clearErrors()
-
         val zipValid = isZipValid(zipCode)
         val nameValid = isNameValid(name)
-        // Ideally we'll set errors on each of the invalid fields, so we don't want to return until
-        // they have all been evaluated.
-        if (!zipValid) {
-            // Could also set a custom error string based on exactly how it is invalid,
-            // but for now just a single "invalid" message.
-            zipCodeError.value = true
-        }
+        zipCodeError.value = !zipValid
+        nameError.value = !nameValid
         return zipValid && nameValid
     }
 
@@ -69,10 +63,6 @@ class OnboardingViewModel(
 
     private fun isNameValid(name: String?): Boolean {
         // TODO validation rules - character validation?
-        return name != null
-    }
-
-    private fun clearErrors() {
-        zipCodeError.value = false
+        return !name.isNullOrBlank()
     }
 }

@@ -53,7 +53,22 @@ class OnboardingSignupFragment : Fragment() {
         })
         onboardingViewModel.zipCodeError.observe(viewLifecycleOwner, Observer {
             if (it) {
-                binding.zipCodeInput.error = "Please enter a valid zip code."
+                binding.zipCodeInput.error = getString(R.string.zip_invalid)
+                if (onboardingViewModel.nameError.value == false) {
+                    binding.zipCodeInput.editText?.let { et ->
+                        et.requestFocus()
+                        et.setSelection(et.text.length)
+                    }
+                }
+            }
+        })
+        onboardingViewModel.nameError.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.nameInput.error = getString(R.string.name_invalid)
+                binding.nameInput.editText?.let { et ->
+                    et.requestFocus()
+                    et.setSelection(et.text.length)
+                }
             }
         })
     }

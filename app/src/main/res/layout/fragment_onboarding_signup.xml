@@ -21,10 +21,10 @@
             android:layout_marginTop="60dp"
             android:layout_marginEnd="@dimen/horizonal_margin"
             android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/continue_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/continue_button"
             app:layout_constraintVertical_chainStyle="spread_inside">
 
             <TextView
@@ -47,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:hint="@string/name"
-                android:theme="@style/PrimaryInput">
+                android:theme="@style/PrimaryInput"
+                app:errorEnabled="@{viewModel.nameError}">
 
                 <com.google.android.material.textfield.TextInputEditText
                     style="@style/PrimaryInputEdit"
@@ -86,7 +87,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/signup_text"
-            app:layout_constraintVertical_chainStyle="spread_inside"/>
+            app:layout_constraintVertical_chainStyle="spread_inside" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
