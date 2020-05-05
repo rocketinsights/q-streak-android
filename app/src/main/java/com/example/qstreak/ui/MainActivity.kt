@@ -1,5 +1,7 @@
 package com.example.qstreak.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.example.qstreak.R
@@ -26,12 +28,20 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
             .replace(R.id.fragment_container_view, fragment)
             .commit()
     }
-    
+
     fun navigateToAddOrEditRecord(existingSubmissionDate: String? = null) {
         val fragment = AddEditSubmissionFragment.newInstance(existingSubmissionDate)
         supportFragmentManager.beginTransaction()
             .addToBackStack(AddEditSubmissionFragment.TAG)
             .replace(R.id.fragment_container_view, fragment)
             .commit()
+    }
+
+    companion object {
+        fun newInstance(context: Context, flags: Int): Intent {
+            return Intent(context, MainActivity::class.java).apply {
+                this.flags = flags
+            }
+        }
     }
 }

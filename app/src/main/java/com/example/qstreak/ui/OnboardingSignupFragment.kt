@@ -53,15 +53,33 @@ class OnboardingSignupFragment : Fragment() {
         })
         onboardingViewModel.zipCodeError.observe(viewLifecycleOwner, Observer {
             if (it) {
-                binding.zipCodeInput.error = "Please enter a valid zip code."
+                binding.zipCodeInput.error = getString(R.string.zip_invalid)
+                if (onboardingViewModel.nameError.value == false) {
+                    binding.zipCodeInput.editText?.let { et ->
+                        et.requestFocus()
+                        et.setSelection(et.text.length)
+                    }
+                }
+            }
+        })
+        onboardingViewModel.nameError.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.nameInput.error = getString(R.string.name_invalid)
+                binding.nameInput.editText?.let { et ->
+                    et.requestFocus()
+                    et.setSelection(et.text.length)
+                }
             }
         })
     }
 
     private fun navigateToDashboard() {
-        val intent = Intent(activity, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
+        startActivity(
+            MainActivity.newInstance(
+                requireContext(),
+                (Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        )
     }
 
     companion object {

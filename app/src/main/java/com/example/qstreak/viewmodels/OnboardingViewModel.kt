@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.qstreak.db.UserRepository
 import com.example.qstreak.network.ApiResult
 import com.example.qstreak.utils.UID
+import com.example.qstreak.utils.USER_NAME
 import kotlinx.coroutines.launch
 
 class OnboardingViewModel(
@@ -17,6 +18,7 @@ class OnboardingViewModel(
     val errorToDisplay = MutableLiveData<String>()
 
     val name = MutableLiveData<String>()
+    val nameError = MutableLiveData<Boolean>(false)
     val zipCode = MutableLiveData<String>()
     val zipCodeError = MutableLiveData<Boolean>(false)
 
@@ -34,6 +36,7 @@ class OnboardingViewModel(
                     userRepository.createUser(name, zipCode!!)
                 if (createUserResponse is ApiResult.Success) {
                     sharedPrefsEditor.putString(UID, createUserResponse.data.uid).commit()
+                    sharedPrefsEditor.putString(USER_NAME, name).commit()
                     signupSuccessful.postValue(true)
                 } else {
                     // We received an API error response when attempting to create a user.
@@ -47,17 +50,10 @@ class OnboardingViewModel(
     }
 
     private fun validateInputs(name: String?, zipCode: String?): Boolean {
-        clearErrors()
-
         val zipValid = isZipValid(zipCode)
         val nameValid = isNameValid(name)
-        // Ideally we'll set errors on each of the invalid fields, so we don't want to return until
-        // they have all been evaluated.
-        if (!zipValid) {
-            // Could also set a custom error string based on exactly how it is invalid,
-            // but for now just a single "invalid" message.
-            zipCodeError.value = true
-        }
+        zipCodeError.value = !zipValid
+        nameError.value = !nameValid
         return zipValid && nameValid
     }
 
@@ -69,10 +65,6 @@ class OnboardingViewModel(
 
     private fun isNameValid(name: String?): Boolean {
         // TODO validation rules - character validation?
-        return name != null
-    }
-
-    private fun clearErrors() {
-        zipCodeError.value = false
+        return !name.isNullOrBlank()
     }
 }

@@ -47,7 +47,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Thanks for tracking, Sandy!"
+                            android:text="@{dashboardViewModel.userName != null ? @string/thanks_for_tracking_name(dashboardViewModel.userName) : @string/thanks_for_tracking}"
                             android:textColor="@color/secondaryText"
                             android:textSize="16sp"
                             android:textStyle="bold" />

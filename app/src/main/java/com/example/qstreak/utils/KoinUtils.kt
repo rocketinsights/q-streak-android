@@ -26,6 +26,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 const val USER_PREFS = "user_prefs"
 const val UID = "uid"
+const val USER_NAME = "user_name"
 
 fun Application.initKoin() {
 
@@ -99,7 +100,7 @@ private fun scopeModules() = module {
         viewModel { AddEditSubmissionViewModel(get(), get(), get()) }
     }
     scope(named<DashboardFragment>()) {
-        viewModel { DashboardViewModel(get()) }
+        viewModel { DashboardViewModel(get(), get()) }
     }
     scope(named<MainActivity>()) {
         viewModel { SubmissionsViewModel(get(), get()) }
