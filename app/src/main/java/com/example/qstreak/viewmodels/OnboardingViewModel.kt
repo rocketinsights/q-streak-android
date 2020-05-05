@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.qstreak.db.UserRepository
 import com.example.qstreak.network.ApiResult
 import com.example.qstreak.utils.UID
+import com.example.qstreak.utils.USER_NAME
 import kotlinx.coroutines.launch
 
 class OnboardingViewModel(
@@ -35,6 +36,7 @@ class OnboardingViewModel(
                     userRepository.createUser(name, zipCode!!)
                 if (createUserResponse is ApiResult.Success) {
                     sharedPrefsEditor.putString(UID, createUserResponse.data.uid).commit()
+                    sharedPrefsEditor.putString(USER_NAME, name).commit()
                     signupSuccessful.postValue(true)
                 } else {
                     // We received an API error response when attempting to create a user.

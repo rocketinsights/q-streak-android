@@ -29,12 +29,8 @@
     <string name="new_submission_contact_label">How many people did you come into close contact with today (approximate)?</string>
     <string name="new_submission_location_label">Did you go to any of the following locations?</string>
     <string name="daily_checkmark">daily_checkmark</string>
-
-    <string-array name="onboarding_titles">
-        <item>Onboarding Fragment 1</item>
-        <item>Onboarding Fragment 2</item>
-        <item>Onboarding Fragment 3</item>
-    </string-array>
+    <string name="thanks_for_tracking_name">Thanks for tracking, %1$s!</string>
+    <string name="thanks_for_tracking">Thanks for tracking!</string>∂
 
 <!--    Field validation    -->
     <string name="zip_invalid">Please enter a valid ZIP code.</string>
