@@ -65,17 +65,17 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/contact_count_text_input_layout"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:hint="Contact Count"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/new_submission_contact_label">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="number"
                 android:text="@={viewModel.contactCount}" />
 
         </com.google.android.material.textfield.TextInputLayout>

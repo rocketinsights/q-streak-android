@@ -1,5 +1,6 @@
 package com.example.qstreak.ui
 
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +39,7 @@ class ActivitiesListAdapter(activities: List<Activity>) :
     override fun onBindViewHolder(holder: ActivityViewHolder, position: Int) {
         val activity = activities[position]
         holder.activityName.text = activity.name
-        holder.activityIcon.text = activity.icon
+        holder.activityIcon.text = "\uf118"
     }
 
     inner class ActivityViewHolder(view: View) : RecyclerView.ViewHolder(view) {
