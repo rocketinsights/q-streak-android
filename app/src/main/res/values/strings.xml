@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Qstreak</string>
 
-    <string name="submission_detail_contact_count">Reported contact count: %1$d</string>
+    <string name="submission_detail_contact_count">%1$d people</string>
     <string name="zip_code">What\'s your zip code?</string>
     <string name="name">What\'s your name?</string>
     <string name="continue_button_label">Start tracking</string>
@@ -23,6 +23,11 @@
     <string name="longest_stretch">Longest Stretch</string>
     <string name="rank_icon">rank icon</string>
     <string name="risk_warning_icon">risk warning icon</string>
+    <string name="activity_report">Activity Report</string>
+    <string name="score_meter">score meter</string>
+    <string name="new_submission_text">📉 Let’s get your score calculated for the day. You can return here at any time to update your daily input.</string>
+    <string name="new_submission_contact_label">How many people did you come into close contact with today (approximate)?</string>
+    <string name="new_submission_location_label">Did you go to any of the following locations?</string>
     <string name="daily_checkmark">daily_checkmark</string>
 
     <string-array name="onboarding_titles">

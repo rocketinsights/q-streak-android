@@ -13,5 +13,6 @@ import com.squareup.moshi.Json
 data class Activity(
     @field:Json(name = "contact_count") @ColumnInfo(name = "contact_count") val contactCount: Int,
     @field:Json(name = "name") @ColumnInfo(name = "name") val name: String,
-    @field:Json(name = "slug") @ColumnInfo(name = "activity_slug") @PrimaryKey val activitySlug: String
+    @field:Json(name = "slug") @ColumnInfo(name = "activity_slug") @PrimaryKey val activitySlug: String,
+    @field:Json(name = "icon") @ColumnInfo(name = "icon") val icon: String
 )

@@ -8,6 +8,7 @@ import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.models.DailyLogItemInfo
 import com.example.qstreak.models.DailyStats
 import com.example.qstreak.models.SubmissionWithActivities
+import com.example.qstreak.utils.ImageUtils
 import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.utils.DateUtils.dateStringFormat
 import com.example.qstreak.utils.UID
@@ -27,6 +28,8 @@ class SubmissionsViewModel(
     val selectedSubmission = MutableLiveData<SubmissionWithActivities>()
     val selectedSubmissionDailyStats = MutableLiveData<DailyStats>()
     val submissionDeleted = MutableLiveData<Boolean>(false)
+
+    val selectedSubmissionScoreImage = MutableLiveData<Int>()
 
     private val uid: String? = sharedPrefs.getString(UID, null)
 
@@ -58,6 +61,7 @@ class SubmissionsViewModel(
         selectedSubmission.value = submissionWithActivities
         selectedSubmissionDailyStats.value = null
         populateDailyStats(submissionWithActivities)
+        selectedSubmissionScoreImage.value = ImageUtils.getImageByScore(submissionWithActivities.submission.score)
     }
 
     fun refreshSelectedSubmission() {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -57,12 +58,10 @@
                             android:gravity="center_vertical">
 
                             <TextView
+                                style="@style/MainHeader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/todays_score"
-                                android:textColor="@android:color/black"
-                                android:textSize="28sp"
-                                android:textStyle="bold" />
+                                android:text="@string/todays_score" />
 
                             <ImageView
                                 android:id="@+id/help_button"
@@ -90,27 +89,13 @@
                     android:orientation="vertical"
                     android:paddingTop="20dp">
 
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/horizonal_margin">
+                    <TextView
+                        style="@style/CardTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="@dimen/horizonal_margin"
+                        android:text="@string/daily_log_activity" />
 
-                        <TextView
-                            style="@style/CardTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="@string/daily_log_activity" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="end"
-                            android:text="@string/view_history"
-                            android:textColor="@color/secondaryText"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -118,7 +103,8 @@
                         android:layout_marginHorizontal="@dimen/horizonal_margin"
                         android:text='@{"Week of " + submissionsViewModel.currentWeekString}'
                         android:textColor="@color/secondaryText"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        tools:text="Week of May 3"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/daily_log_week_view"
@@ -227,6 +213,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="32dp"
                         android:text="Cook County is at risk for continued outbreaks."
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
