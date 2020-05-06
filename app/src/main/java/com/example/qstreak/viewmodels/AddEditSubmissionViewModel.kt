@@ -75,7 +75,7 @@ class AddEditSubmissionViewModel(
                 viewModelScope.launch {
                     val response = existingSubmission.value?.let {
                         updateExistingSubmission(
-                            it.submission.remoteId,
+                            it.submission.date,
                             contactCount.value!!.toInt(),
                             checkedActivities.value.orEmpty(),
                             uid as String
@@ -109,12 +109,12 @@ class AddEditSubmissionViewModel(
     }
 
     private suspend fun updateExistingSubmission(
-        remoteId: Int,
+        date: String,
         contactCount: Int,
         activities: List<Activity>,
         uid: String
     ): ApiResult<SubmissionResponse> {
-        return submissionRepository.updateSubmission(remoteId, contactCount, activities, uid)
+        return submissionRepository.updateSubmission(date, contactCount, activities, uid)
     }
 
     private fun isUserInputValid(): Boolean {

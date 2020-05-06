@@ -15,6 +15,6 @@ interface SubmissionDao {
     @Update
     suspend fun update(submission: Submission)
 
-    @Query("DELETE FROM submissions WHERE remote_id = :remoteId")
-    suspend fun deleteByRemoteId(remoteId: Int)
+    @Query("DELETE FROM submissions WHERE date = :date")
+    suspend fun deleteByDate(date: String)
 }

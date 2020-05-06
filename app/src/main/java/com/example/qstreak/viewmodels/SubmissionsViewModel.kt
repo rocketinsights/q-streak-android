@@ -92,7 +92,7 @@ class SubmissionsViewModel(
         if (uid != null) {
             viewModelScope.launch {
                 val response = submissionRepository.fetchDailyStatsForSubmission(
-                    submissionWithActivities.submission.remoteId,
+                    submissionWithActivities.submission.date,
                     uid
                 )
                 selectedSubmissionDailyStats.value = response

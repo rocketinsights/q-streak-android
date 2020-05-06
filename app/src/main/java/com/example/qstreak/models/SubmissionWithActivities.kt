@@ -8,12 +8,12 @@ data class SubmissionWithActivities(
     @Embedded
     var submission: Submission,
     @Relation(
-        parentColumn = "remote_id",
+        parentColumn = "date",
         entity = Activity::class,
         entityColumn = "activity_slug",
         associateBy = Junction(
             value = SubmissionActivityCrossRef::class,
-            parentColumn = "remote_id",
+            parentColumn = "date",
             entityColumn = "activity_slug"
         )
     )
