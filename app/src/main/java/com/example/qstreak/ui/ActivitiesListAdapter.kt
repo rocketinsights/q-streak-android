@@ -1,17 +1,12 @@
 package com.example.qstreak.ui
 
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qstreak.R
 import com.example.qstreak.models.Activity
-import com.example.qstreak.utils.ImageUtils
-import kotlinx.android.synthetic.main.submission_activity_item.view.*
 import kotlinx.android.synthetic.main.submission_activity_item.view.activity_name
 import kotlinx.android.synthetic.main.submission_location_list_item.view.*
 
@@ -39,7 +34,8 @@ class ActivitiesListAdapter(activities: List<Activity>) :
     override fun onBindViewHolder(holder: ActivityViewHolder, position: Int) {
         val activity = activities[position]
         holder.activityName.text = activity.name
-        holder.activityIcon.text = "\uf118"
+        val icon = activity.icon.toInt(16).toChar().toString()
+        holder.activityIcon.text = icon
     }
 
     inner class ActivityViewHolder(view: View) : RecyclerView.ViewHolder(view) {
