@@ -12,118 +12,119 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/horizonal_margin">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/date_button"
-            style="@style/SecondaryHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:background="@android:color/transparent"
-            android:backgroundTint="@android:color/white"
-            android:text="@{viewModel.submissionDateString}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="DATE" />
-
-        <TextView
-            android:id="@+id/new_submission_header"
-            style="@style/MainHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/record_activity_label"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/date_button" />
-
-        <TextView
-            android:id="@+id/new_submission_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/new_submission_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_submission_header" />
-
-        <TextView
-            android:id="@+id/new_submission_contact_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="@string/new_submission_contact_label"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_submission_text" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/contact_count_text_input_layout"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:hint="Contact Count"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_submission_contact_label">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="number"
-                android:text="@={viewModel.contactCount}" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/new_submission_location_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:text="@string/new_submission_location_label"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contact_count_text_input_layout" />
-
-        <ScrollView
-            android:id="@+id/activities_scroll_view"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="15dp"
-            android:paddingBottom="40dp"
-            app:layout_constraintBottom_toTopOf="@id/save_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_submission_location_label">
+            android:layout_marginHorizontal="@dimen/horizonal_margin"
+            app:layout_constraintBottom_toTopOf="@id/save_button_card"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/activities_checklist"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        </ScrollView>
+                <Button
+                    android:id="@+id/date_button"
+                    style="@style/SecondaryHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@android:color/white"
+                    android:text="@{viewModel.submissionDateString}"
+                    android:textAlignment="textStart"
+                    tools:text="DATE" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/save_button"
-            style="@style/PrimaryActionButton"
+                <TextView
+                    android:id="@+id/new_submission_header"
+                    style="@style/MainHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/record_activity_label" />
+
+                <TextView
+                    android:id="@+id/new_submission_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/new_submission_text" />
+
+                <TextView
+                    android:id="@+id/new_submission_contact_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/new_submission_contact_label"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/contact_count_text_input_layout"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:theme="@style/PrimaryInput">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/PrimaryInputEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:inputType="number"
+                        android:paddingVertical="15dp"
+                        android:text="@={viewModel.contactCount}"
+                        tools:text="0" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/new_submission_location_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/new_submission_location_label"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/activities_checklist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:nestedScrollingEnabled="false" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/save_button_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="40dp"
-            android:onClick="@{() -> viewModel.saveSubmission()}"
-            android:text="Save"
+            app:cardElevation="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:shapeAppearanceOverlay="@style/CardSquareBottomCorners"
+            app:strokeColor="@color/cardBorder"
+            app:strokeWidth="1dp">
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/save_button"
+                style="@style/PrimaryActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
+                android:onClick="@{() -> viewModel.saveSubmission()}"
+                android:text="Save" />
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

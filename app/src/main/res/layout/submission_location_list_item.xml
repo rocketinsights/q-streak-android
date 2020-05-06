@@ -17,9 +17,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="18dp"
-            android:fontFamily="@font/fa_regular_400"
+            android:fontFamily="@font/fa_solid_900"
             android:textColor="@color/locationIcon"
-            android:textSize="24sp"
+            android:textSize="16sp"
             tools:text="\uf2b9" />
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/locationText"
-            android:textSize="24sp"
+            android:textSize="16sp"
             tools:text="Grocery Store" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
