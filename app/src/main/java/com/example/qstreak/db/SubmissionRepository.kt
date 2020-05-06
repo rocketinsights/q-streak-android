@@ -44,13 +44,13 @@ class SubmissionRepository(
     }
 
     suspend fun updateSubmission(
-        remoteId: Int,
+        date: String,
         contactCount: Int,
         activities: List<Activity>,
         uid: String
     ): ApiResult<SubmissionResponse> {
         val response = safeApiCall(dispatcher, retrofit) {
-            api.updateSubmission(remoteId,
+            api.updateSubmission(date,
                 UpdateSubmissionRequest(
                     UpdateSubmissionData(
                         contactCount,
@@ -70,12 +70,12 @@ class SubmissionRepository(
 
     suspend fun deleteSubmission(submission: Submission, uid: String): ApiResult<Response<Unit>> {
         val apiResponse = safeApiCall(dispatcher, retrofit) {
-            api.deleteSubmission(submission.remoteId, uid)
+            api.deleteSubmission(submission.date, uid)
         }
 
         if (apiResponse is ApiResult.Success) {
-            submissionDao.deleteByRemoteId(submission.remoteId)
-            submissionWithActivityDao.deleteActivitiesBySubmissionId(submission.remoteId)
+            submissionDao.deleteByDate(submission.date)
+            submissionWithActivityDao.deleteActivitiesByDate(submission.date)
         }
 
         return apiResponse
@@ -87,7 +87,7 @@ class SubmissionRepository(
     ) {
         submissionDao.insert(submission)
 
-        insertActivityRelations(submission.remoteId, activities)
+        insertActivityRelations(submission.date, activities)
     }
 
     private suspend fun updateSubmissionLocally(
@@ -95,16 +95,16 @@ class SubmissionRepository(
         activities: List<Activity>
     ) {
         submissionDao.update(submission)
-        submissionWithActivityDao.deleteActivitiesBySubmissionId(submission.remoteId)
+        submissionWithActivityDao.deleteActivitiesByDate(submission.date)
 
-        insertActivityRelations(submission.remoteId, activities)
+        insertActivityRelations(submission.date, activities)
     }
 
-    private suspend fun insertActivityRelations(remoteId: Int, activities: List<Activity>) {
+    private suspend fun insertActivityRelations(dateString: String, activities: List<Activity>) {
         for (activity in activities) {
             submissionWithActivityDao.insert(
                 SubmissionActivityCrossRef(
-                    remoteId,
+                    dateString,
                     activity.activitySlug
                 )
             )
@@ -115,9 +115,9 @@ class SubmissionRepository(
         return submissionWithActivityDao.getSubmissionWithActivitiesByDate(date)
     }
 
-    suspend fun fetchDailyStatsForSubmission(remoteId: Int, uid: String): DailyStats {
+    suspend fun fetchDailyStatsForSubmission(date: String, uid: String): DailyStats {
         val api = QstreakApiService.getQstreakApiService()
-        val response = api.getSubmission(remoteId, uid)
+        val response = api.getSubmission(date, uid)
 
         return response.dailyStats
     }

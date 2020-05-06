@@ -5,9 +5,9 @@ import androidx.room.Entity
 
 @Entity(
     tableName = "submission_activity_cross_ref",
-    primaryKeys = ["remote_id", "activity_slug"]
+    primaryKeys = ["date", "activity_slug"]
 )
 data class SubmissionActivityCrossRef(
-    @ColumnInfo(name = "remote_id") val remoteId: Int,
+    @ColumnInfo(name = "date") val date: String,
     @ColumnInfo(name = "activity_slug") val activitySlug: String
 )

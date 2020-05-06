@@ -6,8 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "submissions")
 data class Submission(
-    @ColumnInfo(name = "date") var date: String,
+    @PrimaryKey @ColumnInfo(name = "date") var date: String,
     @ColumnInfo(name = "contact_count") var contactCount: Int,
-    @PrimaryKey @ColumnInfo(name = "remote_id") var remoteId: Int,
     @ColumnInfo(name = "score") var score: Int? = null
 )

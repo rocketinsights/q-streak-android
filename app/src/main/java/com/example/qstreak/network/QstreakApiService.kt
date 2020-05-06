@@ -20,21 +20,21 @@ interface QstreakApiService {
     @GET("destinations")
     suspend fun getActivities(@Header(AUTHORIZATION) uid: String): List<Activity>
 
-    @GET("submissions/{remoteId}")
+    @GET("submissions/{date}")
     suspend fun getSubmission(
-        @Path("remoteId") remoteId: Int,
+        @Path("date") date: String,
         @Header(AUTHORIZATION) uid: String
     ): SubmissionResponse
 
-    @DELETE("submissions/{remoteId}")
+    @DELETE("submissions/{date}")
     suspend fun deleteSubmission(
-        @Path("remoteId") remoteId: Int,
+        @Path("date") date: String,
         @Header(AUTHORIZATION) uid: String
     ): Response<Unit>
 
-    @PUT("submissions/{remoteId}")
+    @PUT("submissions/{date}")
     suspend fun updateSubmission(
-        @Path("remoteId") remoteId: Int,
+        @Path("date") date: String,
         @Body updateSubmissionRequest: UpdateSubmissionRequest,
         @Header(AUTHORIZATION) uid: String
     ): SubmissionResponse
