@@ -57,6 +57,7 @@ class AddEditSubmissionFragment : Fragment() {
         observeErrors()
         observeSelectedDateChange()
         setDateClickListener()
+        setupBackButtonClickListener()
 
         return binding.root
     }
@@ -120,6 +121,12 @@ class AddEditSubmissionFragment : Fragment() {
                 addEditViewModel.loadDate(pickedDate)
             }
             picker.show(requireActivity().supportFragmentManager, picker.toString())
+        }
+    }
+
+    private fun setupBackButtonClickListener() {
+        binding.submissionAddEditBackButton.setOnClickListener {
+            (requireActivity() as MainActivity).onBackPressed()
         }
     }
 

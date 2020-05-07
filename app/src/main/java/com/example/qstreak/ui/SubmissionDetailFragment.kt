@@ -42,6 +42,7 @@ class SubmissionDetailFragment : Fragment() {
         observeDate()
         observeDeletion()
         setupActivitiesList()
+        setupBackButtonClickListener()
 
         return binding.root
     }
@@ -54,6 +55,12 @@ class SubmissionDetailFragment : Fragment() {
                 (requireActivity() as MainActivity).navigateToAddOrEditRecord()
             }
 
+        }
+    }
+
+    private fun setupBackButtonClickListener() {
+        binding.submissionDetailBackButton.setOnClickListener {
+            (requireActivity() as MainActivity).onBackPressed()
         }
     }
 
