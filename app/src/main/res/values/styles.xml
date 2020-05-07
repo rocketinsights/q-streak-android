@@ -52,7 +52,8 @@
     </style>
 
     <style name="DashboardCard">
-        <item name="android:layout_marginHorizontal">@dimen/horizonal_margin</item>
+        <item name="android:layout_marginStart">@dimen/horizonal_margin</item>
+        <item name="android:layout_marginEnd">@dimen/horizonal_margin</item>
         <item name="android:layout_marginTop">7dp</item>
         <item name="android:layout_marginBottom">7dp</item>
         <item name="cardCornerRadius">10dp</item>

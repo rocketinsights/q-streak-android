@@ -100,14 +100,16 @@
                         style="@style/CardTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginHorizontal="@dimen/horizonal_margin"
+                        android:layout_marginStart="@dimen/horizonal_margin"
+                        android:layout_marginEnd="@dimen/horizonal_margin"
                         android:text="@string/daily_log_activity" />
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginHorizontal="@dimen/horizonal_margin"
+                        android:layout_marginStart="@dimen/horizonal_margin"
+                        android:layout_marginEnd="@dimen/horizonal_margin"
                         android:text='@{"Week of " + submissionsViewModel.currentWeekString}'
                         android:textColor="@color/secondaryText"
                         android:textSize="16sp"

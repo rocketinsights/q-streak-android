@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginHorizontal="@dimen/horizonal_margin"
+            android:layout_marginStart="@dimen/horizonal_margin"
+            android:layout_marginEnd="@dimen/horizonal_margin"
             android:paddingTop="34dp"
             android:paddingBottom="60dp">
 
