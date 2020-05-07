@@ -34,7 +34,9 @@
     <string name="people">people</string>
     <string name="person">person</string>
     <string name="delete_record_confirmation_title">Confirm Deletion</string>
-
+    <string name="delete_record_confirmation_message">Are you sure you want to delete this record?</string>
+    <string name="delete_record_confirmation_cancel">Cancel</string>
+    <string name="delete_record_confirmation_confirm">Delete</string>
 
     <!--    Field validation    -->
     <string name="zip_invalid">Please enter a valid ZIP code.</string>
@@ -44,7 +46,4 @@
     <string name="todays_score_header">What\'s my score?</string>
     <string name="todays_score_text">Your score is a reflection of your risk level based on your reported activity and location relative to the Covid-19 outbreak.</string>
     <string name="close_window_text">Got It</string>
-    <string name="delete_record_confirmation_message">Are you sure you want to delete this record?</string>
-    <string name="delete_record_confirmation_cancel">Cancel</string>
-    <string name="delete_record_confirmation_confirm">Delete</string>
 </resources>
