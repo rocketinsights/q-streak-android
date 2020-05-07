@@ -149,7 +149,6 @@ class AddEditSubmissionFragment : Fragment() {
             window.height = LinearLayout.LayoutParams.MATCH_PARENT
             window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             window.showAtLocation(view, Gravity.BOTTOM, 0, 0)
-            window.animationStyle =
 
             window.contentView.help_header.text = getString(R.string.close_contact_header)
             window.contentView.help_text.text = getString(R.string.close_contact_text)
