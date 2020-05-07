@@ -1,9 +1,14 @@
 package com.example.qstreak.ui
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -15,9 +20,10 @@ import com.example.qstreak.models.Activity
 import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.viewmodels.AddEditSubmissionViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import kotlinx.android.synthetic.main.help_card.view.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 class AddEditSubmissionFragment : Fragment() {
@@ -54,6 +60,7 @@ class AddEditSubmissionFragment : Fragment() {
         observeCompletion()
         observeErrors()
         setDateClickListener()
+        helpButtonClickListener()
 
         return binding.root
     }
@@ -130,6 +137,27 @@ class AddEditSubmissionFragment : Fragment() {
                 addEditViewModel.initializeWithDate(pickedDate)
             }
             picker.show(requireActivity().supportFragmentManager, picker.toString())
+        }
+    }
+
+    private fun helpButtonClickListener() {
+        binding.helpButton.setOnClickListener {
+            val window = PopupWindow(requireContext())
+            val view = layoutInflater.inflate(R.layout.help_card, null)
+            window.contentView = view
+            window.width = LinearLayout.LayoutParams.MATCH_PARENT
+            window.height = LinearLayout.LayoutParams.MATCH_PARENT
+            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window.showAtLocation(view, Gravity.BOTTOM, 0, 0)
+            window.animationStyle =
+
+            window.contentView.help_header.text = getString(R.string.close_contact_header)
+            window.contentView.help_text.text = getString(R.string.close_contact_text)
+
+            val closeWindow = view.findViewById<ExtendedFloatingActionButton>(R.id.close_window)
+            closeWindow.setOnClickListener {
+                window.dismiss()
+            }
         }
     }
 

@@ -35,4 +35,8 @@
 <!--    Field validation    -->
     <string name="zip_invalid">Please enter a valid ZIP code.</string>
     <string name="name_invalid">Please enter a valid name.</string>
+    <string name="close_contact_header">What\'s close contact?</string>
+    <string name="close_contact_text">Close contact means touching or being within 6 feet of another person.</string>
+    <string name="todays_score_header">What\'s my score?</string>
+    <string name="todays_score_text">Your score is a reflection of your risk level based on your reported activity and location relative to the Covid-19 outbreak.</string>
 </resources>
