@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:elevation="2dp"
-                android:fontFamily="@font/fa_regular_400"
+                android:fontFamily="@font/fa_solid_900"
                 android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="@color/dashboardIcon"
