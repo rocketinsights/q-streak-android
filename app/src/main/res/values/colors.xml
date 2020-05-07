@@ -11,4 +11,6 @@
     <color name="locationIcon">#6C63FF</color>
     <color name="locationText">#4E4C70</color>
     <color name="helpCardBackground">#b3101010</color>
+    <color name="dashboardIcon">#3F3D56</color>
+    <color name="dashboardIconBackground">#F2F4F6</color>
 </resources>

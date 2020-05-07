@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentDashboardBinding
@@ -62,6 +63,7 @@ class DashboardFragment : Fragment() {
         }
 
         setupDailyLog()
+        setupDashboardMessages()
         helpButtonClickListener()
 
         return binding.root
@@ -104,6 +106,18 @@ class DashboardFragment : Fragment() {
 
     private fun onScrollFirstItemVisible(firstItemPosition: Int) {
         submissionsViewModel.setCurrentWeekBasedOnScrollPosition(firstItemPosition)
+    }
+
+    private fun setupDashboardMessages() {
+        val recyclerView = binding.dashboardMessages
+        val adapter = DashboardMessagesAdapter()
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = layoutManager
+
+        dashboardViewModel.dashboardMessages.observe(viewLifecycleOwner, Observer {
+            adapter.setMessages(it)
+        })
     }
 
     private fun helpButtonClickListener() {

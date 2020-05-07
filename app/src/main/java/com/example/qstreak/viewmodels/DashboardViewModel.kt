@@ -24,7 +24,7 @@ class DashboardViewModel(
     val hasEntryForToday = MutableLiveData<Boolean>()
     val userName = MutableLiveData<String>(sharedPrefs.getString(USER_NAME, null))
     val uid: String? = sharedPrefs.getString(UID, null)
-    val dashboardMessages = MutableLiveData<List<DashboardMessage>>(emptyList())
+    val dashboardMessages = MutableLiveData<List<DashboardMessage>>()
     val errorToDisplay = MutableLiveData<String>()
 
     fun refreshToday() {
