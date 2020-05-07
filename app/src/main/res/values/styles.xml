@@ -18,6 +18,15 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
+    <style name="ConfirmationDialogTheme" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/ConfirmationButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/ConfirmationButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/ConfirmationButtonStyle</item>
+    </style>
+    <style name="ConfirmationButtonStyle" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
     <style name="PrimaryActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
         <item name="android:textAllCaps">false</item>
         <item name="android:textAlignment">center</item>

@@ -33,8 +33,12 @@
     <string name="thanks_for_tracking">Thanks for tracking!</string>
     <string name="people">people</string>
     <string name="person">person</string>
+    <string name="delete_record_confirmation_title">Confirm Deletion</string>
+    <string name="delete_record_confirmation_message">Are you sure you want to delete this record?</string>
+    <string name="delete_record_confirmation_cancel">Cancel</string>
+    <string name="delete_record_confirmation_confirm">Delete</string>
 
-<!--    Field validation    -->
+    <!--    Field validation    -->
     <string name="zip_invalid">Please enter a valid ZIP code.</string>
     <string name="name_invalid">Please enter a valid name.</string>
     <string name="close_contact_header">What\'s close contact?</string>

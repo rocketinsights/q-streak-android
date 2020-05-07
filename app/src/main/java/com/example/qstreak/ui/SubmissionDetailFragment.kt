@@ -12,6 +12,7 @@ import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentSubmissionDetailBinding
 import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.viewmodels.SubmissionsViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class SubmissionDetailFragment : Fragment() {
     private val submissionsViewModel: SubmissionsViewModel by lazy {
@@ -43,6 +44,7 @@ class SubmissionDetailFragment : Fragment() {
         observeDeletion()
         setupActivitiesList()
         setupBackButtonClickListener()
+        setupDeleteButtonClickListener()
 
         return binding.root
     }
@@ -61,6 +63,23 @@ class SubmissionDetailFragment : Fragment() {
     private fun setupBackButtonClickListener() {
         binding.submissionDetailBackButton.setOnClickListener {
             (requireActivity() as MainActivity).onBackPressed()
+        }
+    }
+
+    private fun setupDeleteButtonClickListener() {
+        binding.deleteButton.setOnClickListener {
+            context?.let {
+                MaterialAlertDialogBuilder(it, R.style.ConfirmationDialogTheme)
+                    .setTitle(getString(R.string.delete_record_confirmation_title))
+                    .setMessage(getString(R.string.delete_record_confirmation_message))
+                    .setNeutralButton(getString(R.string.delete_record_confirmation_cancel)) { _, _ ->
+                        // do nothing
+                    }
+                    .setPositiveButton(getString(R.string.delete_record_confirmation_confirm)) { _, _ ->
+                        submissionsViewModel.deleteSubmission()
+                    }
+                    .show()
+            }
         }
     }
 
