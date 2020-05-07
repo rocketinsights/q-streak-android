@@ -19,7 +19,6 @@ import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.*
 
 class AddEditSubmissionFragment : Fragment() {
 
@@ -55,7 +54,6 @@ class AddEditSubmissionFragment : Fragment() {
         observeCompletion()
         observeErrors()
         setDateClickListener()
-        setContactCountIncDecClickListeners()
 
         return binding.root
     }
@@ -132,17 +130,6 @@ class AddEditSubmissionFragment : Fragment() {
                 addEditViewModel.initializeWithDate(pickedDate)
             }
             picker.show(requireActivity().supportFragmentManager, picker.toString())
-        }
-    }
-
-    private fun setContactCountIncDecClickListeners() {
-        binding.incrementContactCountButton.setOnClickListener {
-            val nextContactCount = addEditViewModel.contactCount.value?.toInt()?.inc() ?: 1
-            addEditViewModel.contactCount.value = nextContactCount.toString()
-        }
-        binding.decrementContactCountButton.setOnClickListener {
-            val previousContactCount = max(0, addEditViewModel.contactCount.value?.toInt()?.dec() ?: 0)
-            addEditViewModel.contactCount.value = previousContactCount.toString()
         }
     }
 

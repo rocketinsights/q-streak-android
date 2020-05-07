@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.max
 
 class AddEditSubmissionViewModel(
     private val submissionRepository: SubmissionRepository,
@@ -66,6 +67,16 @@ class AddEditSubmissionViewModel(
             submissionDate.value = DateUtils.dateStringFormat.parse(dateString)
             submissionDateString.value = DateUtils.getDateStringForAddEditFromDbRecord(dateString)
         }
+    }
+
+    fun incrementContactCount() {
+        val nextContactCount = contactCount.value?.toInt()?.inc() ?: 1
+        contactCount.value = nextContactCount.toString()
+    }
+
+    fun decrementContactCount() {
+        val previousContactCount = max(0, contactCount.value?.toInt()?.dec() ?: 0)
+        contactCount.value = previousContactCount.toString()
     }
 
     fun saveSubmission() {
