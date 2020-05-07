@@ -11,11 +11,13 @@ import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentDashboardBinding
 import com.example.qstreak.models.DailyLogItemInfo
 import com.example.qstreak.utils.DateUtils
+import com.example.qstreak.utils.DateUtils.dateStringFormat
 import com.example.qstreak.utils.RecyclerViewUtils
 import com.example.qstreak.viewmodels.DashboardViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class DashboardFragment : Fragment() {
     private lateinit var binding: FragmentDashboardBinding
@@ -51,12 +53,20 @@ class DashboardFragment : Fragment() {
         }
 
         binding.scoreMeter.setOnClickListener {
-            (requireActivity() as MainActivity).navigateToAddOrEditRecord()
+            getTodaysDailyLogInfo()?.let { it ->
+                onDailyLogItemSelected(it)
+            }
         }
 
         setupDailyLog()
 
         return binding.root
+    }
+
+    private fun getTodaysDailyLogInfo() : DailyLogItemInfo? {
+        return submissionsViewModel.dailyLogInfos.value?.find {
+            it.isToday
+        }
     }
 
     private fun setupDailyLog() {
