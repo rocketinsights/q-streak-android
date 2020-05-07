@@ -83,7 +83,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="30"
-                        android:clickable="@{dashboardViewModel.hasEntryForToday ? false : true}"
                         android:contentDescription="@string/score_meter_level_5"
                         app:imageResource="@{dashboardViewModel.currentScoreImage}"
                         tools:src="@drawable/ic_dashboard_score_5" />

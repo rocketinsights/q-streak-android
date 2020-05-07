@@ -5,9 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.example.qstreak.R
+import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.viewmodels.SubmissionsViewModel
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class MainActivity : FragmentActivity(R.layout.activity_main) {
     val submissionsViewModel: SubmissionsViewModel by currentScope.viewModel(this)
@@ -22,14 +24,18 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
     }
 
     fun navigateToShowRecord() {
-        val fragment = SubmissionDetailFragment()
+        val fragment = SubmissionDetailFragment.newInstance()
         supportFragmentManager.beginTransaction()
             .addToBackStack(SubmissionDetailFragment.TAG)
             .replace(R.id.fragment_container_view, fragment)
             .commit()
     }
 
-    fun navigateToAddOrEditRecord(existingSubmissionDate: String? = null) {
+    fun navigateToAddOrEditRecord(
+        existingSubmissionDate: String = DateUtils.dateStringFormat.format(
+            Calendar.getInstance().time
+        )
+    ) {
         val fragment = AddEditSubmissionFragment.newInstance(existingSubmissionDate)
         supportFragmentManager.beginTransaction()
             .addToBackStack(AddEditSubmissionFragment.TAG)

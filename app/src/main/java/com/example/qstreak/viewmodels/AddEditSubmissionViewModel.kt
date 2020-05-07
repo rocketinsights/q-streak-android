@@ -15,8 +15,8 @@ import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.utils.UID
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.max
 
 class AddEditSubmissionViewModel(
     private val submissionRepository: SubmissionRepository,
@@ -24,18 +24,23 @@ class AddEditSubmissionViewModel(
     sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
-    // TODO is this locale okay to use?
-    private val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-
+    // Used in display of Add/Edit Record screen
     val activities: LiveData<List<Activity>> = activitiesRepository.activities
-    val checkedActivities = MutableLiveData<List<Activity>>()
-
-    val submissionComplete = MutableLiveData<Boolean>(false)
-    val submissionDate = MutableLiveData<Date>(Date())
-    val submissionDateString = MutableLiveData<String>(DateUtils.getDateStringForAddEditFromDate())
+    val checkedActivities = MutableLiveData<List<Activity>>(emptyList())
+    val selectedDateDisplayString =
+        MutableLiveData<String>(DateUtils.getDateDisplayStringFromDate())
     val contactCount = MutableLiveData<String>()
-    val existingSubmission = MutableLiveData<SubmissionWithActivities>()
     val errorToDisplay = MutableLiveData<String>()
+
+    // Observe for when to close add/edit screen
+    val submissionComplete = MutableLiveData<Boolean>(false)
+
+    // Observe for updating selection in other screens
+    val selectedDateString =
+        MutableLiveData<String>(DateUtils.dateStringFormat.format(Calendar.getInstance().time))
+
+    // Observe whether currently selected date has data
+    private val existingSubmission = MutableLiveData<SubmissionWithActivities?>()
 
     private val uid: String? by lazy {
         sharedPreferences.getString(UID, null)
@@ -54,18 +59,36 @@ class AddEditSubmissionViewModel(
         }
     }
 
-    fun initializeWithDate(dateString: String) {
+    fun loadDate(dateString: String) {
         viewModelScope.launch {
             try {
                 val submission = submissionRepository.getSubmissionWithActivitiesByDate(dateString)
                 existingSubmission.value = submission
+                selectedDateString.value = dateString
+                selectedDateDisplayString.value =
+                    DateUtils.getDateDisplayStringFromDbRecord(dateString)
+                if (submission != null) {
+                    contactCount.value = submission.submission.contactCount.toString()
+                    checkedActivities.value = submission.activities
+                } else {
+                    contactCount.value = "0"
+                    checkedActivities.value = emptyList()
+                }
             } catch (e: Exception) {
                 errorToDisplay.value = ("Error loading date: $dateString")
                 Timber.e(e)
             }
-            submissionDate.value = DateUtils.dateStringFormat.parse(dateString)
-            submissionDateString.value = DateUtils.getDateStringForAddEditFromDbRecord(dateString)
         }
+    }
+
+    fun incrementContactCount() {
+        val nextContactCount = contactCount.value?.toInt()?.inc() ?: 1
+        contactCount.value = nextContactCount.toString()
+    }
+
+    fun decrementContactCount() {
+        val previousContactCount = max(0, contactCount.value?.toInt()?.dec() ?: 0)
+        contactCount.value = previousContactCount.toString()
     }
 
     fun saveSubmission() {
@@ -75,14 +98,14 @@ class AddEditSubmissionViewModel(
                 viewModelScope.launch {
                     val response = existingSubmission.value?.let {
                         updateExistingSubmission(
-                            it.submission.date,
+                            selectedDateString.value!!,
                             contactCount.value!!.toInt(),
                             checkedActivities.value.orEmpty(),
                             uid as String
                         )
                     } ?: createNewSubmission(
                         contactCount.value!!.toInt(),
-                        dateFormatter.format(submissionDate.value!!),
+                        selectedDateString.value!!,
                         checkedActivities.value.orEmpty(),
                         uid as String
                     )

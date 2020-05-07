@@ -19,6 +19,7 @@ import com.example.qstreak.databinding.FragmentAddEditSubmissionBinding
 import com.example.qstreak.models.Activity
 import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.viewmodels.AddEditSubmissionViewModel
+import com.example.qstreak.viewmodels.SubmissionsViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.android.synthetic.main.help_card.view.*
@@ -29,6 +30,9 @@ import java.util.*
 class AddEditSubmissionFragment : Fragment() {
 
     private val addEditViewModel: AddEditSubmissionViewModel by currentScope.viewModel(this)
+    private val submissionsViewModel: SubmissionsViewModel by lazy {
+        (requireActivity() as MainActivity).submissionsViewModel
+    }
 
     private lateinit var binding: FragmentAddEditSubmissionBinding
 
@@ -42,8 +46,8 @@ class AddEditSubmissionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        arguments?.getString(SUBMISSION_DATE_KEY)?.let {
-            addEditViewModel.initializeWithDate(it)
+        arguments?.getString(DATE_STRING)?.let {
+            addEditViewModel.loadDate(it)
         }
 
         binding = DataBindingUtil.inflate(
@@ -56,9 +60,9 @@ class AddEditSubmissionFragment : Fragment() {
         binding.viewModel = addEditViewModel
 
         setupActivitiesList()
-        observeExistingSubmission()
         observeCompletion()
         observeErrors()
+        observeSelectedDateChange()
         setDateClickListener()
         helpButtonClickListener()
 
@@ -82,31 +86,11 @@ class AddEditSubmissionFragment : Fragment() {
 
         // Update UI with activities currently checked
         addEditViewModel.checkedActivities.observe(viewLifecycleOwner, Observer {
-            adapter.setCheckedActivities(it.orEmpty())
+            adapter.setCheckedActivities(it)
         })
 
         binding.activitiesChecklist.adapter = adapter
         binding.activitiesChecklist.layoutManager = LinearLayoutManager(activity)
-    }
-
-    // TODO this is MVP. How to avoid coming back up to the Fragment here?
-    private fun observeExistingSubmission() {
-        addEditViewModel.existingSubmission.observe(viewLifecycleOwner, Observer { existing ->
-            if (existing != null) {
-                // TODO less gross way to do this: (ensures if we return to detail page the correct record is selected)
-                (requireActivity() as MainActivity).submissionsViewModel.selectSubmission(existing)
-
-                addEditViewModel.contactCount.value = existing.submission.contactCount.toString()
-                addEditViewModel.submissionDate.value =
-                    DateUtils.getDateFromDbRecord(existing.submission.date)
-                addEditViewModel.submissionDateString.value =
-                    DateUtils.getDateStringForAddEditFromDbRecord(existing.submission.date)
-                addEditViewModel.checkedActivities.value = existing.activities
-            } else {
-                addEditViewModel.contactCount.value = null
-                addEditViewModel.checkedActivities.value = null
-            }
-        })
     }
 
     private fun observeCompletion() {
@@ -123,6 +107,13 @@ class AddEditSubmissionFragment : Fragment() {
         })
     }
 
+    private fun observeSelectedDateChange() {
+        // TODO not proper MVVM?
+        addEditViewModel.selectedDateString.observe(viewLifecycleOwner, Observer {
+            submissionsViewModel.selectDate(it)
+        })
+    }
+
     private fun setDateClickListener() {
         binding.dateButton.setOnClickListener {
             val builder = MaterialDatePicker.Builder.datePicker()
@@ -134,7 +125,7 @@ class AddEditSubmissionFragment : Fragment() {
                     this.add(Calendar.DATE, 1)
                 }
                 val pickedDate = DateUtils.dateStringFormat.format(calendar.time)
-                addEditViewModel.initializeWithDate(pickedDate)
+                addEditViewModel.loadDate(pickedDate)
             }
             picker.show(requireActivity().supportFragmentManager, picker.toString())
         }
@@ -166,13 +157,11 @@ class AddEditSubmissionFragment : Fragment() {
 
     companion object {
         const val TAG = "AddSubmissionFragment"
-        const val SUBMISSION_DATE_KEY = "submission_id"
+        private const val DATE_STRING = "date_string"
 
-        fun newInstance(existingSubmissionDate: String?): AddEditSubmissionFragment {
+        fun newInstance(dateString: String): AddEditSubmissionFragment {
             val fragment = AddEditSubmissionFragment()
-            existingSubmissionDate?.let { date ->
-                fragment.arguments = Bundle().apply { this.putString(SUBMISSION_DATE_KEY, date) }
-            }
+            fragment.arguments = Bundle().apply { this.putString(DATE_STRING, dateString) }
             return fragment
         }
     }
