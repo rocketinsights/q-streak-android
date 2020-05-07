@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentSubmissionDetailBinding
+import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.viewmodels.SubmissionsViewModel
 
 class SubmissionDetailFragment : Fragment() {
@@ -20,7 +21,7 @@ class SubmissionDetailFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        submissionsViewModel.refreshSelectedSubmission()
+        submissionsViewModel.refreshDate()
     }
 
     override fun onCreateView(
@@ -38,6 +39,7 @@ class SubmissionDetailFragment : Fragment() {
         binding.viewModel = submissionsViewModel
 
         setupEditClickListener()
+        observeDate()
         observeDeletion()
         setupActivitiesList()
 
@@ -46,10 +48,19 @@ class SubmissionDetailFragment : Fragment() {
 
     private fun setupEditClickListener() {
         binding.editButton.setOnClickListener {
-            (requireActivity() as MainActivity).navigateToAddOrEditRecord(
-                submissionsViewModel.selectedSubmission.value?.submission?.date
-            )
+            submissionsViewModel.selectedDateString.value?.let {
+                (requireActivity() as MainActivity).navigateToAddOrEditRecord(it)
+            } ?: run {
+                (requireActivity() as MainActivity).navigateToAddOrEditRecord()
+            }
+
         }
+    }
+
+    private fun observeDate() {
+        submissionsViewModel.selectedDateString.observe(viewLifecycleOwner, Observer {
+            binding.submissionDetailDate.text = DateUtils.getDateDisplayStringFromDbRecord(it)
+        })
     }
 
     private fun observeDeletion() {
@@ -78,5 +89,9 @@ class SubmissionDetailFragment : Fragment() {
 
     companion object {
         const val TAG = "SubmissionDetailFragment"
+
+        fun newInstance(): SubmissionDetailFragment {
+            return SubmissionDetailFragment()
+        }
     }
 }

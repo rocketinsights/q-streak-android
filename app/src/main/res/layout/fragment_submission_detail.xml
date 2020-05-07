@@ -10,6 +10,8 @@
             type="com.example.qstreak.viewmodels.SubmissionsViewModel" />
 
         <import type="android.view.View" />
+
+        <import type="com.example.qstreak.utils.DateUtils" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +25,6 @@
             style="@style/SecondaryHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.selectedSubmission.submission.date}"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

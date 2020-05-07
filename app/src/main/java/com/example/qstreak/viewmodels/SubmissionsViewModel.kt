@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.qstreak.db.SubmissionRepository
 import com.example.qstreak.models.DailyLogItemInfo
-import com.example.qstreak.models.DailyStats
 import com.example.qstreak.models.SubmissionWithActivities
 import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.utils.DateUtils.dateStringFormat
@@ -25,10 +24,9 @@ class SubmissionsViewModel(
         this.value = DateUtils.getWeekOfDateString(Calendar.getInstance().time)
     }
 
+    val selectedDateString = MutableLiveData<String>()
     val selectedSubmission = MutableLiveData<SubmissionWithActivities>()
-    val selectedSubmissionDailyStats = MutableLiveData<DailyStats>()
     val submissionDeleted = MutableLiveData<Boolean>(false)
-
     val selectedSubmissionScoreImage = MutableLiveData<Int>()
 
     private val uid: String? = sharedPrefs.getString(UID, null)
@@ -57,24 +55,27 @@ class SubmissionsViewModel(
         }
     }
 
-    fun selectSubmission(submissionWithActivities: SubmissionWithActivities) {
-        selectedSubmission.value = submissionWithActivities
-        selectedSubmissionDailyStats.value = null
-        selectedSubmissionScoreImage.value =
-            ImageUtils.getImageByScore(submissionWithActivities.submission.score)
+    fun selectDate(dateString: String = dateStringFormat.format(Calendar.getInstance().time)) {
+        selectedDateString.value = dateString
+        viewModelScope.launch {
+            val submissionForDateOrNull =
+                submissionRepository.getSubmissionWithActivitiesByDate(dateString)
+            submissionForDateOrNull?.let { loadSubmission(it) }
+        }
     }
 
-    fun refreshSelectedSubmission() {
-        val selectedDate = selectedSubmission.value?.submission?.date
-        selectedDate?.let {
-            viewModelScope.launch {
-                val selectedSubmission =
-                    submissionRepository.getSubmissionWithActivitiesByDate(selectedDate)
-                selectedSubmission?.let {
-                    selectSubmission(it)
-                }
-            }
+    fun refreshDate() {
+        selectedDateString.value?.let {
+            selectDate(it)
+        } ?: run {
+            selectDate()
         }
+    }
+
+    fun loadSubmission(submissionWithActivities: SubmissionWithActivities) {
+        selectedSubmission.value = submissionWithActivities
+        selectedSubmissionScoreImage.value =
+            ImageUtils.getImageByScore(submissionWithActivities.submission.score)
     }
 
     fun deleteSubmission() {
@@ -83,19 +84,6 @@ class SubmissionsViewModel(
                 submissionRepository.deleteSubmission(selectedSubmission.value!!.submission, uid)
                 // TODO this is a case for SingleLiveEvent
                 submissionDeleted.value = true
-            }
-        }
-    }
-
-    private fun populateDailyStats(submissionWithActivities: SubmissionWithActivities) {
-        // TODO handle null uid
-        if (uid != null) {
-            viewModelScope.launch {
-                val response = submissionRepository.fetchDailyStatsForSubmission(
-                    submissionWithActivities.submission.date,
-                    uid
-                )
-                selectedSubmissionDailyStats.value = response
             }
         }
     }

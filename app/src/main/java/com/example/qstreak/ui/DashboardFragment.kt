@@ -79,7 +79,7 @@ class DashboardFragment : Fragment() {
 
     private fun onDailyLogItemSelected(item: DailyLogItemInfo) {
         if (item.isComplete) {
-            submissionsViewModel.selectSubmission(item.submission!!)
+            submissionsViewModel.selectDate(DateUtils.dateStringFormat.format(item.date))
             (requireActivity() as MainActivity).navigateToShowRecord()
         } else {
             (requireActivity() as MainActivity).navigateToAddOrEditRecord(

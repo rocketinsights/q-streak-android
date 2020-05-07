@@ -23,7 +23,7 @@
             android:layout_marginTop="32dp"
             android:background="@android:color/transparent"
             android:backgroundTint="@android:color/white"
-            android:text="@{viewModel.submissionDateString}"
+            android:text="@{viewModel.selectedDateDisplayString}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

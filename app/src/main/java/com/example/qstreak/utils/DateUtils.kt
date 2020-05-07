@@ -38,11 +38,11 @@ object DateUtils {
         return dateFormatWeekOfDate.format(calendar.time)
     }
 
-    fun getDateStringForAddEditFromDate(date: Date = Calendar.getInstance().time): String {
+    fun getDateDisplayStringFromDate(date: Date = Calendar.getInstance().time): String {
         return dateStringFormatForAddEditRecord.format(date)
     }
 
-    fun getDateStringForAddEditFromDbRecord(dbString: String): String? {
+    fun getDateDisplayStringFromDbRecord(dbString: String): String? {
         return getDateFromDbRecord(dbString)?.let {
             dateStringFormatForAddEditRecord.format(it)
         }
