@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/helpCardBackground">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/help_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:shapeAppearanceOverlay="@style/CardSquareBottomCorners"
+        app:strokeColor="@color/cardBorder"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/horizonal_margin"
+            android:layout_marginEnd="@dimen/horizonal_margin"
+            android:paddingTop="34dp"
+            android:paddingBottom="60dp">
+
+            <TextView
+                android:id="@+id/help_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="@string/todays_score_header"
+                style="@style/MainHeader" />
+
+            <TextView
+                android:id="@+id/help_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="@string/todays_score_text"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"/>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/close_window"
+                style="@style/PrimaryActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/close_window_text" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,7 +70,7 @@
 
                             <ImageView
                                 android:id="@+id/help_button"
-                                android:layout_width="0dp"
+                                android:layout_width="27dp"
                                 android:layout_height="27dp"
                                 android:layout_marginStart="4dp"
                                 android:contentDescription="@string/help_button_text"
@@ -100,18 +100,20 @@
                         style="@style/CardTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginHorizontal="@dimen/horizonal_margin"
+                        android:layout_marginStart="@dimen/horizonal_margin"
+                        android:layout_marginEnd="@dimen/horizonal_margin"
                         android:text="@string/daily_log_activity" />
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginHorizontal="@dimen/horizonal_margin"
+                        android:layout_marginStart="@dimen/horizonal_margin"
+                        android:layout_marginEnd="@dimen/horizonal_margin"
                         android:text='@{"Week of " + submissionsViewModel.currentWeekString}'
                         android:textColor="@color/secondaryText"
                         android:textSize="16sp"
-                        tools:text="Week of May 3"/>
+                        tools:text="Week of May 3" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/daily_log_week_view"
