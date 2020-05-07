@@ -14,4 +14,5 @@ data class DailyLogItemInfo(
     // For use in UI conditional logic
     val isComplete = submission != null
     val isTodayOrEarlier = date <= Calendar.getInstance().time
+    val isToday = dayOfMonth == dateFormatDayOfMonth.format(Date())
 }
