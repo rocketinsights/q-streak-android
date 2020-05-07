@@ -26,8 +26,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:src="@drawable/ic_arrow_back_black_36dp"
-            >
-        </ImageView>
+            />
 
         <TextView
             android:id="@+id/submission_detail_date"
