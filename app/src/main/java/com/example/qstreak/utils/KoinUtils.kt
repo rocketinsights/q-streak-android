@@ -4,10 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.qstreak.BuildConfig
-import com.example.qstreak.db.ActivitiesRepository
-import com.example.qstreak.db.QstreakDatabase
-import com.example.qstreak.db.SubmissionRepository
-import com.example.qstreak.db.UserRepository
+import com.example.qstreak.db.*
 import com.example.qstreak.network.QstreakApiService
 import com.example.qstreak.network.QstreakApiSignupService
 import com.example.qstreak.ui.*
@@ -87,6 +84,7 @@ private fun repositoryModule() = module {
     single { UserRepository(get(), get(), get(), Dispatchers.IO) }
     single { SubmissionRepository(get(), get(), get(), get(), Dispatchers.IO) }
     single { ActivitiesRepository(get(), get()) }
+    single { DashboardRepository(get(), get(), Dispatchers.IO) }
 }
 
 private fun scopeModules() = module {
@@ -100,7 +98,7 @@ private fun scopeModules() = module {
         viewModel { AddEditSubmissionViewModel(get(), get(), get()) }
     }
     scope(named<DashboardFragment>()) {
-        viewModel { DashboardViewModel(get(), get()) }
+        viewModel { DashboardViewModel(get(), get(), get()) }
     }
     scope(named<MainActivity>()) {
         viewModel { SubmissionsViewModel(get(), get()) }
