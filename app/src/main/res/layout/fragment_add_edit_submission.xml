@@ -37,7 +37,8 @@
                     android:backgroundTint="@android:color/white"
                     android:text="@{viewModel.selectedDateDisplayString}"
                     android:textAlignment="textStart"
-                    tools:text="DATE" />
+                    android:textAllCaps="false"
+                    tools:text="Monday May 4" />
 
                 <TextView
                     android:id="@+id/new_submission_header"
@@ -67,8 +68,8 @@
                     android:id="@+id/contact_count_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/contact_count_text_input_layout"
@@ -88,6 +89,17 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="11dp"
+                        android:layout_marginEnd="11dp"
+                        android:text='@{viewModel.contactCount.equals("1") ? @string/person : @string/people}'
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        tools:text="people" />
+
                     <ImageButton
                         android:id="@+id/help_button"
                         android:layout_width="27dp"
@@ -96,30 +108,36 @@
                         android:contentDescription="@string/help_button_text"
                         android:src="@drawable/qstreak_help_button" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/decrement_contact_count_button"
-                        android:layout_width="50dp"
-                        android:layout_height="60dp"
-                        android:text="-"
-                        android:textColor="@android:color/black"
-                        app:cornerRadius="30dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginEnd="10dp"
-                        app:layout_constraintEnd_toStartOf="@+id/increment_contact_count_button"
-                        android:onClick="@{() -> viewModel.decrementContactCount()}" />
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/increment_contact_count_button"
-                        android:layout_width="50dp"
-                        android:layout_height="60dp"
-                        app:cornerRadius="30dp"
-                        android:textColor="@android:color/black"
-                        android:text="+"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:onClick="@{() -> viewModel.incrementContactCount()}" />
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/decrement_contact_count_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:backgroundTint="@android:color/white"
+                            android:onClick="@{() -> viewModel.decrementContactCount()}"
+                            android:src="@drawable/ic_remove_black_24dp"
+                            app:backgroundTint="@android:color/black"
+                            app:borderWidth="2dp"
+                            app:elevation="0dp" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/increment_contact_count_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:backgroundTint="@android:color/white"
+                            android:onClick="@{() -> viewModel.incrementContactCount()}"
+                            android:src="@drawable/ic_add_black_24dp"
+                            app:backgroundTint="@android:color/black"
+                            app:borderWidth="2dp"
+                            app:elevation="0dp" />
+                    </LinearLayout>
 
                 </LinearLayout>
 

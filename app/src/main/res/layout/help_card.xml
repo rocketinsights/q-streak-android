@@ -22,8 +22,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginHorizontal="@dimen/horizonal_margin"
-            android:paddingTop="20dp"
-            android:paddingBottom="12dp">
+            android:paddingTop="34dp"
+            android:paddingBottom="60dp">
 
             <TextView
                 android:id="@+id/help_header"
@@ -38,7 +38,8 @@
                 android:layout_height="wrap_content"
                 tools:text="@string/todays_score_text"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"/>
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/close_window"
@@ -48,8 +49,7 @@
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
                 android:layout_marginTop="25dp"
-                android:layout_marginBottom="8dp"
-                android:text="Got It" />
+                android:text="@string/close_window_text" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
