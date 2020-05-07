@@ -10,4 +10,5 @@
     <color name="cardBorder">#203f3d56</color>
     <color name="locationIcon">#6C63FF</color>
     <color name="locationText">#4E4C70</color>
+    <color name="helpCardBackground">#b3101010</color>
 </resources>
