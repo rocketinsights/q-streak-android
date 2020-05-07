@@ -16,7 +16,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/horizonal_margin"
-        android:paddingTop="60dp">
+        android:paddingTop="25dp">
+
+
+        <ImageView
+            android:id="@+id/submission_detail_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_arrow_back_black_36dp"
+            />
 
         <TextView
             android:id="@+id/submission_detail_date"
@@ -26,7 +36,7 @@
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/submission_detail_back_button"
             tools:text="2020-04-05" />
 
         <TextView
