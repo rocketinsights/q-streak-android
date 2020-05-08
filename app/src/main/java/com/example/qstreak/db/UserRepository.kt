@@ -14,7 +14,7 @@ class UserRepository(
     suspend fun getUser(): User? = userDao.getUser()
 
     suspend fun createUser(
-        name: String,
+        name: String?,
         zip: String
     ): ApiResult<CreateUserResponse> {
         val apiResponse = safeApiCall(dispatcher, retrofit) {

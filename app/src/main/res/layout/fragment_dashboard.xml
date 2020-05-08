@@ -50,7 +50,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{dashboardViewModel.userName != null ? @string/thanks_for_tracking_name(dashboardViewModel.userName) : @string/thanks_for_tracking}"
+                            android:text="@{dashboardViewModel.userName.length() > 0 ? @string/thanks_for_tracking_name(dashboardViewModel.userName) : @string/thanks_for_tracking}"
                             android:textColor="@color/secondaryText"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -135,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/horizonal_margin"
                     android:layout_marginEnd="@dimen/horizonal_margin"
-                    android:visibility="@{dashboardViewModel.dashboardMessages != null ? View.VISIBLE : View.GONE}">
+                    android:visibility="@{dashboardViewModel.showRiskWarning ? View.VISIBLE : View.GONE}">
 
                     <ImageView
                         android:layout_width="36dp"

@@ -64,7 +64,7 @@ class OnboardingViewModel(
     }
 
     private fun isNameValid(name: String?): Boolean {
-        // TODO validation rules - character validation?
-        return !name.isNullOrBlank()
+        // As of now name is optional.
+        return true
     }
 }

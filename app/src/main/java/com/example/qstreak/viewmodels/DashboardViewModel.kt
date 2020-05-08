@@ -25,6 +25,7 @@ class DashboardViewModel(
     val userName = MutableLiveData<String>(sharedPrefs.getString(USER_NAME, null))
     val uid: String? = sharedPrefs.getString(UID, null)
     val dashboardMessages = MutableLiveData<List<DashboardMessage>>()
+    val showRiskWarning = MutableLiveData<Boolean>(false)
     val countyName = MutableLiveData<String>()
     val errorToDisplay = MutableLiveData<String>()
 
@@ -40,12 +41,17 @@ class DashboardViewModel(
     }
 
     fun refreshDashboardMessages() {
+        // Clear list to avoid clunky visual change in content.
+        dashboardMessages.value = emptyList()
+        showRiskWarning.value = false
+
         if (uid != null) {
             viewModelScope.launch {
                 val response = dashboardRepository.getDashboardContent(uid)
                 if (response is ApiResult.Success) {
                     dashboardMessages.value = response.data.messages
                     countyName.value = response.data.dailyStats.location?.county ?: "Your area"
+                    showRiskWarning.value = true
                 } else {
                     errorToDisplay.value = (response as ApiResult.Error).apiErrors
                 }

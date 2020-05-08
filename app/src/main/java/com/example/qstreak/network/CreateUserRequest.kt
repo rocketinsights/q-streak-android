@@ -7,6 +7,6 @@ data class CreateUserRequest(
 )
 
 data class Account(
-    @field:Json(name = "name") val name: String = "",
+    @field:Json(name = "name") val name: String? = null,
     @field:Json(name = "zip") val zip: String
 )
