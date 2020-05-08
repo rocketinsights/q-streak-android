@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentAddEditSubmissionBinding
 import com.example.qstreak.models.Activity
-import com.example.qstreak.utils.DateUtils
+import com.example.qstreak.utils.DateUtils.dateStringFormat
 import com.example.qstreak.viewmodels.AddEditSubmissionViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
-import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.android.synthetic.main.help_card.view.*
 import org.koin.androidx.scope.currentScope
@@ -117,15 +117,24 @@ class AddEditSubmissionFragment : Fragment() {
 
     private fun setDateClickListener() {
         binding.dateButton.setOnClickListener {
-            val builder = MaterialDatePicker.Builder.datePicker()
+            val builder = datePicker()
+            // Set pre-filled date on picker to current record.
+            builder.setSelection(Calendar.getInstance().apply {
+                addEditViewModel.selectedDateString.value?.let {
+                    dateStringFormat.parse(it)?.let { selectedDate ->
+                        this.time = selectedDate
+                    }
+                }
+            }.timeInMillis)
+            builder.setTheme(R.style.DatePicker)
             val picker = builder.build()
             picker.addOnPositiveButtonClickListener {
                 val calendar = Calendar.getInstance().apply {
-                    this.time = Date(it)
+                    this.timeInMillis = it
                     // TODO Don't know why we have to add one to the result of the picker
                     this.add(Calendar.DATE, 1)
                 }
-                val pickedDate = DateUtils.dateStringFormat.format(calendar.time)
+                val pickedDate = dateStringFormat.format(calendar.time)
                 addEditViewModel.loadDate(pickedDate)
             }
             picker.show(requireActivity().supportFragmentManager, picker.toString())
