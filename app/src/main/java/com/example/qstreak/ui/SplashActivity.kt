@@ -9,7 +9,7 @@ import com.example.qstreak.viewmodels.SplashViewModel
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
+// TODO replace with logo screen if available
 class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
     private val viewModel: SplashViewModel by currentScope.viewModel(this)
 
@@ -29,13 +29,13 @@ class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
         val intent = Intent(this, OnboardingActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
-        overridePendingTransition(R.anim.fade_in, 0)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     private fun navigateToDashboard() {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
-        overridePendingTransition(R.anim.fade_in, 0)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 }
