@@ -55,15 +55,29 @@
                     android:layout_marginTop="15dp"
                     android:text="@string/new_submission_text" />
 
-                <TextView
-                    android:id="@+id/new_submission_contact_label"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/new_submission_contact_label"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="30dp">
+
+                    <TextView
+                        android:id="@+id/new_submission_contact_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/new_submission_contact_label"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/help_button"
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:contentDescription="@string/help_button_text"
+                        android:src="@drawable/qstreak_help_button" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/contact_count_layout"
@@ -100,14 +114,6 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         tools:text="people" />
-
-                    <ImageButton
-                        android:id="@+id/help_button"
-                        android:layout_width="27dp"
-                        android:layout_height="27dp"
-                        android:layout_marginStart="4dp"
-                        android:contentDescription="@string/help_button_text"
-                        android:src="@drawable/qstreak_help_button" />
 
                     <LinearLayout
                         android:layout_width="fill_parent"
