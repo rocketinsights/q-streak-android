@@ -113,4 +113,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="CheckBox" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorControlNormal">#000</item>   <!-- border color -->
+        <item name="colorControlActivated">@color/colorPrimary</item> <!-- activated color -->
+    </style>
+
 </resources>
