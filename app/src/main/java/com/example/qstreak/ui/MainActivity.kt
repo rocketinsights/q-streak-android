@@ -26,6 +26,7 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
     fun navigateToShowRecord() {
         val fragment = SubmissionDetailFragment.newInstance()
         supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.pull_out_from_bottom, 0, 0, 0)
             .addToBackStack(SubmissionDetailFragment.TAG)
             .replace(R.id.fragment_container_view, fragment)
             .commit()
@@ -38,6 +39,7 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
     ) {
         val fragment = AddEditSubmissionFragment.newInstance(existingSubmissionDate)
         supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.pull_out_from_bottom, 0, 0, 0)
             .addToBackStack(AddEditSubmissionFragment.TAG)
             .replace(R.id.fragment_container_view, fragment)
             .commit()
