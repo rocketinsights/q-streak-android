@@ -37,6 +37,7 @@
     <string name="delete_record_confirmation_message">Are you sure you want to delete this record?</string>
     <string name="delete_record_confirmation_cancel">Cancel</string>
     <string name="delete_record_confirmation_confirm">Delete</string>
+    <string name="dashboard_hazard_message">%1$s is at risk for continued outbreaks.</string>
 
     <!--    Field validation    -->
     <string name="zip_invalid">Please enter a valid ZIP code.</string>
