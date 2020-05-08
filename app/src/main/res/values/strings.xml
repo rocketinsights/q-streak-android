@@ -3,7 +3,7 @@
 
     <string name="submission_detail_contact_count">%1$d people</string>
     <string name="zip_code">What\'s your zip code?</string>
-    <string name="name">What\'s your name?</string>
+    <string name="name">What\'s your name? (optional)</string>
     <string name="continue_button_label">Start tracking</string>
     <string name="delete_submission">Delete Submission</string>
     <string name="onboarding_step1_action_text">Get started</string>
