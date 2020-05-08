@@ -47,7 +47,6 @@
                         android:layout_weight="70"
                         android:orientation="vertical">
 
-                        <!--                        TODO store user's name when they sign up to use in string -->
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -125,105 +124,31 @@
 
                 </LinearLayout>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/longest_stretch"
-                    style="@style/DashboardCard"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/dashboard_messages"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="20dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="18dp"
-                            android:contentDescription="@string/longest_streak_icon"
-                            android:src="@drawable/qstreak_longest_streak" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                style="@style/CardTitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/longest_stretch" />
-
-                            <TextView
-                                style="@style/CardDescription"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="It's been 5 days since you last visited the grocery store." />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/rank"
-                    style="@style/DashboardCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="20dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="18dp"
-                            android:contentDescription="@string/rank_icon"
-                            android:src="@drawable/qstreak_rank_icon" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                style="@style/CardTitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Top 10" />
-
-                            <TextView
-                                style="@style/CardDescription"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="You’re in the 10% of people in your community who have reported under 5 close encounters over the last week." />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
+                    android:layout_marginTop="20dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/horizonal_margin"
-                    android:layout_marginTop="18dp"
-                    android:layout_marginEnd="@dimen/horizonal_margin">
+                    android:layout_marginEnd="@dimen/horizonal_margin"
+                    android:visibility="@{dashboardViewModel.dashboardMessages != null ? View.VISIBLE : View.GONE}">
 
                     <ImageView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
-                        android:layout_marginStart="42dp"
-                        android:layout_marginEnd="13dp"
+                        android:layout_margin="18dp"
                         android:contentDescription="@string/risk_warning_icon"
                         android:src="@drawable/qstreak_risk_warning" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="32dp"
-                        android:text="Cook County is at risk for continued outbreaks."
+                        android:layout_gravity="center_vertical"
+                        android:text="@{@string/dashboard_hazard_message(dashboardViewModel.countyName)}"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
                 </LinearLayout>

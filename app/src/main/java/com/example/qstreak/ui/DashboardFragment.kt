@@ -8,12 +8,12 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentDashboardBinding
 import com.example.qstreak.models.DailyLogItemInfo
 import com.example.qstreak.utils.DateUtils
-import com.example.qstreak.utils.DateUtils.dateStringFormat
 import com.example.qstreak.utils.RecyclerViewUtils
 import com.example.qstreak.viewmodels.DashboardViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
@@ -21,7 +21,6 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import kotlinx.android.synthetic.main.help_card.view.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 class DashboardFragment : Fragment() {
     private lateinit var binding: FragmentDashboardBinding
@@ -34,6 +33,7 @@ class DashboardFragment : Fragment() {
         super.onResume()
         submissionsViewModel.generateDailyLogInfos()
         dashboardViewModel.refreshToday()
+        dashboardViewModel.refreshDashboardMessages()
     }
 
     override fun onCreateView(
@@ -63,12 +63,13 @@ class DashboardFragment : Fragment() {
         }
 
         setupDailyLog()
+        setupDashboardMessages()
         helpButtonClickListener()
 
         return binding.root
     }
 
-    private fun getTodaysDailyLogInfo() : DailyLogItemInfo? {
+    private fun getTodaysDailyLogInfo(): DailyLogItemInfo? {
         return submissionsViewModel.dailyLogInfos.value?.find {
             it.isToday
         }
@@ -105,6 +106,18 @@ class DashboardFragment : Fragment() {
 
     private fun onScrollFirstItemVisible(firstItemPosition: Int) {
         submissionsViewModel.setCurrentWeekBasedOnScrollPosition(firstItemPosition)
+    }
+
+    private fun setupDashboardMessages() {
+        val recyclerView = binding.dashboardMessages
+        val adapter = DashboardMessagesAdapter()
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = layoutManager
+
+        dashboardViewModel.dashboardMessages.observe(viewLifecycleOwner, Observer {
+            adapter.setMessages(it)
+        })
     }
 
     private fun helpButtonClickListener() {

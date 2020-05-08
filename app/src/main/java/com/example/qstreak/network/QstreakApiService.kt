@@ -39,6 +39,9 @@ interface QstreakApiService {
         @Header(AUTHORIZATION) uid: String
     ): SubmissionResponse
 
+    @GET("dashboard")
+    suspend fun getDashboardData(@Header(AUTHORIZATION) uid: String): DashboardResponse
+
     companion object {
         const val AUTHORIZATION = "Authorization"
 
