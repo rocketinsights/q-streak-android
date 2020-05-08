@@ -1,9 +1,14 @@
 package com.example.qstreak.ui
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.databinding.DataBindingUtil
@@ -21,6 +26,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import kotlinx.android.synthetic.main.help_card.view.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class DashboardFragment : Fragment() {
     private lateinit var binding: FragmentDashboardBinding
@@ -110,7 +116,7 @@ class DashboardFragment : Fragment() {
 
     private fun setupDashboardMessages() {
         val recyclerView = binding.dashboardMessages
-        val adapter = DashboardMessagesAdapter()
+        val adapter = DashboardMessagesAdapter(this::openUrl)
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = layoutManager
@@ -136,6 +142,18 @@ class DashboardFragment : Fragment() {
             val closeWindow = view.findViewById<ExtendedFloatingActionButton>(R.id.close_window)
             closeWindow.setOnClickListener {
                 window.dismiss()
+            }
+        }
+    }
+
+    private fun openUrl(url: String?) {
+        url?.let {
+            val openUrl = Intent(Intent.ACTION_VIEW)
+            try {
+                openUrl.data = Uri.parse("https://$url")
+                startActivity(openUrl)
+            } catch (e: Exception) {
+                Timber.e(e)
             }
         }
     }

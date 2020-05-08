@@ -9,7 +9,7 @@ import com.example.qstreak.R
 import com.example.qstreak.network.DashboardMessage
 import kotlinx.android.synthetic.main.dashboard_message_item.view.*
 
-class DashboardMessagesAdapter() :
+class DashboardMessagesAdapter(private val onUrlClicked: (String?) -> Unit) :
     RecyclerView.Adapter<DashboardMessagesAdapter.MessageViewHolder>() {
 
     private val messages = mutableListOf<DashboardMessage>()
@@ -33,6 +33,12 @@ class DashboardMessagesAdapter() :
         holder.messageIcon.text = message.icon.toInt(16).toChar().toString()
         holder.messageTitle.text = message.dashboardMessageTitle
         holder.messageBody.text = message.dashboardMessageBody
+
+        if (message.dashboardMessageUrl != null) {
+            holder.itemView.setOnClickListener {
+                onUrlClicked(message.dashboardMessageUrl)
+            }
+        }
     }
 
     inner class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
