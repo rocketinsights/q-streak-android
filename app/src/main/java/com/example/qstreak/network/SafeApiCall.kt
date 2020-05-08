@@ -25,7 +25,9 @@ suspend fun <T> safeApiCall(
                         arrayOfNulls<Annotation>(0)
                     )
                 throwable.response()?.errorBody()?.let {
-                    errors = converter.convert(it)?.getErrorString()
+                    if (it.contentLength() > 0) {
+                        errors = converter.convert(it)?.getErrorString()
+                    }
                 }
                 code = throwable.code()
             }
