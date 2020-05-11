@@ -28,19 +28,19 @@ class AddEditSubmissionViewModel(
     val activities: LiveData<List<Activity>> = activitiesRepository.activities
     val checkedActivities = MutableLiveData<List<Activity>>(emptyList())
     val selectedDateDisplayString =
-        MutableLiveData<String>(DateUtils.getDateDisplayStringFromDate())
+        MutableLiveData(DateUtils.getDateDisplayStringFromDate())
     val contactCount = MutableLiveData<String>()
     val errorToDisplay = MutableLiveData<String>()
 
     // Observe for when to close add/edit screen
-    val submissionComplete = MutableLiveData<Boolean>(false)
+    val submissionComplete = MutableLiveData(false)
 
     // Observe for updating selection in other screens
     val selectedDateString =
-        MutableLiveData<String>(DateUtils.dateStringFormat.format(Calendar.getInstance().time))
+        MutableLiveData(DateUtils.dateStringFormat.format(Calendar.getInstance().time))
 
     // Observe whether currently selected date has data
-    private val existingSubmission = MutableLiveData<SubmissionWithActivities?>()
+    val existingSubmission = MutableLiveData<SubmissionWithActivities?>()
 
     private val uid: String? by lazy {
         sharedPreferences.getString(UID, null)
