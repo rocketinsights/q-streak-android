@@ -13,15 +13,24 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        flavorDimensions "default"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField "String", "BASE_URL", '"http://10.0.2.2:4000/"'
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        local {
+            buildConfigField "String", "BASE_URL", '"http://10.0.2.2:4000/"'
+        }
+
+        prod {
+            buildConfigField "String", "BASE_URL", '"https://api.qstreak.com/"'
         }
     }
 
