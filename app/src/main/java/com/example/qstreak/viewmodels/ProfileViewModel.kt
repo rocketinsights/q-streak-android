@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.qstreak.db.UserRepository
 import com.example.qstreak.utils.USER_NAME
+import com.example.qstreak.utils.USER_ZIP
 
 class ProfileViewModel(
     private val userRepository: UserRepository,
@@ -12,5 +13,6 @@ class ProfileViewModel(
 ) : ViewModel() {
 
     val userName = MutableLiveData<String>(sharedPrefs.getString(USER_NAME, null))
+    val userZipCode = MutableLiveData<String>(sharedPrefs.getString(USER_ZIP, null))
 
 }

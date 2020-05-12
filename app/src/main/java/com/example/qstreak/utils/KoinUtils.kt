@@ -24,6 +24,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 const val USER_PREFS = "user_prefs"
 const val UID = "uid"
 const val USER_NAME = "user_name"
+const val USER_ZIP = "user_zipcode"
 
 fun Application.initKoin() {
 
