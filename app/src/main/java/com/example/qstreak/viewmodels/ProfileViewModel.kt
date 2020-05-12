@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.qstreak.db.UserRepository
 import com.example.qstreak.utils.USER_NAME
 
-class UserViewModel(
+class ProfileViewModel(
     private val userRepository: UserRepository,
     sharedPrefs: SharedPreferences
 ) : ViewModel() {

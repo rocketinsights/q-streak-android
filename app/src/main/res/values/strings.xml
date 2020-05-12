@@ -29,8 +29,8 @@
     <string name="new_submission_contact_label">How many people did you come into close contact with today (approximate)?</string>
     <string name="new_submission_location_label">Did you go to any of the following locations?</string>
     <string name="daily_checkmark">daily_checkmark</string>
-    <string name="thanks_for_tracking_name">Thanks for tracking, %1$s!</string>
-    <string name="thanks_for_tracking">Thanks for tracking!</string>
+    <string name="hello_name">Hello %1$s!</string>
+    <string name="hello">Hello!</string>
     <string name="people">people</string>
     <string name="person">person</string>
     <string name="delete_record_confirmation_title">Confirm Deletion</string>
@@ -51,4 +51,5 @@
     <string name="profile">Profile</string>
     <string name="edit_label">Edit</string>
     <string name="user_zip_code">Zip Code</string>
+    <string name="profile_button_text">profile button</string>
 </resources>

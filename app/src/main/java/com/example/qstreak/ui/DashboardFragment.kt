@@ -71,6 +71,7 @@ class DashboardFragment : Fragment() {
         setupDailyLog()
         setupDashboardMessages()
         helpButtonClickListener()
+        profileButtonClickListener()
 
         return binding.root
     }
@@ -143,6 +144,12 @@ class DashboardFragment : Fragment() {
             closeWindow.setOnClickListener {
                 window.dismiss()
             }
+        }
+    }
+
+    private fun profileButtonClickListener() {
+        binding.profileButton.setOnClickListener {
+            (requireActivity() as MainActivity).navigateToShowProfile()
         }
     }
 
