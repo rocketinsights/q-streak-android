@@ -103,4 +103,7 @@ private fun scopeModules() = module {
     scope(named<MainActivity>()) {
         viewModel { SubmissionsViewModel(get(), get()) }
     }
+    scope(named<ProfileFragment>()) {
+        viewModel { ProfileViewModel(get(), get()) }
+    }
 }
