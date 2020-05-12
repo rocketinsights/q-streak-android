@@ -43,6 +43,15 @@ class MainActivity : FragmentActivity(R.layout.activity_main) {
             .commit()
     }
 
+    fun navigateToEditProfile() {
+        val fragment = EditProfileFragment.newInstance()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.pull_out_from_bottom, 0, 0, 0)
+            .addToBackStack(EditProfileFragment.TAG)
+            .replace(R.id.fragment_container_view, fragment)
+            .commit()
+    }
+
     fun navigateToAddOrEditRecord(
         existingSubmissionDate: String = DateUtils.dateStringFormat.format(
             Calendar.getInstance().time

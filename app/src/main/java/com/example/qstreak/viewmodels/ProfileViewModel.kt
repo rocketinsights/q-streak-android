@@ -3,12 +3,10 @@ package com.example.qstreak.viewmodels
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.qstreak.db.UserRepository
 import com.example.qstreak.utils.USER_NAME
 import com.example.qstreak.utils.USER_ZIP
 
 class ProfileViewModel(
-    private val userRepository: UserRepository,
     sharedPrefs: SharedPreferences
 ) : ViewModel() {
 

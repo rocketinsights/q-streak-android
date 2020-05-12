@@ -30,17 +30,17 @@ class ProfileFragment : Fragment() {
         binding.lifecycleOwner = activity
         binding.viewModel = profileViewModel
 
-//        setupEditClickListener()
+        setupEditClickListener()
         setupBackButtonClickListener()
 
         return binding.root
     }
 
-//    private fun setupEditClickListener() {
-//        binding.editButton.setOnClickListener {
-//            (requireActivity() as MainActivity).navigateToEditProfile()
-//        }
-//    }
+    private fun setupEditClickListener() {
+        binding.editButton.setOnClickListener {
+            (requireActivity() as MainActivity).navigateToEditProfile()
+        }
+    }
 
     private fun setupBackButtonClickListener() {
         binding.backButton.setOnClickListener {
