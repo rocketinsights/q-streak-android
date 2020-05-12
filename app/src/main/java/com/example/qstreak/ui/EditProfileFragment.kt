@@ -38,33 +38,17 @@ class EditProfileFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = editProfileViewModel
 
-        observeCompletion()
-        observeErrors()
-        setupBackButtonClickListener()
+        setupBackButtonClickListeners()
 
         return binding.root
     }
 
-    private fun onProfileCompleted() {
-        requireActivity().supportFragmentManager.popBackStack()
-    }
 
-    private fun observeCompletion() {
-        editProfileViewModel.profileComplete.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                onProfileCompleted()
-            }
-        })
-    }
-
-    private fun observeErrors() {
-        editProfileViewModel.errorToDisplay.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
-        })
-    }
-
-    private fun setupBackButtonClickListener() {
+    private fun setupBackButtonClickListeners() {
         binding.backButton.setOnClickListener {
+            (requireActivity() as MainActivity).onBackPressed()
+        }
+        binding.doneButton.setOnClickListener {
             (requireActivity() as MainActivity).onBackPressed()
         }
     }
