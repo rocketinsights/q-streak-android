@@ -47,4 +47,8 @@
     <string name="todays_score_header">What\'s my score?</string>
     <string name="todays_score_text">Your score is a reflection of your risk level based on your reported activity and location relative to the Covid-19 outbreak.</string>
     <string name="close_window_text">Got It</string>
+    <string name="profile_name">Name</string>
+    <string name="profile">Profile</string>
+    <string name="edit_label">Edit</string>
+    <string name="user_zip_code">Zip Code</string>
 </resources>
