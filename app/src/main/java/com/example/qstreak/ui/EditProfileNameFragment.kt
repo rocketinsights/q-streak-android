@@ -10,13 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentEditProfileNameBinding
-import com.example.qstreak.viewmodels.EditProfileViewModel
-import org.koin.androidx.scope.currentScope
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.qstreak.viewmodels.ProfileViewModel
 
 class EditProfileNameFragment : Fragment() {
-
-    private val editProfileViewModel: EditProfileViewModel by currentScope.viewModel(this)
+    private val profileViewModel: ProfileViewModel by lazy {
+        (requireActivity() as MainActivity).profileViewModel
+    }
 
     private lateinit var binding: FragmentEditProfileNameBinding
 
@@ -32,7 +31,7 @@ class EditProfileNameFragment : Fragment() {
             false
         )
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = editProfileViewModel
+        binding.viewModel = profileViewModel
 
         setupBackButtonClickListener()
         observeErrors()
@@ -42,7 +41,7 @@ class EditProfileNameFragment : Fragment() {
     }
 
     private fun observeUpdated() {
-        editProfileViewModel.profileUpdated.observe(viewLifecycleOwner, Observer {
+        profileViewModel.profileUpdated.observe(viewLifecycleOwner, Observer {
             if (it) {
                 requireActivity().supportFragmentManager.popBackStack()
             }
@@ -50,7 +49,7 @@ class EditProfileNameFragment : Fragment() {
     }
 
     private fun observeErrors() {
-        editProfileViewModel.errorToDisplay.observe(viewLifecycleOwner, Observer {
+        profileViewModel.errorToDisplay.observe(viewLifecycleOwner, Observer {
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         })
     }

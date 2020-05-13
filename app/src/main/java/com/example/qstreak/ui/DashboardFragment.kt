@@ -21,6 +21,7 @@ import com.example.qstreak.models.DailyLogItemInfo
 import com.example.qstreak.utils.DateUtils
 import com.example.qstreak.utils.RecyclerViewUtils
 import com.example.qstreak.viewmodels.DashboardViewModel
+import com.example.qstreak.viewmodels.ProfileViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.android.synthetic.main.help_card.view.*
@@ -33,6 +34,9 @@ class DashboardFragment : Fragment() {
     private val dashboardViewModel: DashboardViewModel by currentScope.viewModel(this)
     private val submissionsViewModel: SubmissionsViewModel by lazy {
         (requireActivity() as MainActivity).submissionsViewModel
+    }
+    private val profileViewModel: ProfileViewModel by lazy {
+        (requireActivity() as MainActivity).profileViewModel
     }
 
     override fun onResume() {
@@ -57,6 +61,7 @@ class DashboardFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.dashboardViewModel = dashboardViewModel
         binding.submissionsViewModel = submissionsViewModel
+        binding.profileViewModel = profileViewModel
 
         binding.buttonRecordActivity.setOnClickListener {
             (requireActivity() as MainActivity).navigateToAddOrEditRecord()

@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.example.qstreak.R
 import com.example.qstreak.utils.DateUtils
+import com.example.qstreak.viewmodels.ProfileViewModel
 import com.example.qstreak.viewmodels.SubmissionsViewModel
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -13,6 +14,7 @@ import java.util.*
 
 class MainActivity : FragmentActivity(R.layout.activity_main) {
     val submissionsViewModel: SubmissionsViewModel by currentScope.viewModel(this)
+    val profileViewModel: ProfileViewModel by currentScope.viewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

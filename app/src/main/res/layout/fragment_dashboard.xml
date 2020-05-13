@@ -14,6 +14,9 @@
         <variable
             name="submissionsViewModel"
             type="com.example.qstreak.viewmodels.SubmissionsViewModel" />
+        <variable
+            name="profileViewModel"
+            type="com.example.qstreak.viewmodels.ProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,7 +66,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@{dashboardViewModel.userName.length() > 0 ? @string/hello_name(dashboardViewModel.userName) : @string/hello}"
+                                android:text="@{profileViewModel.userName.length() > 0 ? @string/hello_name(profileViewModel.userName) : @string/hello}"
                                 android:textColor="@color/secondaryText"
                                 android:textSize="16sp"
                                 android:textStyle="bold"

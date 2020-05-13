@@ -103,17 +103,12 @@ private fun scopeModules() = module {
     }
     scope(named<MainActivity>()) {
         viewModel { SubmissionsViewModel(get(), get()) }
-    }
-    scope(named<ProfileFragment>()) {
-        viewModel { ProfileViewModel(get()) }
-    }
-    scope(named<EditProfileFragment>()) {
-        viewModel { ProfileViewModel(get()) }
+        viewModel { ProfileViewModel(get(), get(), get()) }
     }
     scope(named<EditProfileNameFragment>()) {
-        viewModel { EditProfileViewModel(get(), get(), get()) }
+        viewModel { ProfileViewModel(get(), get(), get()) }
     }
     scope(named<EditProfileZipCodeFragment>()) {
-        viewModel { EditProfileViewModel(get(), get(), get()) }
+        viewModel { ProfileViewModel(get(), get(), get()) }
     }
 }

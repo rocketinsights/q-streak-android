@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentProfileBinding
 import com.example.qstreak.viewmodels.ProfileViewModel
-import org.koin.androidx.scope.currentScope
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
-    private val profileViewModel: ProfileViewModel by currentScope.viewModel(this)
     private lateinit var binding: FragmentProfileBinding
+    private val profileViewModel: ProfileViewModel by lazy {
+        (requireActivity() as MainActivity).profileViewModel
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
