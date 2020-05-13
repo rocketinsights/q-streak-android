@@ -105,10 +105,4 @@ private fun scopeModules() = module {
         viewModel { SubmissionsViewModel(get(), get()) }
         viewModel { ProfileViewModel(get(), get(), get()) }
     }
-    scope(named<EditProfileNameFragment>()) {
-        viewModel { ProfileViewModel(get(), get(), get()) }
-    }
-    scope(named<EditProfileZipCodeFragment>()) {
-        viewModel { ProfileViewModel(get(), get(), get()) }
-    }
 }
