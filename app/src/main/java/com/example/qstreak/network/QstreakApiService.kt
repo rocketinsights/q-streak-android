@@ -39,6 +39,12 @@ interface QstreakApiService {
         @Header(AUTHORIZATION) uid: String
     ): SubmissionResponse
 
+    @PUT("account/update")
+    suspend fun updateUser(
+        @Body updateUserRequest: UpdateUserRequest,
+        @Header(AUTHORIZATION) uid: String
+    ): UpdateUserResponse
+
     @GET("dashboard")
     suspend fun getDashboardData(@Header(AUTHORIZATION) uid: String): DashboardResponse
 

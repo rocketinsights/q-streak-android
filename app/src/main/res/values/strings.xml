@@ -52,4 +52,7 @@
     <string name="edit_label">Edit</string>
     <string name="user_zip_code">Zip Code</string>
     <string name="profile_button_text">profile button</string>
+    <string name="edit_user_name">Edit User Name</string>
+    <string name="save">Save</string>
+    <string name="edit_zip_code">Edit Zip Code</string>
 </resources>

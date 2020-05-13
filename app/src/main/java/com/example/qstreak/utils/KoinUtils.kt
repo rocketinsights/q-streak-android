@@ -82,7 +82,7 @@ private fun databaseModule() = module {
 }
 
 private fun repositoryModule() = module {
-    single { UserRepository(get(), get(), get(), Dispatchers.IO) }
+    single { UserRepository(get(), get(), get(), get(), Dispatchers.IO) }
     single { SubmissionRepository(get(), get(), get(), get(), Dispatchers.IO) }
     single { ActivitiesRepository(get(), get()) }
     single { DashboardRepository(get(), get(), Dispatchers.IO) }
@@ -108,6 +108,12 @@ private fun scopeModules() = module {
         viewModel { ProfileViewModel(get()) }
     }
     scope(named<EditProfileFragment>()) {
-        viewModel { EditProfileViewModel(get(), get()) }
+        viewModel { ProfileViewModel(get()) }
+    }
+    scope(named<EditProfileNameFragment>()) {
+        viewModel { EditProfileViewModel(get(), get(), get()) }
+    }
+    scope(named<EditProfileZipCodeFragment>()) {
+        viewModel { EditProfileViewModel(get(), get(), get()) }
     }
 }
