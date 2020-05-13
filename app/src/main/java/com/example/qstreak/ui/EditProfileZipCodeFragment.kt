@@ -61,6 +61,7 @@ class EditProfileZipCodeFragment : Fragment() {
     private fun observeUpdated() {
         profileViewModel.profileUpdated.observe(viewLifecycleOwner, Observer {
             if (it) {
+                profileViewModel.profileUpdated.value = false
                 requireActivity().supportFragmentManager.popBackStack()
             }
         })
