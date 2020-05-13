@@ -40,17 +40,29 @@ class EditProfileZipCodeFragment : Fragment() {
         return binding.root
     }
 
+    private fun observeErrors() {
+        profileViewModel.errorToDisplay.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+        })
+        profileViewModel.zipCodeError.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.zipCodeInput.error = getString(R.string.zip_invalid)
+                if (profileViewModel.nameError.value == false) {
+                    binding.zipCodeInput.editText?.let { et ->
+                        et.requestFocus()
+                        et.setSelection(et.text.length)
+                    }
+                }
+            }
+        })
+    }
+
+
     private fun observeUpdated() {
         profileViewModel.profileUpdated.observe(viewLifecycleOwner, Observer {
             if (it) {
                 requireActivity().supportFragmentManager.popBackStack()
             }
-        })
-    }
-
-    private fun observeErrors() {
-        profileViewModel.errorToDisplay.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         })
     }
 

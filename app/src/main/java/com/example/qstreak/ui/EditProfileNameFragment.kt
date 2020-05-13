@@ -52,6 +52,15 @@ class EditProfileNameFragment : Fragment() {
         profileViewModel.errorToDisplay.observe(viewLifecycleOwner, Observer {
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         })
+        profileViewModel.nameError.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.nameInput.error = getString(R.string.name_invalid)
+                binding.nameInput.editText?.let { et ->
+                    et.requestFocus()
+                    et.setSelection(et.text.length)
+                }
+            }
+        })
     }
 
 
