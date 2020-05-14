@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentEditProfileNameBinding
 import com.example.qstreak.viewmodels.ProfileViewModel
+import kotlinx.android.synthetic.main.fragment_edit_profile_name.*
 
 class EditProfileNameFragment : Fragment() {
     private val profileViewModel: ProfileViewModel by lazy {
@@ -67,6 +68,7 @@ class EditProfileNameFragment : Fragment() {
 
     private fun setupBackButtonClickListener() {
         binding.backButton.setOnClickListener {
+            edit_user_name.setText(profileViewModel.userNameDisplay)
             (requireActivity() as MainActivity).onBackPressed()
         }
     }

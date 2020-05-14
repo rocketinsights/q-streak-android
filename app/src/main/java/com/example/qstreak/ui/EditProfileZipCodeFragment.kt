@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.example.qstreak.R
 import com.example.qstreak.databinding.FragmentEditProfileZipcodeBinding
 import com.example.qstreak.viewmodels.ProfileViewModel
+import kotlinx.android.synthetic.main.fragment_edit_profile_zipcode.*
 
 class EditProfileZipCodeFragment : Fragment() {
 
@@ -70,6 +71,7 @@ class EditProfileZipCodeFragment : Fragment() {
 
     private fun setupBackButtonClickListener() {
         binding.backButton.setOnClickListener {
+            edit_user_zip_code.setText(profileViewModel.userZipCodeDisplay)
             (requireActivity() as MainActivity).onBackPressed()
         }
     }
