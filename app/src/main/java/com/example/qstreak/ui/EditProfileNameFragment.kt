@@ -65,10 +65,10 @@ class EditProfileNameFragment : Fragment() {
         })
     }
 
-
     private fun setupBackButtonClickListener() {
         binding.backButton.setOnClickListener {
             edit_user_name.setText(profileViewModel.userNameDisplay)
+            profileViewModel.nameError.value = false
             (requireActivity() as MainActivity).onBackPressed()
         }
     }
