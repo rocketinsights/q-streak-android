@@ -11,44 +11,56 @@ import com.example.qstreak.utils.USER_NAME
 import com.example.qstreak.utils.USER_ZIP
 import kotlinx.coroutines.launch
 
-class OnboardingViewModel(
+class ProfileViewModel(
+    private val sharedPrefs: SharedPreferences,
     private val userRepository: UserRepository,
     private val sharedPrefsEditor: SharedPreferences.Editor
 ) : ViewModel() {
-    val signupSuccessful = MutableLiveData<Boolean>(false)
+    val userName = MutableLiveData<String>(sharedPrefs.getString(USER_NAME, null))
+    val userZipCode = MutableLiveData<String>(sharedPrefs.getString(USER_ZIP, null))
+    val nameError = MutableLiveData<Boolean>(false)
+    val zipCodeError = MutableLiveData<Boolean>(false)
+    val profileUpdated = MutableLiveData<Boolean>(false)
+    var userNameDisplay = sharedPrefs.getString(USER_NAME, null)
+    var userZipCodeDisplay = sharedPrefs.getString(USER_ZIP, null)
+
+    private val uid: String? by lazy {
+        sharedPrefs.getString(UID, null)
+    }
+
+    // Used in display of Edit Profile Name/Zip Code screens
     val errorToDisplay = MutableLiveData<String>()
 
-    val name = MutableLiveData<String>()
-    val nameError = MutableLiveData<Boolean>(false)
-    val zipCode = MutableLiveData<String>()
-    val zipCodeError = MutableLiveData<Boolean>(false)
-
-    fun createUser() {
-        val name = name.value?.let { it } ?: ""
-        val zipCode = zipCode.value
+    fun saveProfile() {
+        val name = userName.value?.let { it } ?: ""
+        val zipCode = userZipCode.value
 
         if (!validateInputs(name, zipCode)) {
             return
         }
 
-        viewModelScope.launch {
-            try {
-                val createUserResponse =
-                    userRepository.createUser(name, zipCode!!)
-                if (createUserResponse is ApiResult.Success) {
-                    sharedPrefsEditor.putString(UID, createUserResponse.data.uid).commit()
+        try {
+            viewModelScope.launch {
+                val response =
+                    userRepository.updateUser(name, zipCode!!, uid.toString())
+
+                if (response is ApiResult.Success) {
                     sharedPrefsEditor.putString(USER_NAME, name).commit()
                     sharedPrefsEditor.putString(USER_ZIP, zipCode).commit()
-                    signupSuccessful.postValue(true)
+                    refreshNameAndZipCode()
+                    profileUpdated.value = true
                 } else {
-                    // We received an API error response when attempting to create a user.
-                    errorToDisplay.value = (createUserResponse as ApiResult.Error).apiErrors
+                    errorToDisplay.value = (response as ApiResult.Error).apiErrors
                 }
-            } catch (e: Exception) {
-                // Something else went wrong when attempting to create a user.
-                errorToDisplay.value = e.message
             }
+        } catch (e: Exception) {
+            errorToDisplay.value = e.message
         }
+    }
+
+    private fun refreshNameAndZipCode() {
+        userNameDisplay = sharedPrefs.getString(USER_NAME, null)
+        userZipCodeDisplay = sharedPrefs.getString(USER_ZIP, null)
     }
 
     private fun validateInputs(name: String?, zipCode: String?): Boolean {
@@ -59,8 +71,6 @@ class OnboardingViewModel(
         return zipValid && nameValid
     }
 
-    // TODO These methods could be extracted to a utility class.
-
     private fun isZipValid(zip: String?): Boolean {
         return !zip.isNullOrBlank() && zip.length == 5 && zip.toInt() > 0
     }
@@ -69,4 +79,5 @@ class OnboardingViewModel(
         // As of now name is optional.
         return true
     }
+
 }

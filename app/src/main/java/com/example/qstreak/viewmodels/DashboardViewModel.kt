@@ -22,7 +22,6 @@ class DashboardViewModel(
 ) : ViewModel() {
     val currentScoreImage = MutableLiveData<Int>()
     val hasEntryForToday = MutableLiveData<Boolean>()
-    val userName = MutableLiveData<String>(sharedPrefs.getString(USER_NAME, null))
     val uid: String? = sharedPrefs.getString(UID, null)
     val dashboardMessages = MutableLiveData<List<DashboardMessage>>()
     val showRiskWarning = MutableLiveData<Boolean>(false)

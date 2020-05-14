@@ -24,6 +24,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 const val USER_PREFS = "user_prefs"
 const val UID = "uid"
 const val USER_NAME = "user_name"
+const val USER_ZIP = "user_zipcode"
 
 fun Application.initKoin() {
 
@@ -81,7 +82,7 @@ private fun databaseModule() = module {
 }
 
 private fun repositoryModule() = module {
-    single { UserRepository(get(), get(), get(), Dispatchers.IO) }
+    single { UserRepository(get(), get(), get(), get(), Dispatchers.IO) }
     single { SubmissionRepository(get(), get(), get(), get(), Dispatchers.IO) }
     single { ActivitiesRepository(get(), get()) }
     single { DashboardRepository(get(), get(), Dispatchers.IO) }
@@ -102,5 +103,6 @@ private fun scopeModules() = module {
     }
     scope(named<MainActivity>()) {
         viewModel { SubmissionsViewModel(get(), get()) }
+        viewModel { ProfileViewModel(get(), get(), get()) }
     }
 }

@@ -7,7 +7,8 @@ import retrofit2.Retrofit
 
 class UserRepository(
     private val userDao: UserDao,
-    private val api: QstreakApiSignupService,
+    private val api: QstreakApiService,
+    private val signupApi: QstreakApiSignupService,
     private val retrofit: Retrofit,
     private val dispatcher: CoroutineDispatcher
 ) {
@@ -18,7 +19,7 @@ class UserRepository(
         zip: String
     ): ApiResult<CreateUserResponse> {
         val apiResponse = safeApiCall(dispatcher, retrofit) {
-            api.signup(CreateUserRequest(Account(name, zip)))
+            signupApi.signup(CreateUserRequest(Account(name, zip)))
         }
 
         // Add user to local database if API reports user successfully created.
@@ -30,9 +31,21 @@ class UserRepository(
         return apiResponse
     }
 
-    suspend fun update(user: User) {
-        userDao.update(user)
-    }
+    suspend fun updateUser(
+        name: String?,
+        zip: String,
+        uid: String
+    ): ApiResult<UpdateUserResponse> {
+        val apiResponse = safeApiCall(dispatcher, retrofit) {
+            api.updateUser(UpdateUserRequest(UpdateUserData(name, zip)), uid)
+        }
 
-    // maybe proxy getUser too? or just return user val?
+        // Update user in local database if API reports user successfully updated.
+        if (apiResponse is ApiResult.Success) {
+            val user = apiResponse.data.toUserModel()
+            userDao.update(user)
+        }
+
+        return apiResponse
+    }
 }
