@@ -33,7 +33,6 @@
                 android:src="@drawable/ic_arrow_back_black_36dp"/>
 
             <TextView
-                android:id="@+id/done_button"
                 style="@style/SecondaryHeader"
                 android:textColor="@android:color/black"
                 android:layout_width="wrap_content"
