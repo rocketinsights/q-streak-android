@@ -22,7 +22,11 @@
             android:id="@+id/header_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toTopOf="@id/profile_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/back_button"
@@ -70,9 +74,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/profile_bottom_border"
+            android:gravity="center_vertical"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
-            android:gravity="center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profile_header">
@@ -99,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
-                android:src="@drawable/qstreak_arrow_right"/>
+                android:src="@drawable/qstreak_arrow_right" />
         </LinearLayout>
 
         <LinearLayout
@@ -107,9 +111,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/profile_bottom_border"
+            android:gravity="center_vertical"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
-            android:gravity="center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/user_name">
@@ -136,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
-                android:src="@drawable/qstreak_arrow_right"/>
+                android:src="@drawable/qstreak_arrow_right" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
