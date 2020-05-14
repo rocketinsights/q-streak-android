@@ -21,6 +21,8 @@ class ProfileViewModel(
     val nameError = MutableLiveData<Boolean>(false)
     val zipCodeError = MutableLiveData<Boolean>(false)
     val profileUpdated = MutableLiveData<Boolean>(false)
+    var userNameDisplay = sharedPrefs.getString(USER_NAME, null)
+    var userZipCodeDisplay = sharedPrefs.getString(USER_ZIP, null)
 
     private val uid: String? by lazy {
         sharedPrefs.getString(UID, null)
@@ -57,8 +59,8 @@ class ProfileViewModel(
     }
 
     private fun refreshNameAndZipCode() {
-        userName.value = sharedPrefs.getString(USER_NAME, null)
-        userZipCode.value = sharedPrefs.getString(USER_ZIP, null)
+        userNameDisplay = sharedPrefs.getString(USER_NAME, null)
+        userZipCodeDisplay = sharedPrefs.getString(USER_ZIP, null)
     }
 
     private fun validateInputs(name: String?, zipCode: String?): Boolean {
